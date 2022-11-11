@@ -8,8 +8,10 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import Container from "@mui/material/Container";
-import Login from "../src/pages/Login";
 import { Box } from "@mui/material";
+import PostList from "./components/PostList";
+import TeachStack from "./components/TeachStack";
+import { AiFillHeart } from "react-icons/ai";
 
 function Copyright(props) {
   return (
@@ -22,9 +24,8 @@ function Copyright(props) {
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
         Your Website
-      </Link>{" "}
+      </Link>
       {new Date().getFullYear()}
-      {"."}
     </Typography>
   );
 }
@@ -43,10 +44,12 @@ function PricingContent() {
         color="default"
         elevation={0}
         sx={{ borderBottom: theme => `1px solid ${theme.palette.divider}` }}
+        maxWidth="md"
+        component="main"
       >
         <Toolbar sx={{ flexWrap: "wrap" }}>
           <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-            Company name
+            Co-Meet
           </Typography>
           <nav>
             <Link
@@ -55,7 +58,7 @@ function PricingContent() {
               href="#"
               sx={{ my: 1, mx: 1.5 }}
             >
-              Features
+              새 글 쓰기
             </Link>
             <Link
               variant="button"
@@ -63,36 +66,31 @@ function PricingContent() {
               href="#"
               sx={{ my: 1, mx: 1.5 }}
             >
-              Enterprise
-            </Link>
-            <Link
-              variant="button"
-              color="text.primary"
-              href="#"
-              sx={{ my: 1, mx: 1.5 }}
-            >
-              Support
+              <AiFillHeart />
             </Link>
           </nav>
-          <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
+          <Button
+            to="/"
+            href="#"
+            variant="outlined"
+            sx={{
+              my: 1,
+              mx: 1.5,
+            }}
+          >
             Login
           </Button>
         </Toolbar>
       </AppBar>
-      {/* end of header*/}
-      {/* <Login /> */}
-
+      {/* end header */}
+      {/* Teach Stack */}
       <Container maxWidth="md" component="main">
-        {/* <Grid spacing={4} justifyContent="main">
-        </Grid> */}
-
         <Box
           sx={{
             marginTop: 2,
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
-            backgroundColor: "ivory",
+            alignItems: "start",
           }}
         >
           <Grid
@@ -103,30 +101,20 @@ function PricingContent() {
               alignItems: "flex-end",
             }}
           >
-            <Box sx={{ marginRight: 3 }}>ID</Box>
-            <Box>user_input..</Box>
-          </Grid>
-
-          <Grid
-            item
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "flex-end",
-            }}
-          >
-            <Box sx={{ marginRight: 3 }}>PW</Box>
-            <Box>user_input..</Box>
+            <TeachStack />
           </Grid>
         </Box>
+      </Container>
 
+      {/* Post List */}
+      <Container maxWidth="md" component="main">
         <Box
           sx={{
             marginTop: 2,
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
-            backgroundColor: "lightgrey",
+            alignItems: "start",
+            // backgroundColor: "ivory",
           }}
         >
           <Grid
@@ -137,54 +125,7 @@ function PricingContent() {
               alignItems: "flex-end",
             }}
           >
-            <Box sx={{ marginRight: 3 }}>ID</Box>
-            <Box>user_input..</Box>
-          </Grid>
-
-          <Grid
-            item
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "flex-end",
-            }}
-          >
-            <Box sx={{ marginRight: 3 }}>PW</Box>
-            <Box>user_input..</Box>
-          </Grid>
-        </Box>
-
-        <Box
-          sx={{
-            marginTop: 2,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            backgroundColor: "ivory",
-          }}
-        >
-          <Grid
-            item
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "flex-end",
-            }}
-          >
-            <Box sx={{ marginRight: 3 }}>ID</Box>
-            <Box>user_input..</Box>
-          </Grid>
-
-          <Grid
-            item
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "flex-end",
-            }}
-          >
-            <Box sx={{ marginRight: 3 }}>PW</Box>
-            <Box>user_input..</Box>
+            <PostList />
           </Grid>
         </Box>
       </Container>
@@ -195,12 +136,13 @@ function PricingContent() {
         component="footer"
         sx={{
           borderTop: theme => `1px solid ${theme.palette.divider}`,
-          mt: 8,
+          mt: 2,
           py: [3, 6],
         }}
       >
         <Grid container spacing={4} justifyContent="space-evenly">
           Footer area
+          {/* 위에 영어 지우고 이 자리에 컴포넌트 연결하면 됩니다. */}
         </Grid>
         <Copyright sx={{ mt: 5 }} />
       </Container>
