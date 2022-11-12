@@ -4,7 +4,19 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import styled from "styled-components";
+import Post from "./Post";
 
+const BigTable = styled.div`
+  align-content: center;
+  box-sizing: inherit;
+  box-sizing: content-box;
+`;
+
+const Table = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -58,8 +70,23 @@ export default function BasicTabs() {
           <Tab label="프로젝트" {...a11yProps(2)} />
         </Tabs>
       </Box>
+
       <TabPanel value={value} index={0}>
-        모두보기
+        <BigTable>
+          <Table>
+            <Post></Post>
+            <Post></Post>
+            <Post></Post>
+            <Post></Post>
+            <Post></Post>
+            <Post></Post>
+            <Post></Post>
+            <Post></Post>
+            <Post></Post>
+            <Post></Post>
+            <Post></Post>
+          </Table>
+        </BigTable>
       </TabPanel>
       <TabPanel value={value} index={1}>
         스터디
