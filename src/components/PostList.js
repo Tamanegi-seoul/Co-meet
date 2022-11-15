@@ -5,7 +5,8 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import styled from "styled-components";
-import Post from "./Post";
+import Post from "./PostPreview";
+// // Main page안의 카드 슬롯 형태 리스트
 
 const BigTable = styled.div`
   align-content: center;

@@ -4,6 +4,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+// Main page안의 기술 스텍 나열 컴포넌트
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

@@ -1,7 +1,7 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+// Main page안의 슬라이드 배너
 // https://velog.io/@owlsuri/React-slick-Custom 참고사이트
 
 export default function MainCarousel(props) {
