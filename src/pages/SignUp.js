@@ -1,4 +1,4 @@
-import * as React from "react";
+import { React, useState, useCallback } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -12,7 +12,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
+import styled from "styled-components";
+//1. 이메일, 비밀번호 유효성 추가하기
+//2. alert가 아닌 빨간박스로 표시하기
 function Copyright(props) {
   return (
     <Typography
@@ -34,13 +36,57 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
+  const ErrorMessage = styled.div`
+    color: red;
+  `;
+  const [nickName, setNickName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
+  const [passwordError, setpasswordError] = useState(false);
+  const [agree, setAgree] = useState(false);
+  const onChangenickName = useCallback(e => {
+    setNickName(e.target.value);
+  }, []);
+  const onChangeEamil = useCallback(e => {
+    setEmail(e.target.value);
+  }, []);
+  const onChangePassword = useCallback(e => {
+    setPassword(e.target.value);
+  }, []);
+  const onChangePasswordCheck = useCallback(
+    e => {
+      setPasswordCheck(e.target.value);
+      setpasswordError(e.target.value !== password);
+    },
+    [password]
+  );
+  const onChangeAgree = useCallback(
+    e => {
+      setAgree(!agree);
+    },
+    [agree]
+  );
+
   const handleSubmit = event => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    // const data = new FormData(event.currentTarget);
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
+    if (!passwordError) {
+      if (agree) {
+        console.log(email);
+        console.log(password);
+        console.log(nickName);
+        console.log(agree);
+      } else {
+        alert("동의해주세요");
+      }
+    } else {
+      alert("비번이 다릅니다!");
+    }
   };
 
   return (
@@ -68,25 +114,15 @@ export default function SignUp() {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
+                  name="nickName"
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="nickName"
+                  label="Nick Name"
+                  value={nickName}
+                  onChange={onChangenickName}
                   autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -96,6 +132,8 @@ export default function SignUp() {
                   id="email"
                   label="Email Address"
                   name="email"
+                  value={email}
+                  onChange={onChangeEamil}
                   autoComplete="email"
                 />
               </Grid>
@@ -107,13 +145,38 @@ export default function SignUp() {
                   label="Password"
                   type="password"
                   id="password"
+                  value={password}
+                  onChange={onChangePassword}
                   autoComplete="new-password"
                 />
               </Grid>
               <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="passwordCheck"
+                  label="PasswordCheck"
+                  type="password"
+                  id="passwordCheck"
+                  value={passwordCheck}
+                  onChange={onChangePasswordCheck}
+                  autoComplete="new-password"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                {passwordError && (
+                  <ErrorMessage>비밀번호가 같지 않습니다.</ErrorMessage>
+                )}
+              </Grid>
+              <Grid item xs={12}>
                 <FormControlLabel
                   control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
+                    <Checkbox
+                      value="allowExtraEmails"
+                      color="primary"
+                      checked={agree}
+                      onChange={onChangeAgree}
+                    />
                   }
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
@@ -129,7 +192,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/login" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
