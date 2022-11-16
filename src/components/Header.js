@@ -18,7 +18,12 @@ const Header = () => {
     >
       <Toolbar sx={{ flexWrap: "wrap" }}>
         <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-          <Link variant="button" color="text.primary" href="/">
+          <Link
+            variant="inherit"
+            underline="none"
+            color="text.primary"
+            href="/"
+          >
             Co-Meet
           </Link>
         </Typography>
@@ -26,6 +31,7 @@ const Header = () => {
           <Link
             variant="button"
             color="text.primary"
+            underline="none"
             href="#"
             sx={{ my: 1, mx: 1.5 }}
           >
@@ -41,8 +47,7 @@ const Header = () => {
           </Link>
         </nav>
         <Button
-          to="/"
-          href="#"
+          href="/login"
           variant="outlined"
           sx={{
             my: 1,
