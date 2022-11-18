@@ -14,7 +14,6 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import { Input } from "@mui/material";
 //1. 이메일, 비밀번호 유효성 추가하기
 //2. alert가 아닌 빨간박스로 표시하기
 function Copyright(props) {
