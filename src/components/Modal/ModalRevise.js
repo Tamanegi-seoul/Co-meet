@@ -1,5 +1,5 @@
-// 게시글 작성 완료 화면 => "삭제"버튼을 눌렸을때 -> 모달창 -> 삭제하시겠습니까?
-// 게시글 작성 완료 화면 => 댓글 창에서 "삭제"버튼을 눌렸을때 -> 모달창 -> 삭제하시겠습니까?
+// 게시글 작성 완료 화면 => "수정"버튼을 눌렸을때 -> 모달창 -> 수정하시겠습니까?
+// 게시글 작성 완료 화면 => 댓글 창에서 "수정"버튼을 눌렸을때 -> 모달창 -> 수정하시겠습니까?
 import * as React from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
@@ -29,14 +29,14 @@ const AnswerButton = styled.button`
   border-radius: 20px;
 `;
 
-export default function ModalDelete() {
+export default function ModalRevise() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
     <div>
-      <Button onClick={handleOpen}>삭제 모달창</Button>
+      <Button onClick={handleOpen}>수정 모달창</Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -60,7 +60,7 @@ export default function ModalDelete() {
                 fontWeight: "bold",
               }}
             >
-              작성하신 글을 삭제하시겠어요?
+              작성하신 글을 수정하시겠어요?
             </Typography>
             <Typography
               id="transition-modal-description"
@@ -77,7 +77,7 @@ export default function ModalDelete() {
                   cursor: "pointer",
                 }}
               >
-                네, 삭제할래요
+                네, 수정할래요
               </AnswerButton>
             </Typography>
           </Box>
