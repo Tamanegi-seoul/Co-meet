@@ -13,9 +13,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
-import { useForm } from "react-hook-form";
-//1. 이메일, 비밀번호 유효성 추가하기
-//2. alert가 아닌 빨간박스로 표시하기
+import { Controller, useForm } from "react-hook-form";
+import { Autocomplete } from "@mui/material";
+
 function Copyright(props) {
   return (
     <Typography
@@ -33,7 +33,7 @@ function Copyright(props) {
     </Typography>
   );
 }
-
+const objOptions = [{ value: "A" }, { value: "B" }, { value: "C" }];
 const theme = createTheme();
 const ErrorMessage = styled.div`
   color: red;
@@ -41,6 +41,7 @@ const ErrorMessage = styled.div`
 
 export default function SignUp() {
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -52,50 +53,6 @@ export default function SignUp() {
   const onError = error => {
     console.log(error);
   };
-  // const [nickName, setNickName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [passwordCheck, setPasswordCheck] = useState("");
-  // const [passwordError, setpasswordError] = useState(false);
-  // const [agree, setAgree] = useState(false);
-  // const onChangenickName = useCallback(e => {
-  //   setNickName(e.target.value);
-  // }, []);
-  // const onChangeEamil = useCallback(e => {
-  //   setEmail(e.target.value);
-  // }, []);
-  // const onChangePassword = useCallback(e => {
-  //   setPassword(e.target.value);
-  // }, []);
-  // const onChangePasswordCheck = useCallback(
-  //   e => {
-  //     setPasswordCheck(e.target.value);
-  //     setpasswordError(e.target.value !== password);
-  //   },
-  //   [password]
-  // );
-  // const onChangeAgree = useCallback(
-  //   e => {
-  //     setAgree(!agree);
-  //   },
-  //   [agree]
-  // );
-
-  // const handleSubmit = event => {
-  //   event.preventDefault();
-  //   // const data = new FormData(event.currentTarget);
-  //   // console.log({
-  //   //   email: data.get("email"),
-  //   //   password: data.get("password"),
-  //   // });
-  //   if (!agree) {
-  //     return alert("동의를 해주세요");
-  //   }
-  //   if (passwordError) {
-  //     return alert("비밀번호가 일치하지 않습니다");
-  //   }
-  //   console.log("회원가입 완료");
-  // };
 
   return (
     <ThemeProvider theme={theme}>
@@ -125,7 +82,6 @@ export default function SignUp() {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-                  required
                   type="text"
                   name="nickName"
                   fullWidth
@@ -138,8 +94,6 @@ export default function SignUp() {
                       message: "최소 2글자를 넘어야 합니다.",
                     },
                   })}
-                  // value={nickName}
-                  // onChange={onChangenickName}
                   autoFocus
                 />
               </Grid>
@@ -150,7 +104,6 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
                   fullWidth
                   id="email"
                   label="Email Address"
@@ -173,7 +126,6 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
                   fullWidth
                   name="password"
                   label="Password"
@@ -188,8 +140,6 @@ export default function SignUp() {
                         "비밀번호를 8~16자로 영문 대소문자, 숫자, 특수기호를 조합해서 사용하세요. ",
                     },
                   })}
-                  // value={password}
-                  // onChange={onChangePassword}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -197,37 +147,48 @@ export default function SignUp() {
                   <small role="alert">{errors.password.message}</small>
                 )}
               </Grid>
-              {/* <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="passwordCheck"
-                  label="PasswordCheck"
-                  type="password"
-                  id="passwordCheck"
-                  {...register("passwordCheck", {
-                    required: "비밀번호확인 필수입력입니다.",
-                    pattern: {},
-                  })}
+              <Grid item xs={12}>
+                <Controller
+                  control={control}
+                  name="Stacks"
+                  render={({ field: { ref, onChange, ...field } }) => (
+                    <Autocomplete
+                      multiple
+                      options={objOptions}
+                      getOptionLabel={option => option.value}
+                      onChange={(_, data) => onChange(data)}
+                      renderInput={params => (
+                        <TextField
+                          {...field}
+                          {...params}
+                          fullWidth
+                          inputRef={ref}
+                          variant="filled"
+                          label="object-complete"
+                        />
+                      )}
+                    />
+                  )}
                 />
-              </Grid> */}
-              {/* <Grid item xs={12}>
-                {passwordError && (
-                  <ErrorMessage>비밀번호가 같지 않습니다.</ErrorMessage>
-                )}
-              </Grid> */}
+              </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
                   control={
                     <Checkbox
-                      value="allowExtraEmails"
+                      value="agree"
                       color="primary"
-                      // checked={agree}
-                      // onChange={onChangeAgree}
+                      {...register("agree", {
+                        required: "동의버튼을 눌러주세요",
+                      })}
                     />
                   }
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
+              </Grid>
+              <Grid item xs={12}>
+                {errors.agree && (
+                  <small role="alert">{errors.agree.message}</small>
+                )}
               </Grid>
             </Grid>
             <Button
