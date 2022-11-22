@@ -32,7 +32,7 @@ const Header = () => {
             variant="button"
             color="text.primary"
             underline="none"
-            href="#"
+            href="/write"
             sx={{ my: 1, mx: 1.5 }}
           >
             새 글 쓰기

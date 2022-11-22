@@ -1,4 +1,4 @@
-import { React, useState, useCallback } from "react";
+import { React } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -12,7 +12,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import styled from "styled-components";
+// import styled from "styled-components";
 import { Controller, useForm } from "react-hook-form";
 import { Autocomplete } from "@mui/material";
 
@@ -35,9 +35,9 @@ function Copyright(props) {
 }
 const objOptions = [{ value: "A" }, { value: "B" }, { value: "C" }];
 const theme = createTheme();
-const ErrorMessage = styled.div`
-  color: red;
-`;
+// const ErrorMessage = styled.div`
+//   color: red;
+// `;
 
 export default function SignUp() {
   const {
@@ -46,6 +46,7 @@ export default function SignUp() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm();
+
   const onSubmit = data => {
     console.log(data, "sdsdsdsd");
   };
@@ -135,7 +136,7 @@ export default function SignUp() {
                     required: "비밀번호는 필수 입력입니다.",
                     pattern: {
                       value:
-                        /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,16}$/,
+                        /(?=.*\d{1,50})(?=.*[~`!@#$%^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,16}$/,
                       message:
                         "비밀번호를 8~16자로 영문 대소문자, 숫자, 특수기호를 조합해서 사용하세요. ",
                     },

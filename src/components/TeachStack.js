@@ -4,8 +4,16 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import { ListItem, ToggleButton } from "@mui/material";
+import Chip from "@mui/material/Chip";
+import Paper from "@mui/material/Paper";
+import TagFacesIcon from "@mui/icons-material/TagFaces";
+import styled from "styled-components";
 // Main page안의 기술 스텍 나열 컴포넌트
-
+const SlectedStack = styled.div`
+  display: flex;
+  width: 25%;
+`;
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -41,6 +49,17 @@ function a11yProps(index) {
 
 export default function BasicTabs() {
   const [value, setValue] = React.useState(0);
+  const [chipData, setChipData] = React.useState([
+    { key: 0, label: "Angular" },
+    { key: 1, label: "jQuery" },
+    { key: 2, label: "Polymer" },
+    { key: 3, label: "React" },
+    { key: 4, label: "Vue.js" },
+  ]);
+
+  const handleDelete = chipToDelete => () => {
+    setChipData(chips => chips.filter(chip => chip.key !== chipToDelete.key));
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -62,7 +81,15 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        모두보기
+        <ToggleButton
+          sx={{ borderRadius: 10 }}
+          value="check"
+          selected={false}
+          onChange={() => {}}
+        >
+          <img alt="" src="img/react.png" />
+          리액트
+        </ToggleButton>
       </TabPanel>
       <TabPanel value={value} index={1}>
         프론트앤드
@@ -76,6 +103,20 @@ export default function BasicTabs() {
       <TabPanel value={value} index={4}>
         기타
       </TabPanel>
+      <SlectedStack>
+        {chipData.map(data => {
+          let icon;
+          return (
+            <ListItem key={data.key}>
+              <Chip
+                icon={icon}
+                label={data.label}
+                onDelete={handleDelete(data)}
+              />
+            </ListItem>
+          );
+        })}
+      </SlectedStack>
     </Box>
   );
 }

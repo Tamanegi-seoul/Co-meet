@@ -12,6 +12,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useForm } from "react-hook-form";
 
 function Copyright(props) {
   return (
@@ -33,13 +34,18 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = event => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm();
+
+  const onSubmit = data => {
+    console.log(data, "sdsdsdsd");
+  };
+
+  const onError = error => {
+    console.log(error);
   };
 
   return (
@@ -62,7 +68,7 @@ export default function SignIn() {
           </Typography>
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit, onError)}
             noValidate
             sx={{ mt: 1 }}
           >
@@ -75,6 +81,13 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              {...register("email", {
+                required: "이메일을 입력하여 주세요.",
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: "이메일 형식에 맞지 않습니다.",
+                },
+              })}
             />
             <TextField
               margin="normal"
@@ -85,25 +98,26 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              {...register("password", {
+                required: "비밀번호를 입력하여주세요.",
+              })}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+            <Grid item xs>
+              이메일 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시
+              확인해주세요.
+            </Grid>
+
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={isSubmitting}
             >
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
+              <Grid item xs></Grid>
               <Grid item>
                 <Link href="/SignUp" variant="body2">
                   {"Don't have an account? Sign Up"}
