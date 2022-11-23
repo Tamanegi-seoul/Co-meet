@@ -16,38 +16,24 @@ const MainPage = () => {
         styles={{ ul: { margin: 0, padding: 0, listStyle: "none" } }}
       />
       <CssBaseline />
-
-      {/* begin of header*/}
       <Header />
-      <InformationEdit />
-      {/* end header */}
-
-      {/* slide */}
+      {/* <InformationEdit /> */}
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <MainCarousel></MainCarousel>
         </Grid>
-        {/* slide */}
-
-        {/* TechStack */}
         <Grid item xs={1}></Grid>
         <Grid item xs={10}>
           <TeachStack />
         </Grid>
         <Grid item xs={1}></Grid>
-        {/* TechStack */}
-
-        {/* PostList */}
         <Grid item xs={1}></Grid>
         <Grid item xs={10}>
           <PostList />
         </Grid>
         <Grid item xs={1}></Grid>
-        {/* PostList */}
       </Grid>
-      {/* Footer */}
       <Footer />
-      {/* End footer */}
     </React.Fragment>
   );
 };
