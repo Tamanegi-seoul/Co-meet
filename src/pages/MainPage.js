@@ -7,6 +7,8 @@ import TeachStack from "../components/TeachStack";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import MainCarousel from "../components/MainCarousel";
+import InformationEdit from "./InformationEdit";
+
 const MainPage = () => {
   return (
     <React.Fragment>
@@ -17,6 +19,7 @@ const MainPage = () => {
 
       {/* begin of header*/}
       <Header />
+      <InformationEdit />
       {/* end header */}
 
       {/* slide */}
