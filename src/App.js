@@ -1,5 +1,7 @@
 import * as React from "react";
 import { Routes, Route } from "react-router-dom";
+import PostComent from "./components/ReadPage/PostComent";
+import PostView from "./components/ReadPage/PostView";
 import MainPage from "./pages/MainPage";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
@@ -20,7 +22,7 @@ function App() {
         <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/write" element={<WritePage />}></Route>
         {/* 나중에 404페이지를 넣어야합니다 ↓ */}
-        <Route path="*" element={<MainPage />}></Route>
+        <Route path="*" element={<PostView />}></Route>
       </Routes>
     </>
   );
