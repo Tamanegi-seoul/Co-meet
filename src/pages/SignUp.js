@@ -1,4 +1,4 @@
-import { React, useState, useCallback } from "react";
+import { React } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -12,9 +12,10 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import styled from "styled-components";
-//1. 이메일, 비밀번호 유효성 추가하기
-//2. alert가 아닌 빨간박스로 표시하기
+// import styled from "styled-components";
+import { Controller, useForm } from "react-hook-form";
+import { Autocomplete } from "@mui/material";
+
 function Copyright(props) {
   return (
     <Typography
@@ -32,61 +33,26 @@ function Copyright(props) {
     </Typography>
   );
 }
-
+const objOptions = [{ value: "A" }, { value: "B" }, { value: "C" }];
 const theme = createTheme();
+// const ErrorMessage = styled.div`
+//   color: red;
+// `;
 
 export default function SignUp() {
-  const ErrorMessage = styled.div`
-    color: red;
-  `;
-  const [nickName, setNickName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordCheck, setPasswordCheck] = useState("");
-  const [passwordError, setpasswordError] = useState(false);
-  const [agree, setAgree] = useState(false);
-  const onChangenickName = useCallback(e => {
-    setNickName(e.target.value);
-  }, []);
-  const onChangeEamil = useCallback(e => {
-    setEmail(e.target.value);
-  }, []);
-  const onChangePassword = useCallback(e => {
-    setPassword(e.target.value);
-  }, []);
-  const onChangePasswordCheck = useCallback(
-    e => {
-      setPasswordCheck(e.target.value);
-      setpasswordError(e.target.value !== password);
-    },
-    [password]
-  );
-  const onChangeAgree = useCallback(
-    e => {
-      setAgree(!agree);
-    },
-    [agree]
-  );
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm();
 
-  const handleSubmit = event => {
-    event.preventDefault();
-    // const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    // });
-    if (!passwordError) {
-      if (agree) {
-        console.log(email);
-        console.log(password);
-        console.log(nickName);
-        console.log(agree);
-      } else {
-        alert("동의해주세요");
-      }
-    } else {
-      alert("비번이 다릅니다!");
-    }
+  const onSubmit = data => {
+    console.log(data, "sdsdsdsd");
+  };
+
+  const onError = error => {
+    console.log(error);
   };
 
   return (
@@ -110,82 +76,127 @@ export default function SignUp() {
           <Box
             component="form"
             noValidate
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit, onError)}
+            // onSubmit={handleSubmit}
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
+                  type="text"
                   name="nickName"
                   fullWidth
                   id="nickName"
                   label="Nick Name"
-                  value={nickName}
-                  onChange={onChangenickName}
+                  {...register("nickName", {
+                    required: "닉네임은 필수 입력입니다.",
+                    minLength: {
+                      value: 2,
+                      message: "최소 2글자를 넘어야 합니다.",
+                    },
+                  })}
                   autoFocus
                 />
               </Grid>
               <Grid item xs={12}>
+                {errors.nickName && (
+                  <small role="alert">{errors.nickName.message}</small>
+                )}
+              </Grid>
+              <Grid item xs={12}>
                 <TextField
-                  required
                   fullWidth
                   id="email"
                   label="Email Address"
                   name="email"
-                  value={email}
-                  onChange={onChangeEamil}
-                  autoComplete="email"
+                  {...register("email", {
+                    required: "이메일은 필수 입력입니다.",
+                    pattern: {
+                      value: /\S+@\S+\.\S+/,
+                      message: "이메일 형식에 맞지 않습니다.",
+                    },
+                  })}
+                  // value={email}
+                  // onChange={onChangeEamil}
                 />
               </Grid>
               <Grid item xs={12}>
+                {errors.email && (
+                  <small role="alert">{errors.email.message}</small>
+                )}
+              </Grid>
+              <Grid item xs={12}>
                 <TextField
-                  required
                   fullWidth
                   name="password"
                   label="Password"
                   type="password"
                   id="password"
-                  value={password}
-                  onChange={onChangePassword}
-                  autoComplete="new-password"
+                  {...register("password", {
+                    required: "비밀번호는 필수 입력입니다.",
+                    pattern: {
+                      value:
+                        /(?=.*\d{1,50})(?=.*[~`!@#$%^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,16}$/,
+                      message:
+                        "비밀번호를 8~16자로 영문 대소문자, 숫자, 특수기호를 조합해서 사용하세요. ",
+                    },
+                  })}
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="passwordCheck"
-                  label="PasswordCheck"
-                  type="password"
-                  id="passwordCheck"
-                  value={passwordCheck}
-                  onChange={onChangePasswordCheck}
-                  autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                {passwordError && (
-                  <ErrorMessage>비밀번호가 같지 않습니다.</ErrorMessage>
+                {errors.password && (
+                  <small role="alert">{errors.password.message}</small>
                 )}
+              </Grid>
+              <Grid item xs={12}>
+                <Controller
+                  control={control}
+                  name="Stacks"
+                  render={({ field: { ref, onChange, ...field } }) => (
+                    <Autocomplete
+                      multiple
+                      options={objOptions}
+                      getOptionLabel={option => option.value}
+                      onChange={(_, data) => onChange(data)}
+                      renderInput={params => (
+                        <TextField
+                          {...field}
+                          {...params}
+                          fullWidth
+                          inputRef={ref}
+                          variant="filled"
+                          label="object-complete"
+                        />
+                      )}
+                    />
+                  )}
+                />
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
                   control={
                     <Checkbox
-                      value="allowExtraEmails"
+                      value="agree"
                       color="primary"
-                      checked={agree}
-                      onChange={onChangeAgree}
+                      {...register("agree", {
+                        required: "동의버튼을 눌러주세요",
+                      })}
                     />
                   }
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
+              </Grid>
+              <Grid item xs={12}>
+                {errors.agree && (
+                  <small role="alert">{errors.agree.message}</small>
+                )}
               </Grid>
             </Grid>
             <Button
               type="submit"
               fullWidth
               variant="contained"
+              disabled={isSubmitting}
               sx={{ mt: 3, mb: 2 }}
             >
               Sign Up

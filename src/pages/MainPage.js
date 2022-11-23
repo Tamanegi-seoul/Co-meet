@@ -30,19 +30,19 @@ const MainPage = () => {
         {/* slide */}
 
         {/* TechStack */}
-        <Grid item xs={1.5}></Grid>
-        <Grid item xs={9}>
+        <Grid item xs={1}></Grid>
+        <Grid item xs={10}>
           <TeachStack />
         </Grid>
-        <Grid item xs={1.5}></Grid>
+        <Grid item xs={1}></Grid>
         {/* TechStack */}
 
         {/* PostList */}
-        <Grid item xs={1.5}></Grid>
-        <Grid item xs={9}>
+        <Grid item xs={1}></Grid>
+        <Grid item xs={10}>
           <PostList />
         </Grid>
-        <Grid item xs={1.5}></Grid>
+        <Grid item xs={1}></Grid>
         {/* PostList */}
       </Grid>
       {/* Footer */}

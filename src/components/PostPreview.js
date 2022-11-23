@@ -9,11 +9,13 @@ export default function BasicCard() {
   return (
     <Card
       sx={{
+        height: 400,
+        margin: 1,
         width: {
           xs: "100%",
-          sm: "50%",
-          md: "50%",
-          lg: "33.33%",
+          sm: "100%",
+          md: "47.2%",
+          lg: "31.6%",
         },
       }}
     >
