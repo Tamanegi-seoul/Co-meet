@@ -5,6 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import { AiFillHeart } from "react-icons/ai";
+import { fontWeight } from "@mui/system";
 
 const Header = () => {
   return (
@@ -16,24 +17,45 @@ const Header = () => {
       maxwidth="md"
       component="main"
     >
-      <Toolbar sx={{ flexWrap: "wrap" }}>
-        <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
+      <Toolbar
+        sx={{ flexWrap: "wrap" }}
+        style={{
+          backgroundColor: "white",
+        }}
+      >
+        <Typography
+          style={{ padding: "20px 0px" }}
+          variant="h6"
+          color="inherit"
+          noWrap
+          sx={{ flexGrow: 1 }}
+        >
           <Link
+            style={{
+              paddingLeft: "100px",
+              fontSize: "25px",
+              fontWeight: "900",
+              fontStyle: "italic",
+            }}
             variant="inherit"
             underline="none"
             color="text.primary"
             href="/"
           >
-            Co-Meet
+            Co Meet
           </Link>
         </Typography>
         <nav>
           <Link
+            style={{
+              fontSize: "18px",
+              fontWeight: "900",
+            }}
             variant="button"
             color="text.primary"
             underline="none"
             href="/write"
-            sx={{ my: 1, mx: 1.5 }}
+            sx={{ my: 1, mx: 2 }}
           >
             새 글 쓰기
           </Link>
@@ -41,7 +63,7 @@ const Header = () => {
             variant="button"
             color="text.primary"
             href="#"
-            sx={{ my: 1, mx: 1.5 }}
+            sx={{ my: 1, mx: 2.5 }}
           >
             <AiFillHeart />
           </Link>
@@ -51,7 +73,13 @@ const Header = () => {
           variant="outlined"
           sx={{
             my: 1,
-            mx: 1.5,
+            mx: 3.5,
+          }}
+          style={{
+            backgroundColor: "#1976D2",
+            color: "white",
+            border: "none",
+            marginRight: "100px",
           }}
         >
           Login
