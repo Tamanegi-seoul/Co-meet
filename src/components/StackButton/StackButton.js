@@ -1,26 +1,24 @@
 import { ToggleButton } from "@mui/material";
 import React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addStack, deleteStack } from "../../store/stack";
 
 const StackButton = ({ stack }) => {
   const dispatch = useDispatch();
-
-  const [selectedCheck, setSelectedCheck] = useState(false);
+  const { stackList } = useSelector(state => state.stack);
+  // const [selectedCheck, setSelectedCheck] = useState(false);
   return (
     <ToggleButton
       sx={{ borderRadius: 10, marginRight: 2 }}
       value="check"
-      selected={selectedCheck}
+      selected={stackList.includes(`${stack}`) ? true : false}
       onChange={() => {
-        if (!selectedCheck) {
+        if (!stackList.includes(`${stack}`)) {
           dispatch(addStack({ stack: stack }));
-          setSelectedCheck(!selectedCheck);
         }
-        if (selectedCheck) {
+        if (stackList.includes(`${stack}`)) {
           dispatch(deleteStack({ stack: stack }));
-          setSelectedCheck(!selectedCheck);
         }
       }}
     >
