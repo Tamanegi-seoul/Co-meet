@@ -48,7 +48,17 @@ export default function SignUp() {
   } = useForm();
 
   const onSubmit = data => {
-    console.log(data, "sdsdsdsd");
+    console.log("foreach start");
+    let arr = []; //빈배열생성
+    //arr 배열에 기존 Stacks 배열 value값 저장
+    data.Stacks.forEach(function (obj, index) {
+      console.log(obj.value);
+      arr.push(obj.value);
+    });
+    console.log(arr);
+    //arr배열을 Stacks배열에 덮어쓰기
+    data.Stacks = [...arr];
+    console.log(data, "완료료료료료");
   };
 
   const onError = error => {

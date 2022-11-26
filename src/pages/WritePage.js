@@ -45,7 +45,13 @@ const WritePage = () => {
             <Circle>1</Circle> 프로젝트 기본 정보를 입력해주세요.
           </Title>
           <Box>
-            <FormControl sx={{ margin: 1, width: { md: "100%", lg: "47.9%" } }}>
+            <FormControl
+              sx={{
+                minWidth: "40%",
+                margin: 1,
+                width: { md: "100%", lg: "47.9%" },
+              }}
+            >
               <InputLabel>Age</InputLabel>
               <Select value={age} label="Age" onChange={handleChange}>
                 <MenuItem value={10}>Ten</MenuItem>
@@ -53,7 +59,13 @@ const WritePage = () => {
                 <MenuItem value={30}>Thirty</MenuItem>
               </Select>
             </FormControl>
-            <FormControl sx={{ margin: 1, width: { md: "100%", lg: "47.9%" } }}>
+            <FormControl
+              sx={{
+                minWidth: "40%",
+                margin: 1,
+                width: { md: "100%", lg: "47.9%" },
+              }}
+            >
               <InputLabel>Age</InputLabel>
               <Select value={age} label="Age" onChange={handleChange}>
                 <MenuItem value={10}>Ten</MenuItem>
@@ -61,7 +73,13 @@ const WritePage = () => {
                 <MenuItem value={30}>Thirty</MenuItem>
               </Select>
             </FormControl>
-            <FormControl sx={{ margin: 1, width: { md: "100%", lg: "47.9%" } }}>
+            <FormControl
+              sx={{
+                minWidth: "40%",
+                margin: 1,
+                width: { md: "100%", lg: "47.9%" },
+              }}
+            >
               <InputLabel>Age</InputLabel>
               <Select value={age} label="Age" onChange={handleChange}>
                 <MenuItem value={10}>Ten</MenuItem>
@@ -69,7 +87,13 @@ const WritePage = () => {
                 <MenuItem value={30}>Thirty</MenuItem>
               </Select>
             </FormControl>
-            <FormControl sx={{ margin: 1, width: { md: "100%", lg: "47.9%" } }}>
+            <FormControl
+              sx={{
+                minWidth: "40%",
+                margin: 1,
+                width: { md: "100%", lg: "47.9%" },
+              }}
+            >
               <InputLabel>Age</InputLabel>
               <Select value={age} label="Age" onChange={handleChange}>
                 <MenuItem value={10}>Ten</MenuItem>
@@ -77,7 +101,13 @@ const WritePage = () => {
                 <MenuItem value={30}>Thirty</MenuItem>
               </Select>
             </FormControl>
-            <FormControl sx={{ margin: 1, width: { md: "100%", lg: "47.9%" } }}>
+            <FormControl
+              sx={{
+                minWidth: "40%",
+                margin: 1,
+                width: { md: "100%", lg: "47.9%" },
+              }}
+            >
               <InputLabel>Age</InputLabel>
               <Select value={age} label="Age" onChange={handleChange}>
                 <MenuItem value={10}>Ten</MenuItem>
@@ -103,7 +133,7 @@ const WritePage = () => {
           </Title>
           <CKEditor
             editor={ClassicEditor}
-            data="<p></p>"
+            data=""
             onReady={editor => {
               // You can store the "editor" and use when it is needed.
               console.log("Editor is ready to use!", editor);
