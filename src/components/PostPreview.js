@@ -5,7 +5,12 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 // Main page안의 카드 슬롯 형태
 
-export default function BasicCard() {
+export default function BasicCard({
+  title,
+  start_date,
+  designated_stacks,
+  poster_nickname,
+}) {
   return (
     <Card
       sx={{
@@ -20,7 +25,11 @@ export default function BasicCard() {
       }}
     >
       <CardContent>
-        안녕하세요 만나서 반가워요 팀플같이해요 앞으로도 잘 부탁 드립니다.
+        시작 예정일:{start_date}
+        <br />
+        제목: {title}
+        <br />
+        스택: {designated_stacks}, 닉네임:{poster_nickname}
       </CardContent>
       <CardActions>
         <Button size="small">여기는 버튼부분입니다</Button>

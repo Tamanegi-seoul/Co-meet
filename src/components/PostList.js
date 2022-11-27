@@ -5,7 +5,9 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import styled from "styled-components";
-import Post from "./PostPreview";
+import PostPreview from "./PostPreview";
+import dummyPost from "../dummyPost/dummyPost.json";
+import { useSelector } from "react-redux";
 // // Main page안의 카드 슬롯 형태 리스트
 
 const BigTable = styled.div`
@@ -53,7 +55,7 @@ function a11yProps(index) {
 
 export default function BasicTabs() {
   const [value, setValue] = React.useState(0);
-
+  const stackList = useSelector(state => state.stack.stackList);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -75,17 +77,32 @@ export default function BasicTabs() {
       <TabPanel value={value} index={0}>
         <BigTable>
           <Table>
-            <Post></Post>
-            <Post></Post>
-            <Post></Post>
-            <Post></Post>
-            <Post></Post>
-            <Post></Post>
-            <Post></Post>
-            <Post></Post>
-            <Post></Post>
-            <Post></Post>
-            <Post></Post>
+            {dummyPost.data.map(data => {
+              if (stackList.length === 0) {
+                return (
+                  <PostPreview
+                    title={data.title}
+                    start_date={data.start_date}
+                    designated_stacks={data.designated_stacks}
+                    poster_nickname={data.poster_nickname}
+                  />
+                );
+              } else {
+                const stackChecked = data.designated_stacks.filter(x =>
+                  stackList.includes(x)
+                );
+                if (!(stackChecked.length === 0)) {
+                  return (
+                    <PostPreview
+                      title={data.title}
+                      start_date={data.start_date}
+                      designated_stacks={data.designated_stacks}
+                      poster_nickname={data.poster_nickname}
+                    />
+                  );
+                }
+              }
+            })}
           </Table>
         </BigTable>
       </TabPanel>
