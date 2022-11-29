@@ -132,6 +132,12 @@
   resize: none;
 }
 
+.feed-comment-list {
+  margin-left: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
 .commentText {
   font-size: 16px;
 }
