@@ -11,6 +11,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { loginAsync2 } from "../store/user";
 
 function Copyright(props) {
   return (
@@ -32,6 +34,8 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
+  const dispatch = useDispatch();
+  const userInfo = useSelector(state => state.user.logInDone);
   const {
     register,
     handleSubmit,
@@ -40,6 +44,8 @@ export default function SignIn() {
 
   const onSubmit = data => {
     console.log(data, "sdsdsdsd");
+    dispatch(loginAsync2());
+    console.log(userInfo);
   };
 
   const onError = error => {
