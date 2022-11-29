@@ -28,6 +28,7 @@ const PostComent = () => {
       content: comment,
     };
     setCommentArray([...commentArray, newComment]);
+    setComment("");
   };
 
   const [comment, setComment] = useState();
