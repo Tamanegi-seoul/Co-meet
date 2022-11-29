@@ -14,6 +14,11 @@ export default function BasicCard({
   return (
     <Card
       sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        alignItems: "center",
+        borderRadius: 10,
         height: 400,
         margin: 1,
         width: {
@@ -24,14 +29,22 @@ export default function BasicCard({
         },
       }}
     >
-      <CardContent>
-        시작 예정일:{start_date}
-        <br />
-        제목: {title}
-        <br />
-        스택: {designated_stacks}, 닉네임:{poster_nickname}
+      <CardContent
+        sx={{
+          fontWeight: "900",
+          borderBottom: "2px solid #F8F8F8",
+        }}
+      >
+        Start Date : {start_date}
       </CardContent>
-      <CardActions>
+      <CardContent sx={{ lineHeight: "35px", cursor: "pointer" }}>
+        Title : {title}
+        <br />
+        Stacks : {designated_stacks}
+        <br />
+        Name : {poster_nickname}
+      </CardContent>
+      <CardActions sx={{ borderTop: "2px solid #f8f8f8" }}>
         <Button size="small">여기는 버튼부분입니다</Button>
       </CardActions>
     </Card>
