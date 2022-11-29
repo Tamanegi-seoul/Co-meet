@@ -7,6 +7,7 @@ import { addStack, deleteStack } from "../../store/stack";
 const StackButton = ({ stack }) => {
   const dispatch = useDispatch();
   const { stackList } = useSelector(state => state.stack);
+
   // const [selectedCheck, setSelectedCheck] = useState(false);
   return (
     <ToggleButton
