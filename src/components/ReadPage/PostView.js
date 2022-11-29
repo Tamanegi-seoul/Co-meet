@@ -4,16 +4,14 @@ import "./Post.css";
 import Header from "../Header";
 import Footer from "../Footer";
 import PostComent from "./PostComent";
-import dummy from "./PostData.json";
+import dummyPost from "../../dummyPost/dummyPost.json";
 
 //게시물 작성 완료 페이지의 내용
 const PostView = () => {
   return (
     <>
       <div>
-        {dummy.data.map(data => (
-          <h2 align="center">{data.title}</h2>
-        ))}
+        <h2 align="center">{dummyPost.data[0].title}</h2>
       </div>
 
       <div id="content">
@@ -25,14 +23,12 @@ const PostView = () => {
             />
           </div>
         </div>
-        {dummy.data.map(data => (
-          <div className="TextBox">{data.poster_nickname}</div>
-        ))}
+
+        <div className="TextBox">{dummyPost.data[0].poster_nickname}</div>
 
         <div className="TextBox">|</div>
-        {dummy.data.map(data => (
-          <div className="TextBox">{data.created_date}</div>
-        ))}
+
+        <div className="TextBox">{dummyPost.data[0].created_date}</div>
       </div>
 
       <div>
@@ -40,9 +36,8 @@ const PostView = () => {
         <ul className="studyGrid">
           <li className="contentWrapper">
             <span className="title">모집 구분</span>
-            {dummy.data.map(data => (
-              <span className="title">{data.recruit_status}</span>
-            ))}
+
+            <span className="title">{dummyPost.data[0].recruit_status}</span>
           </li>
           <li className="contentWrapper">
             {/* // ?? */}
@@ -51,33 +46,32 @@ const PostView = () => {
           </li>
           <li className="contentWrapper">
             <span className="title">모집 인원</span>
-            {dummy.data.map(data => (
-              <span className="title">{data.recruit_capacity}</span>
-            ))}
+
+            <span className="title">{dummyPost.data[0].recruit_capacity}</span>
           </li>
           <li className="contentWrapper">
             <span className="title">시작 예정</span>
-            {dummy.data.map(data => (
-              <span className="title">{data.start_date}</span>
-            ))}
+
+            <span className="title">{dummyPost.data[0].start_date}</span>
           </li>
           <li className="contentWrapper">
             <span className="title">연락 방법</span>
-            {dummy.data.map(data => (
-              <span className="title">{data.start_date}</span>
-            ))}
+
+            <span className="title">{dummyPost.data[0].start_date}</span>
           </li>
           <li className="contentWrapper">
             <span className="title">예상 기간</span>
-            {dummy.data.map(data => (
-              <span className="title">{data.expected_term}</span>
-            ))}
+
+            <span className="title">{dummyPost.data[0].expected_term}</span>
           </li>
           <li className="contentWrapper">
             <span className="title">사용 언어</span>
-            {dummy.data.map(data => (
-              <span className="title"> {data.designated_stacks} </span>
-            ))}
+
+            <span className="title">
+              {" "}
+              {dummyPost.data[0].designated_stacks}{" "}
+            </span>
+
             {/* {read.post.language.map((lang, i) => (
             <li key={i} className={styles.language}>
               <img
@@ -95,9 +89,9 @@ const PostView = () => {
       <div className="postContentWrapper">
         <h2 className="postInfo">프로젝트 소개</h2>
         <hr></hr>
-        {dummy.data.map(data => (
-          <div className="postContent">{data.content}</div>
-        ))}
+
+        <div className="postContent">{dummyPost.data[0].content}</div>
+
         <PostComent />
         <Footer />
       </div>
