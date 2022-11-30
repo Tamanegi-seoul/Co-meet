@@ -2,10 +2,14 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchUser } from "./userApi";
 
 const initialState = {
-  me: [123123],
-  logInLoading: false, //로그인 시도
-  logInDone: false, //로그인 상태
-  logInError: null, //로그아웃 시도
+  me: null,
+  logInLoading: false,
+  logInDone: false,
+  logInError: null,
+
+  logOutLoading: false,
+  logOutDone: false,
+  logOutError: null,
 };
 
 const dummyUser = {
@@ -20,12 +24,19 @@ export const loginAsync2 = createAsyncThunk("login", async () => {
   return;
 });
 
+export const logOutAsync2 = createAsyncThunk("login", async () => {
+  const response = await fetchUser();
+  return;
+});
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
     // addStack: (state, action) => {},
-    // deleteStack: (state, action) => {},
+    //일단 임시로 로그아웃(나중에 api로 로그아웃)
+    logOut: state => {
+      state.me = null;
+    },
   },
   extraReducers: builder => {
     builder
@@ -45,5 +56,6 @@ export const userSlice = createSlice({
       });
   },
 });
+export const { logOut } = userSlice.actions;
 
 export default userSlice.reducer;

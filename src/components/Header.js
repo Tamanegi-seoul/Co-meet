@@ -6,8 +6,17 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import { AiFillHeart } from "react-icons/ai";
 import { fontWeight } from "@mui/system";
+import { useSelector } from "react-redux";
+import { useState } from "react";
+import ModalUserInfo from "./Modal/ModalUserInfo";
 
 const Header = () => {
+  const [modalCheck, setModalCheck] = useState(false);
+  const userInfo = useSelector(state => state.user.me);
+  const onclick = () => {
+    setModalCheck(!modalCheck);
+    console.log(modalCheck);
+  };
   return (
     <AppBar
       position="static"
@@ -45,7 +54,7 @@ const Header = () => {
             Co Meet
           </Link>
         </Typography>
-        <nav>
+        <nav style={{ display: "flex" }}>
           <Link
             style={{
               fontSize: "18px",
@@ -59,31 +68,38 @@ const Header = () => {
           >
             새 글 쓰기
           </Link>
-          <Link
-            variant="button"
-            color="text.primary"
-            href="#"
-            sx={{ my: 1, mx: 2.5 }}
-          >
-            <AiFillHeart />
-          </Link>
+          {userInfo == null ? null : (
+            <Link
+              variant="button"
+              color="text.primary"
+              href="#"
+              sx={{ my: 1, mx: 2.5 }}
+            >
+              <AiFillHeart />
+            </Link>
+          )}
+
+          {userInfo == null ? (
+            <Button
+              href="/login"
+              variant="outlined"
+              sx={{
+                my: 1,
+                mx: 3.5,
+              }}
+              style={{
+                backgroundColor: "#1976D2",
+                color: "white",
+                border: "none",
+                marginRight: "100px",
+              }}
+            >
+              Login
+            </Button>
+          ) : (
+            <ModalUserInfo></ModalUserInfo>
+          )}
         </nav>
-        <Button
-          href="/login"
-          variant="outlined"
-          sx={{
-            my: 1,
-            mx: 3.5,
-          }}
-          style={{
-            backgroundColor: "#1976D2",
-            color: "white",
-            border: "none",
-            marginRight: "100px",
-          }}
-        >
-          Login
-        </Button>
       </Toolbar>
     </AppBar>
   );

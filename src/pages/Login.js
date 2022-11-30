@@ -13,6 +13,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAsync2 } from "../store/user";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -34,8 +35,10 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userInfo = useSelector(state => state.user.logInDone);
+  const userInfo = useSelector(state => state.user.me);
+  console.log(userInfo);
   const {
     register,
     handleSubmit,
@@ -45,6 +48,7 @@ export default function SignIn() {
   const onSubmit = data => {
     console.log(data, "sdsdsdsd");
     dispatch(loginAsync2());
+    navigate("/");
     console.log(userInfo);
   };
 
