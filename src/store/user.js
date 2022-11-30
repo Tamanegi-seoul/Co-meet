@@ -24,7 +24,7 @@ export const loginAsync2 = createAsyncThunk("login", async () => {
   return;
 });
 
-export const logOutAsync2 = createAsyncThunk("login", async () => {
+export const logOutAsync2 = createAsyncThunk("logout", async () => {
   const response = await fetchUser();
   return;
 });
@@ -33,10 +33,6 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     // addStack: (state, action) => {},
-    //일단 임시로 로그아웃(나중에 api로 로그아웃)
-    logOut: state => {
-      state.me = null;
-    },
   },
   extraReducers: builder => {
     builder
@@ -53,6 +49,20 @@ export const userSlice = createSlice({
       })
       .addCase(loginAsync2.rejected, state => {
         state.logInError = "error";
+      })
+      .addCase(logOutAsync2.pending, state => {
+        state.logOutLoading = true;
+        state.logOutError = null;
+        state.logOutDone = false;
+      })
+      .addCase(logOutAsync2.fulfilled, (state, action) => {
+        state.logOutLoading = true;
+        state.logOutDone = true;
+        // state.me = action.payload;
+        state.me = null;
+      })
+      .addCase(logOutAsync2.rejected, state => {
+        state.logOutError = "error";
       });
   },
 });
