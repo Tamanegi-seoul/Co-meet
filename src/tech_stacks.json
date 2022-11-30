@@ -1,0 +1,42 @@
+{
+  "language": {
+    "Java": "JAVA",
+    "JavaScript": "JAVA_SCRIPT",
+    "TypeScript": "TYPE_SCRIPT",
+    "Python": "PYTHON",
+    "R": "R",
+    "C": "C",
+    "C++": "C++",
+    "Go": "GO",
+    "Swift": "SWIFT",
+    "Kotlin": "KOTLIN",
+    "MySQL": "MYSQL",
+    "MongoDB": "MONGO_DB",
+    "Php": "PHP",
+    "Flutter": "FLUTTER"
+  },
+
+  "framework": {
+    "Spring": "SPRING",
+    "React": "REACT",
+    "ReactNative": "REACT_NATIVE",
+    "Vue": "VUE",
+    "NodeJs": "NODE_JS",
+    "NextJS": "NEXT_JS",
+    "NestJS": "NEST_JS",
+    "Express": "EXPRESS",
+    "Django": "DJANGO"
+  },
+
+  "etc": {
+    "GraphQL": "GRAPH_QL",
+    "Firebase": "FIREBASE",
+    "Unity": "UNITY",
+    "Aws": "AWS",
+    "Kubernetes": "KUBERNETES",
+    "Docker": "DOCKER",
+    "Git": "GIT",
+    "Figma": "FIGMA",
+    "Zeplin": "ZEPLIN"
+  }
+}

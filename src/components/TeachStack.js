@@ -8,11 +8,10 @@ import { ListItem, ToggleButton } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteStack } from "../store/stack";
-import Paper from "@mui/material/Paper";
-import TagFacesIcon from "@mui/icons-material/TagFaces";
 import styled from "styled-components";
 import StackButton from "./StackButton/StackButton";
-import shortid from "shortid";
+import StackList from "../tech_stacks.json";
+
 // Main page안의 기술 스텍 나열 컴포넌트
 const SlectedStack = styled.div`
   display: flex;
@@ -65,6 +64,29 @@ export default function BasicTabs() {
     setValue(newValue);
   };
 
+  const LANGUAGE_STACKLIST = Object.keys(StackList.language);
+  const FRAMWORK_STACKLIST = Object.keys(StackList.framework);
+  const ETC_STACKLIST = Object.keys(StackList.etc);
+
+  // language
+  const laguagneList = LANGUAGE_STACKLIST.map((item, index) => {
+    return (
+      <StackButton key={index} stack={LANGUAGE_STACKLIST[index]}></StackButton>
+    );
+  });
+
+  // framwork
+  const frameworkList = FRAMWORK_STACKLIST.map((item, index) => {
+    return (
+      <StackButton key={index} stack={FRAMWORK_STACKLIST[index]}></StackButton>
+    );
+  });
+
+  // etc
+  const etcList = ETC_STACKLIST.map((item, index) => {
+    return <StackButton key={index} stack={ETC_STACKLIST[index]}></StackButton>;
+  });
+
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -73,33 +95,22 @@ export default function BasicTabs() {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="프론트앤드" {...a11yProps(0)} />
-          <Tab label="백앤드" {...a11yProps(1)} />
-          <Tab label="모바일" {...a11yProps(2)} />
-          <Tab label="기타" {...a11yProps(3)} />
+          <Tab label="언어" {...a11yProps(0)} />
+          <Tab label="프레임워크" {...a11yProps(1)} />
+          <Tab label="기타" {...a11yProps(2)} />
         </Tabs>
       </Box>
+      {/* Language */}
       <TabPanel value={value} index={0}>
-        <StackButton stack={"React"}></StackButton>
-        <StackButton stack={"Vue"}></StackButton>
-        <StackButton stack={"Angular"}></StackButton>
-        <StackButton stack={"Svelte"}></StackButton>
+        {laguagneList}
       </TabPanel>
+      {/* FrameWork */}
       <TabPanel value={value} index={1}>
-        <StackButton stack={"Java"}></StackButton>
-        <StackButton stack={"Spring"}></StackButton>
-        <StackButton stack={"MongoDB"}></StackButton>
-        <StackButton stack={"Django"}></StackButton>
-        <StackButton stack={"Node"}></StackButton>
-        <StackButton stack={"Python"}></StackButton>
-        <StackButton stack={"Flask"}></StackButton>
+        {frameworkList}
       </TabPanel>
+      {/* ETC */}
       <TabPanel value={value} index={2}>
-        <StackButton stack={"Flutter"}></StackButton>
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        <StackButton stack={"Aws"}></StackButton>
-        <StackButton stack={"Docker"}></StackButton>
+        {etcList}
       </TabPanel>
       <SlectedStack>
         {chipStackList.map(data => {
