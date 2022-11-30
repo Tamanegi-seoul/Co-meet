@@ -2,11 +2,12 @@ import { ConstructionRounded } from "@mui/icons-material";
 import React, { useState } from "react";
 import Header from "../Header";
 import "./Post.css";
+
+import { FaRegTrashAlt } from "react-icons/fa";
+
 //게시물 작성 완료 페이지의 댓글창
 // const PostComent = ({ content, setContent, onRegisterClick, count }) => {
 const PostComent = () => {
-  // class Comments extends React.Component {}
-
   const [commentArray, setCommentArray] = useState([
     {
       id: 0, //사용자아이디
@@ -18,6 +19,14 @@ const PostComent = () => {
       content: "저 스터디 참여하고 싶습니다 ! ", //댓글 내용
     },
   ]);
+
+  const removeComment = id => {
+    setCommentArray(
+      commentArray.filter(comment => {
+        return comment.id !== id;
+      })
+    );
+  };
 
   const [id, setId] = useState(2);
 
@@ -35,12 +44,25 @@ const PostComent = () => {
 
   return (
     <div className="commentInput">
-      <h1 className="commentCount">{id} 개의 댓글이 있습니다.</h1>
       <div className="feed-comment-list">
         {commentArray.map(comment => {
           return (
             <div key={comment.id}>
               {comment.id} {comment.content}
+              <button
+                style={{
+                  border: "none",
+                  backgroundColor: "white",
+                  float: "right",
+                }}
+                onClick={() => removeComment(comment.id)}
+              >
+                <FaRegTrashAlt
+                  className="comment-delete"
+                  color="cornflowerblue"
+                  size="16px"
+                />
+              </button>
             </div>
           );
         })}
