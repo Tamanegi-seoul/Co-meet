@@ -8,12 +8,9 @@ import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import ButtonGroup from "@mui/material/ButtonGroup";
-
-const buttons = [
-  <Button key="one">내작성글</Button>,
-  <Button key="two">설정</Button>,
-  <Button key="three">Login / Logout</Button>,
-];
+import { useDispatch, useSelector } from "react-redux";
+import { logOutAsync2 } from "../../store/user";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -29,15 +26,25 @@ const style = {
 };
 
 export default function ModalUserInfo() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const userInfo = useSelector(state => state.user.me);
 
+  const buttons = [
+    <Button key="one">내작성글</Button>,
+    <Button key="two" onClick={() => navigate("/information")}>
+      설정
+    </Button>,
+    <Button key="three" onClick={() => dispatch(logOutAsync2())}>
+      Logout
+    </Button>,
+  ];
   return (
     <div>
-      <Button handleClick onClick={handleOpen}>
-        icon
-      </Button>
+      <Button onClick={handleOpen}>{userInfo.nickname}</Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
