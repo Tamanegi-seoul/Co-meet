@@ -7,7 +7,6 @@ import TeachStack from "../components/TeachStack";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import MainCarousel from "../components/MainCarousel";
-import InformationEdit from "./InformationEdit";
 
 const MainPage = () => {
   return (
@@ -17,7 +16,6 @@ const MainPage = () => {
       />
       <CssBaseline />
       <Header />
-      {/* <InformationEdit /> */}
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <MainCarousel></MainCarousel>
