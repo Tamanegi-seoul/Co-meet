@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import stackReducer, { stackSlice } from "../store/stack";
-import { userSlice } from "../store/user";
+import stackReducer, { stackSlice } from "../store/stack/stack";
+import { userSlice } from "../store/user/user";
 import { combineReducers } from "@reduxjs/toolkit";
 import {
   FLUSH,

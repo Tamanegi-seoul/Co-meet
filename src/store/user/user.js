@@ -10,6 +10,10 @@ const initialState = {
   logOutLoading: false,
   logOutDone: false,
   logOutError: null,
+
+  signUpLoading: false,
+  signUpDone: false,
+  signUpError: null,
 };
 
 const dummyUser = {
@@ -19,13 +23,19 @@ const dummyUser = {
   prefer_stacks: ["JAVA", "JAVA_SCRIPT"],
 };
 
-export const loginAsync2 = createAsyncThunk("login", async () => {
+export const loginAsync2 = createAsyncThunk("login", async data => {
   const response = await fetchUser();
+  console.log(data);
   return;
 });
 
 export const logOutAsync2 = createAsyncThunk("logout", async () => {
   const response = await fetchUser();
+  return;
+});
+export const signUpAsync2 = createAsyncThunk("signup", async data => {
+  const response = await fetchUser();
+  console.log(data);
   return;
 });
 export const userSlice = createSlice({

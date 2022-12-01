@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -15,6 +13,9 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 // import styled from "styled-components";
 import { Controller, useForm } from "react-hook-form";
 import { Autocomplete } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { signUpAsync2 } from "../store/user/user";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -40,6 +41,8 @@ const theme = createTheme();
 // `;
 
 export default function SignUp() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     control,
     register,
@@ -55,10 +58,11 @@ export default function SignUp() {
       console.log(obj.value);
       arr.push(obj.value);
     });
-    console.log(arr);
     //arr배열을 Stacks배열에 덮어쓰기
     data.Stacks = [...arr];
-    console.log(data, "완료료료료료");
+    dispatch(signUpAsync2(data));
+    alert("회원가입 완료");
+    navigate("/login");
   };
 
   const onError = error => {
@@ -181,25 +185,6 @@ export default function SignUp() {
                     />
                   )}
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      value="agree"
-                      color="primary"
-                      {...register("agree", {
-                        required: "동의버튼을 눌러주세요",
-                      })}
-                    />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid>
-              <Grid item xs={12}>
-                {errors.agree && (
-                  <small role="alert">{errors.agree.message}</small>
-                )}
               </Grid>
             </Grid>
             <Button
