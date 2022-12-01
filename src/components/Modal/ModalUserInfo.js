@@ -38,7 +38,13 @@ export default function ModalUserInfo() {
     <Button key="two" onClick={() => navigate("/information")}>
       설정
     </Button>,
-    <Button key="three" onClick={() => dispatch(logOutAsync2())}>
+    <Button
+      key="three"
+      onClick={() => {
+        dispatch(logOutAsync2());
+        navigate("/");
+      }}
+    >
       Logout
     </Button>,
   ];

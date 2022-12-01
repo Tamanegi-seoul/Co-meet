@@ -46,10 +46,8 @@ export default function SignIn() {
   } = useForm();
 
   const onSubmit = data => {
-    console.log(data, "sdsdsdsd");
-    dispatch(loginAsync2());
+    dispatch(loginAsync2(data));
     navigate("/");
-    console.log(userInfo);
   };
 
   const onError = error => {

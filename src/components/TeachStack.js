@@ -4,13 +4,13 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { ListItem, ToggleButton } from "@mui/material";
+import { ListItem } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteStack } from "../store/stack";
 import styled from "styled-components";
 import StackButton from "./StackButton/StackButton";
-import StackList from "../tech_stacks.json";
+import StackListJson from "../tech_stacks.json";
 
 // Main page안의 기술 스텍 나열 컴포넌트
 const SlectedStack = styled.div`
@@ -64,9 +64,9 @@ export default function BasicTabs() {
     setValue(newValue);
   };
 
-  const LANGUAGE_STACKLIST = Object.keys(StackList.language);
-  const FRAMWORK_STACKLIST = Object.keys(StackList.framework);
-  const ETC_STACKLIST = Object.keys(StackList.etc);
+  const LANGUAGE_STACKLIST = Object.keys(StackListJson.language);
+  const FRAMWORK_STACKLIST = Object.keys(StackListJson.framework);
+  const ETC_STACKLIST = Object.keys(StackListJson.etc);
 
   // language
   const laguagneList = LANGUAGE_STACKLIST.map((item, index) => {
