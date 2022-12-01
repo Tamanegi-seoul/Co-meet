@@ -1,7 +1,7 @@
 import { ToggleButton } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addStack, deleteStack } from "../../store/stack";
+import { addStack, deleteStack } from "../../store/stack/stack";
 
 const StackButton = ({ stack }) => {
   const dispatch = useDispatch();

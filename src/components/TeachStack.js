@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import { ListItem } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteStack } from "../store/stack";
+import { deleteStack } from "../store/stack/stack";
 import styled from "styled-components";
 import StackButton from "./StackButton/StackButton";
 import StackListJson from "../tech_stacks.json";

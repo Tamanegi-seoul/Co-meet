@@ -14,7 +14,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Controller, useForm } from "react-hook-form";
 import { Autocomplete } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { signUpAsync2 } from "../store/user";
+import { signUpAsync2 } from "../store/user/user";
 import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {

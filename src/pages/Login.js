@@ -12,7 +12,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { loginAsync2 } from "../store/user";
+import { loginAsync2 } from "../store/user/user";
 import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
