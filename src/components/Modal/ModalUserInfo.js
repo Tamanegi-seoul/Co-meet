@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { useDispatch, useSelector } from "react-redux";
-import { logOutAsync2 } from "../../store/user";
+import { logOutAsync2 } from "../../store/user/user";
 import { useNavigate } from "react-router-dom";
 
 const style = {
