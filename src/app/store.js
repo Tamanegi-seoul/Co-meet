@@ -12,10 +12,12 @@ import {
   REHYDRATE,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { postSlice } from "../store/post/post";
 
 const reducers = combineReducers({
   user: userSlice.reducer,
   stack: stackSlice.reducer,
+  post: postSlice.reducer,
 });
 
 const persistConfig = {
