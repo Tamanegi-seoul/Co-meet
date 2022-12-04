@@ -1,13 +1,30 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchPost } from "../post/postAPI";
+import { fetchMorePost, fetchPost } from "../post/postAPI";
 
-const initialState = {};
+const initialState = {
+  post: {},
+  postList: [],
+  FistPostListLoading: false,
+  FistPostListDone: false,
+  FistPostListError: null,
+
+  MorePostListLoading: false,
+  MorePostListDone: false,
+  MorePostListError: null,
+};
 
 export const loadPostListAsync = createAsyncThunk("loadPostList", async () => {
   const response = await fetchPost();
-  console.log();
-  return;
+  return response.data;
 });
+
+export const loadMorePostListAsync = createAsyncThunk(
+  "loadMorePostList",
+  async () => {
+    const response = await fetchMorePost();
+    return response.data;
+  }
+);
 
 export const postSlice = createSlice({
   name: "post",
@@ -15,9 +32,34 @@ export const postSlice = createSlice({
   reducer: {},
   extraReducers: builder => {
     builder
-      .addCase(loadPostListAsync.pending, state => {})
-      .addCase(loadPostListAsync.fulfilled, (state, action) => {})
-      .addCase(loadPostListAsync.rejected, state => {});
+      .addCase(loadPostListAsync.pending, state => {
+        state.FistPostListLoading = true;
+        state.FistPostListDone = false;
+      })
+      .addCase(loadPostListAsync.fulfilled, (state, action) => {
+        state.postList = action.payload;
+        state.FistPostListLoading = false;
+        state.FistPostListDone = true;
+      })
+      .addCase(loadPostListAsync.rejected, state => {
+        state.FistPostListLoading = false;
+        state.FistPostListDone = false;
+      })
+
+      .addCase(loadMorePostListAsync.pending, state => {
+        state.MorePostListLoading = true;
+        state.MorePostListDone = false;
+      })
+      .addCase(loadMorePostListAsync.fulfilled, (state, action) => {
+        console.log(action.payload);
+        state.postList.data = state.postList.data.concat(action.payload);
+        state.MorePostListLoading = false;
+        state.MorePostListDone = true;
+      })
+      .addCase(loadMorePostListAsync.rejected, state => {
+        state.MorePostListLoading = false;
+        state.MorePostListDone = false;
+      });
   },
 });
 
