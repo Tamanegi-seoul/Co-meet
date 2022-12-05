@@ -19,7 +19,7 @@ export default function MainCarousel(props) {
   return (
     <SlideList>
       <Slider {...settings}>
-        <FirstMainpage
+        <FirstMainPage
           onClick={() => {
             window.open(
               "https://www.notion.so/26ecc9e13b114ba5908cdf308a24c7fc",
@@ -33,30 +33,57 @@ export default function MainCarousel(props) {
               justifyContent: "space-around",
             }}
           >
-            <div style={{ paddingTop: "50px" }}>
+            <div>
               <button>notice</button>
               <h2>
                 스터디와 사이드 프로젝트를 찾을 수 있는 개발자 스터디 플랫폼
               </h2>
-              <h2>
-                <span>"Co Meet" </span>을 소개할게요!
-              </h2>
+              <h3>
+                <span>"Co Meet"</span>을 소개할게요!
+              </h3>
             </div>
             <div>
               <img
                 style={{
-                  width: "300px",
-                  height: "300px",
+                  width: "320px",
                 }}
-                src="/img/slideimage.jpeg"
+                src="/img/comeet_main.png"
                 alt="slideImage"
               />
             </div>
           </div>
-        </FirstMainpage>
-        <div>
-          <h3>2</h3>
-        </div>
+        </FirstMainPage>
+        <SecondMainPage
+          onClick={() => {
+            window.open(
+              "https://www.notion.so/26ecc9e13b114ba5908cdf308a24c7fc",
+              "_blank"
+            );
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+            }}
+          >
+            <div>
+              <h2>스터디와 사이드프로젝트를 찾는 가장 쉬운 방법</h2>
+              <h3>
+                <span>Co Meet</span> 에서 함께 할 개발자를 찾으세요!
+              </h3>
+            </div>
+            <div>
+              <img
+                style={{
+                  width: "320px",
+                }}
+                src="/img/collabora.png"
+                alt="slideImage"
+              />
+            </div>
+          </div>
+        </SecondMainPage>
       </Slider>
     </SlideList>
   );
@@ -66,15 +93,15 @@ const SlideList = styled.div`
   width: 100%;
   height: 300px;
   cursor: pointer;
-  background-color: #f8f8f8;
 `;
 
-const FirstMainpage = styled.div`
-  width: 100%;
-
+const FirstMainPage = styled.div`
+  /* width: 60%; */
+  padding: 50px 0;
+  background-color: #f8f8f8;
   button {
     border-radius: 50px;
-    padding: 5px 30px;
+    padding: 7px 28px;
     font-weight: bold;
     background-color: #00b0ff;
     color: white;
@@ -89,7 +116,23 @@ const FirstMainpage = styled.div`
   }
 
   span {
-    font-size: 38px;
+    font-size: 32px;
+    color: #1976d2;
+  }
+`;
+
+const SecondMainPage = styled.div`
+  /* width: 60%; */
+  padding: 70px 0;
+
+  h2 {
+    font-size: 26px;
+    font-weight: 900;
+    padding-top: 20px;
+  }
+
+  span {
+    font-size: 30px;
     color: #1976d2;
   }
 `;
