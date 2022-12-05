@@ -19,8 +19,13 @@ const StackButton = ({ stack }) => {
           dispatch(deleteStack({ stack: stack }));
         }
       }}
+      style={{ marginBottom: "10px" }}
     >
-      <img alt="" src={`img/${stack}.png`} />
+      <img
+        alt=""
+        src={`img/${stack}.png`}
+        style={{ width: "30px", height: "30px" }}
+      />
       {stack}
     </ToggleButton>
   );
