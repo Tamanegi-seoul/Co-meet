@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchMorePost, fetchPost } from "../post/postAPI";
+import { fetchMorePost, fetchPost, fetchViewPostDetail } from "../post/postAPI";
 
 const initialState = {
   post: {},
@@ -11,6 +11,9 @@ const initialState = {
   MorePostListLoading: false,
   MorePostListDone: false,
   MorePostListError: null,
+  ViewPostDetailLoading: false,
+  ViewPostDetailDone: false,
+  ViewPostDetailError: null,
 };
 
 export const loadPostListAsync = createAsyncThunk("loadPostList", async () => {
@@ -22,6 +25,14 @@ export const loadMorePostListAsync = createAsyncThunk(
   "loadMorePostList",
   async () => {
     const response = await fetchMorePost();
+    return response.data;
+  }
+);
+
+export const viewPostDetailAsync = createAsyncThunk(
+  "viewPostDetailAsync",
+  async post_id => {
+    const response = await fetchViewPostDetail(post_id);
     return response.data;
   }
 );
@@ -59,6 +70,21 @@ export const postSlice = createSlice({
       .addCase(loadMorePostListAsync.rejected, state => {
         state.MorePostListLoading = false;
         state.MorePostListDone = false;
+      })
+      .addCase(viewPostDetailAsync.pending, state => {
+        console.log("start");
+        state.ViewPostDetailLoading = true;
+        state.ViewPostDetailDone = false;
+      })
+      .addCase(viewPostDetailAsync.fulfilled, (state, action) => {
+        console.log(action.payload);
+        state.ViewPostDetailLoading = false;
+        state.ViewPostDetailDone = true;
+      })
+      .addCase(viewPostDetailAsync.rejected, state => {
+        console.log("error");
+        state.ViewPostDetailLoading = false;
+        state.ViewPostDetailDone = false;
       });
   },
 });

@@ -3,6 +3,7 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 // Main page안의 카드 슬롯 형태
 
 export default function BasicCard({
@@ -10,9 +11,17 @@ export default function BasicCard({
   start_date,
   designated_stacks,
   poster_nickname,
+  post_id,
 }) {
+  const navigate = useNavigate();
   return (
+    // <Link to={"/post/" + { post_id }}>
+    // </Link>
     <Card
+      onClick={() => {
+        navigate("/post/" + post_id);
+        console.log(post_id);
+      }}
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -43,6 +52,8 @@ export default function BasicCard({
         Stacks : {designated_stacks}
         <br />
         Name : {poster_nickname}
+        <br />
+        Post_Id:{post_id}
       </CardContent>
       <CardActions sx={{ borderTop: "2px solid #f8f8f8" }}>
         <Button size="small">여기는 버튼부분입니다</Button>
