@@ -45,7 +45,7 @@ export default function BasicCard({
         Name : {poster_nickname}
       </CardContent>
       <CardActions sx={{ borderTop: "2px solid #f8f8f8" }}>
-        <Button size="small">여기는 버튼부분입니다</Button>
+        <Button size="small">사용자 프로필이 보일 에정입니다.</Button>
       </CardActions>
     </Card>
   );
