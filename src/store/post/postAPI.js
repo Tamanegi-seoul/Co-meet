@@ -12,12 +12,17 @@ export function fetchMorePost() {
     setTimeout(() => resolve({ data: generateDummyPost(3) }), 600)
   );
 }
+export function fetchViewPostDetail(post_id) {
+  return new Promise(resolve =>
+    setTimeout(() => resolve({ data: post_id }), 0)
+  );
+}
 
 const generateDummyPost = number =>
   Array(number)
     .fill()
     .map(() => ({
-      id: shortid.generate(),
+      post_id: shortid.generate(),
       title: faker.name.fullName(),
       content: faker.name.fullName(),
       recruit_status: "RECRUIT",

@@ -1,13 +1,21 @@
 import { textAlign } from "@mui/system";
-import React from "react";
+import React, { useEffect } from "react";
 import "./Post.css";
 import Header from "../Header";
 import Footer from "../Footer";
 import PostComent from "./PostComent";
 import dummyPost from "../../dummyPost/dummyPost.json";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { viewPostDetailAsync } from "../../store/post/post";
 
 //게시물 작성 완료 페이지의 내용
 const PostView = () => {
+  const { post_id } = useParams();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(viewPostDetailAsync(post_id));
+  }, []);
   return (
     <>
       <div>
@@ -17,10 +25,7 @@ const PostView = () => {
       <div id="content">
         <div className="TextBox">
           <div className="imagebox">
-            <img
-              class="profile"
-              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTEwMThfMTI5%2FMDAxNjM0NTU2MDA4MDI3.zsBOZlr1ORTLG1JrR28FSt_UKlAbgTR2036EPOeSzfEg.9IXalR6AGH7G5i3j-Xjm1ht7-CFChgD2woGJDDWFN4Mg.JPEG.guskr0512%2FIMG_4659.JPG&type=sc960_832"
-            />
+            <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTEwMThfMTI5%2FMDAxNjM0NTU2MDA4MDI3.zsBOZlr1ORTLG1JrR28FSt_UKlAbgTR2036EPOeSzfEg.9IXalR6AGH7G5i3j-Xjm1ht7-CFChgD2woGJDDWFN4Mg.JPEG.guskr0512%2FIMG_4659.JPG&type=sc960_832" />
           </div>
         </div>
 

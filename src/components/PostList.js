@@ -122,6 +122,7 @@ export default function BasicTabs() {
                       start_date={data.start_date}
                       designated_stacks={data.designated_stacks}
                       poster_nickname={data.poster_nickname}
+                      post_id={data.post_id}
                     />
                   );
                 } else {
