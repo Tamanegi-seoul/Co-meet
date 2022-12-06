@@ -13,7 +13,6 @@ import { viewPostDetailAsync } from "../../store/post/post";
 const PostView = () => {
   const { post_id } = useParams();
   const dispatch = useDispatch();
-  console.log(post_id);
   useEffect(() => {
     dispatch(viewPostDetailAsync(post_id));
   }, []);

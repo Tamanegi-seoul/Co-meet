@@ -72,12 +72,13 @@ export const postSlice = createSlice({
         state.MorePostListDone = false;
       })
       .addCase(viewPostDetailAsync.pending, state => {
-        console.log("start");
+        console.log("postid전송 시작");
         state.ViewPostDetailLoading = true;
         state.ViewPostDetailDone = false;
       })
       .addCase(viewPostDetailAsync.fulfilled, (state, action) => {
         console.log(action.payload);
+        console.log("postid완료 및 데이터 받아오기 완료");
         state.ViewPostDetailLoading = false;
         state.ViewPostDetailDone = true;
       })
