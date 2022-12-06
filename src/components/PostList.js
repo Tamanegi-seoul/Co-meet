@@ -9,6 +9,7 @@ import PostPreview from "./PostPreview";
 import dummyPost from "../dummyPost/dummyPost.json";
 import { useDispatch, useSelector } from "react-redux";
 import { loadMorePostListAsync, loadPostListAsync } from "../store/post/post";
+import Loading from "../pages/Loading";
 // // Main page안의 카드 슬롯 형태 리스트
 
 const BigTable = styled.div`
@@ -139,8 +140,8 @@ export default function BasicTabs() {
                   }
                 }
               })}
-            {isLoading && <div>***********Loading************</div>}
-            {!isLoading && <div ref={setObservationTarget}>1111</div>}
+            {isLoading && <Loading />}
+            {!isLoading && <div ref={setObservationTarget}></div>}
           </Table>
         </BigTable>
       </TabPanel>

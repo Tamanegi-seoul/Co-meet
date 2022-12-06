@@ -1,4 +1,4 @@
-import * as React from "react";
+import { React, useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import PostComent from "./components/ReadPage/PostComent";
 import PostView from "./components/ReadPage/PostView";
