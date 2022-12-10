@@ -59,17 +59,19 @@ export default function BasicTabs() {
   const dispatch = useDispatch();
   const [observationTarget, setObservationTarget] = useState(null);
   const [value, setValue] = useState(0);
-  const firstLoading = useSelector(state => state.post.FistPostListDone);
+
+  const firstLoading = useSelector(state => state.post.FirstPostListDone);
   const isLoading = useSelector(state => state.post.MorePostListLoading);
-  const stackList = useSelector(state => state.stack.stackList);
-  const postList = useSelector(state => state.post.postList);
+  const stackList = useSelector(state => state.post.stackList);
+  const postListData = useSelector(state => state.post.postListData);
+  let postListShow = useSelector(state => state.post.postListShow);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   useEffect(() => {
     dispatch(loadPostListAsync());
     console.log("초기불러오기 완료");
-  }, []);
+  }, [dispatch]);
   // -----------------------------------------------------------------------
   const observer = useRef(
     new IntersectionObserver(
@@ -114,7 +116,7 @@ export default function BasicTabs() {
         <BigTable>
           <Table>
             {firstLoading &&
-              postList.data.map(data => {
+              postListData.map(data => {
                 if (stackList.length === 0) {
                   return (
                     <PostPreview

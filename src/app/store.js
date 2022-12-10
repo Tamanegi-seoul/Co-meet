@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import stackReducer, { stackSlice } from "../store/stack/stack";
 import { userSlice } from "../store/user/user";
 import { combineReducers } from "@reduxjs/toolkit";
 import {
@@ -16,7 +15,6 @@ import { postSlice } from "../store/post/post";
 
 const reducers = combineReducers({
   user: userSlice.reducer,
-  stack: stackSlice.reducer,
   post: postSlice.reducer,
 });
 
