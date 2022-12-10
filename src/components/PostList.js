@@ -93,7 +93,7 @@ export default function BasicTabs() {
       <TabPanel value={value} index={0}>
         <BigTable>
           <Table>
-            {postListShow[0] ? (
+            {postListShow.length !== 0 ? (
               <>
                 {postListShow.map(data => {
                   return (
@@ -119,7 +119,7 @@ export default function BasicTabs() {
       <TabPanel value={value} index={1}>
         <BigTable>
           <Table>
-            {postListShow[0] ? (
+            {postListShow.length !== 0 ? (
               <>
                 {postListShow.map(data => {
                   return (
@@ -143,7 +143,7 @@ export default function BasicTabs() {
       </TabPanel>
 
       <TabPanel value={value} index={2}>
-        {postListShow[0] ? (
+        {postListShow.length !== 0 ? (
           <>
             {postListShow.map(data => {
               return (

@@ -1,6 +1,39 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchMorePost, fetchPost, fetchViewPostDetail } from "../post/postAPI";
-
+const stackListAll = [
+  "JAVA",
+  "JAVA_SCRIPT",
+  "TYPE_SCRIPT",
+  "PYTHON",
+  "R",
+  "C",
+  "C++",
+  "GO",
+  "SWIFT",
+  "KOTLIN",
+  "MYSQL",
+  "MONGO_DB",
+  "PHP",
+  "FLUTTER",
+  "SPRING",
+  "REACT",
+  "REACT_NATIVE",
+  "VUE",
+  "NODE_JS",
+  "NEXT_JS",
+  "NEST_JS",
+  "EXPRESS",
+  "DJANGO",
+  "GRAPH_QL",
+  "FIREBASE",
+  "Unity",
+  "AWS",
+  "KUBERNETES",
+  "DOCKER",
+  "GIT",
+  "FIGMA",
+  "ZEPLIN",
+];
 const initialState = {
   post: {},
   postListData: [],
@@ -58,6 +91,8 @@ export const postSlice = createSlice({
       state.postListShow = state.postListData.filter(data =>
         data.designated_stacks.some(i => state.stackList.includes(i))
       );
+      if (state.stackList.length === 0)
+        state.postListShow = state.postListShow.concat(state.postListData);
     },
   },
   extraReducers: builder => {
@@ -84,7 +119,9 @@ export const postSlice = createSlice({
       .addCase(loadMorePostListAsync.fulfilled, (state, action) => {
         console.log(action.payload);
         state.postListData = state.postListData.concat(action.payload);
-        state.postListShow = state.postListShow.concat(action.payload);
+        state.postListShow = state.postListData.filter(data =>
+          data.designated_stacks.some(i => state.stackList.includes(i))
+        );
         state.MorePostListLoading = false;
         state.MorePostListDone = true;
       })
