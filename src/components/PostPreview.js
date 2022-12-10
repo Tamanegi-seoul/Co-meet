@@ -20,7 +20,6 @@ export default function BasicCard({
     <Card
       onClick={() => {
         navigate("/post/" + post_id);
-        console.log(post_id);
       }}
       sx={{
         display: "flex",

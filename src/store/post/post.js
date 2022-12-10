@@ -14,6 +14,7 @@ const initialState = {
   MorePostListLoading: false,
   MorePostListDone: false,
   MorePostListError: null,
+
   ViewPostDetailLoading: false,
   ViewPostDetailDone: false,
   ViewPostDetailError: null,
@@ -67,6 +68,7 @@ export const postSlice = createSlice({
       })
       .addCase(loadPostListAsync.fulfilled, (state, action) => {
         state.postListData = action.payload.data;
+        state.postListShow = action.payload.data;
         state.FirstPostListLoading = false;
         state.FirstPostListDone = true;
       })
@@ -82,6 +84,7 @@ export const postSlice = createSlice({
       .addCase(loadMorePostListAsync.fulfilled, (state, action) => {
         console.log(action.payload);
         state.postListData = state.postListData.concat(action.payload);
+        state.postListShow = state.postListShow.concat(action.payload);
         state.MorePostListLoading = false;
         state.MorePostListDone = true;
       })

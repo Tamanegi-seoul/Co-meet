@@ -4,8 +4,6 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import styled from "styled-components";
-import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
-import { useSelector } from "react-redux";
 
 function Copyright(props) {
   return (
@@ -25,8 +23,6 @@ function Copyright(props) {
 }
 
 const Footer = () => {
-  const setInfiniteScroll = useIntersectionObserver();
-  const isLoading = useSelector(state => state.post.MorePostListLoading);
   return (
     <Container
       maxWidth="md"
@@ -81,7 +77,6 @@ const Footer = () => {
         {/* 위에 영어 지우고 이 자리에 컴포넌트 연결하면 됩니다. */}
       </Grid>
       <Copyright sx={{ mt: 5 }} />
-      {!isLoading && <div ref={setInfiniteScroll}></div>}
     </Container>
   );
 };

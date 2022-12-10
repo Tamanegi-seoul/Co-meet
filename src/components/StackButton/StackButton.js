@@ -14,7 +14,6 @@ const StackButton = ({ stack }) => {
       onChange={() => {
         if (!stackLists.includes(`${stack}`)) {
           dispatch(addStack({ stack: stack }));
-          console.log(postListShow);
         }
         if (stackLists.includes(`${stack}`)) {
           dispatch(deleteStack({ stack: stack }));

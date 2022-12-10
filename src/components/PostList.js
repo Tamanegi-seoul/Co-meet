@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -6,11 +6,11 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import styled from "styled-components";
 import PostPreview from "./PostPreview";
-import dummyPost from "../dummyPost/dummyPost.json";
 import { useDispatch, useSelector } from "react-redux";
-import { loadMorePostListAsync, loadPostListAsync } from "../store/post/post";
+import { loadPostListAsync } from "../store/post/post";
 import Loading from "../pages/Loading";
 import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
+import NoSearch from "./NoSearch";
 // // Main page안의 카드 슬롯 형태 리스트
 
 const BigTable = styled.div`
@@ -22,6 +22,12 @@ const BigTable = styled.div`
 const Table = styled.div`
   display: flex;
   flex-wrap: wrap;
+`;
+
+const Blank = styled.div`
+  height: 300px;
+  width: 100%;
+  background-color: white;
 `;
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -60,9 +66,9 @@ export default function BasicTabs() {
   const dispatch = useDispatch();
   const [value, setValue] = useState(0);
   const isLoading = useSelector(state => state.post.MorePostListLoading);
-  const stackList = useSelector(state => state.post.stackList);
-  const postListData = useSelector(state => state.post.postListData);
   const postListShow = useSelector(state => state.post.postListShow);
+  const setInfiniteScroll = useIntersectionObserver();
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -87,34 +93,25 @@ export default function BasicTabs() {
       <TabPanel value={value} index={0}>
         <BigTable>
           <Table>
-            {postListData.map(data => {
-              if (stackList.length === 0) {
-                return (
-                  <PostPreview
-                    title={data.title}
-                    start_date={data.start_date}
-                    designated_stacks={data.designated_stacks}
-                    poster_nickname={data.poster_nickname}
-                    post_id={data.post_id}
-                  />
-                );
-              } else {
-                const stackChecked = data.designated_stacks.filter(x =>
-                  stackList.includes(x)
-                );
-                if (!(stackChecked.length === 0)) {
+            {postListShow[0] ? (
+              <>
+                {postListShow.map(data => {
                   return (
                     <PostPreview
                       title={data.title}
                       start_date={data.start_date}
                       designated_stacks={data.designated_stacks}
                       poster_nickname={data.poster_nickname}
+                      post_id={data.post_id}
                     />
                   );
-                }
-              }
-            })}
-            {isLoading && <Loading />}
+                })}
+                {isLoading && <Loading />}
+                {!isLoading && <Blank ref={setInfiniteScroll}></Blank>}
+              </>
+            ) : (
+              <NoSearch />
+            )}
           </Table>
         </BigTable>
       </TabPanel>
@@ -123,26 +120,48 @@ export default function BasicTabs() {
         <BigTable>
           <Table>
             {postListShow[0] ? (
-              postListShow.map(data => {
-                return (
-                  <PostPreview
-                    title={data.title}
-                    start_date={data.start_date}
-                    designated_stacks={data.designated_stacks}
-                    poster_nickname={data.poster_nickname}
-                    post_id={data.post_id}
-                  />
-                );
-              })
+              <>
+                {postListShow.map(data => {
+                  return (
+                    <PostPreview
+                      title={data.title}
+                      start_date={data.start_date}
+                      designated_stacks={data.designated_stacks}
+                      poster_nickname={data.poster_nickname}
+                      post_id={data.post_id}
+                    />
+                  );
+                })}
+                {isLoading && <Loading />}
+                {!isLoading && <Blank ref={setInfiniteScroll}></Blank>}
+              </>
             ) : (
-              <div>빈페이지</div>
+              <NoSearch />
             )}
           </Table>
         </BigTable>
       </TabPanel>
 
       <TabPanel value={value} index={2}>
-        프로젝트
+        {postListShow[0] ? (
+          <>
+            {postListShow.map(data => {
+              return (
+                <PostPreview
+                  title={data.title}
+                  start_date={data.start_date}
+                  designated_stacks={data.designated_stacks}
+                  poster_nickname={data.poster_nickname}
+                  post_id={data.post_id}
+                />
+              );
+            })}
+            {isLoading && <Loading />}
+            {!isLoading && <Blank ref={setInfiniteScroll}></Blank>}
+          </>
+        ) : (
+          <NoSearch />
+        )}
       </TabPanel>
     </Box>
   );
