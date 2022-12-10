@@ -43,18 +43,19 @@ export const viewPostDetailAsync = createAsyncThunk(
 export const postSlice = createSlice({
   name: "post",
   initialState,
-  reducer: {
+  reducers: {
     addStack: (state, action) => {
       state.stackList.unshift(action.payload.stack);
-      // state.postListShow = postListData.filter(data =>
-      //   data.designated_stacks.some(i => state.stackList.includes(i))
-      // );
-      console.log(state.stackList[0]);
-      console.log(state.stackList);
+      state.postListShow = state.postListData.filter(data =>
+        data.designated_stacks.some(i => state.stackList.includes(i))
+      );
     },
     deleteStack: (state, action) => {
       state.stackList = state.stackList.filter(
         element => element !== action.payload.stack
+      );
+      state.postListShow = state.postListData.filter(data =>
+        data.designated_stacks.some(i => state.stackList.includes(i))
       );
     },
   },
@@ -66,7 +67,6 @@ export const postSlice = createSlice({
       })
       .addCase(loadPostListAsync.fulfilled, (state, action) => {
         state.postListData = action.payload.data;
-        state.postListShow = action.payload.data;
         state.FirstPostListLoading = false;
         state.FirstPostListDone = true;
       })
@@ -82,7 +82,6 @@ export const postSlice = createSlice({
       .addCase(loadMorePostListAsync.fulfilled, (state, action) => {
         console.log(action.payload);
         state.postListData = state.postListData.concat(action.payload);
-        state.postListShow = state.postListShow.concat(action.payload);
         state.MorePostListLoading = false;
         state.MorePostListDone = true;
       })
@@ -109,6 +108,6 @@ export const postSlice = createSlice({
   },
 });
 
-export const { addStack, deleteStack } = postSlice.actions;
+export const { addStack, deleteStack, fuckyou } = postSlice.actions;
 
 export default postSlice.reducer;
