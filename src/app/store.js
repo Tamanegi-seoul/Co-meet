@@ -1,6 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import stackReducer, { stackSlice } from "../store/stack/stack";
-import { userSlice } from "../store/user/user";
+import userReducer from "../store/user/user";
 import { combineReducers } from "@reduxjs/toolkit";
 import {
   FLUSH,
@@ -12,12 +11,11 @@ import {
   REHYDRATE,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { postSlice } from "../store/post/post";
+import postReducer from "../store/post/post";
 
 const reducers = combineReducers({
-  user: userSlice.reducer,
-  stack: stackSlice.reducer,
-  post: postSlice.reducer,
+  user: userReducer,
+  post: postReducer,
 });
 
 const persistConfig = {

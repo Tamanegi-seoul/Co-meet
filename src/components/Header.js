@@ -5,18 +5,11 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import { AiFillHeart } from "react-icons/ai";
-import { fontWeight } from "@mui/system";
 import { useSelector } from "react-redux";
-import { useState } from "react";
 import ModalUserInfo from "./Modal/ModalUserInfo";
 
 const Header = () => {
-  const [modalCheck, setModalCheck] = useState(false);
   const userInfo = useSelector(state => state.user.me);
-  const onclick = () => {
-    setModalCheck(!modalCheck);
-    console.log(modalCheck);
-  };
   return (
     <AppBar
       position="static"

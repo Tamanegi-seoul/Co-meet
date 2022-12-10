@@ -3,14 +3,18 @@ import { fetchMorePost, fetchPost, fetchViewPostDetail } from "../post/postAPI";
 
 const initialState = {
   post: {},
-  postList: [],
-  FistPostListLoading: false,
-  FistPostListDone: false,
-  FistPostListError: null,
+  postListData: [],
+  postListShow: [],
+  stackList: [],
+
+  FirstPostListLoading: false,
+  FirstPostListDone: false,
+  FirstPostListError: null,
 
   MorePostListLoading: false,
   MorePostListDone: false,
   MorePostListError: null,
+
   ViewPostDetailLoading: false,
   ViewPostDetailDone: false,
   ViewPostDetailError: null,
@@ -40,21 +44,37 @@ export const viewPostDetailAsync = createAsyncThunk(
 export const postSlice = createSlice({
   name: "post",
   initialState,
-  reducer: {},
+  reducers: {
+    addStack: (state, action) => {
+      state.stackList.unshift(action.payload.stack);
+      state.postListShow = state.postListData.filter(data =>
+        data.designated_stacks.some(i => state.stackList.includes(i))
+      );
+    },
+    deleteStack: (state, action) => {
+      state.stackList = state.stackList.filter(
+        element => element !== action.payload.stack
+      );
+      state.postListShow = state.postListData.filter(data =>
+        data.designated_stacks.some(i => state.stackList.includes(i))
+      );
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(loadPostListAsync.pending, state => {
-        state.FistPostListLoading = true;
-        state.FistPostListDone = false;
+        state.FirstPostListLoading = true;
+        state.FirstPostListDone = false;
       })
       .addCase(loadPostListAsync.fulfilled, (state, action) => {
-        state.postList = action.payload;
-        state.FistPostListLoading = false;
-        state.FistPostListDone = true;
+        state.postListData = action.payload.data;
+        state.postListShow = action.payload.data;
+        state.FirstPostListLoading = false;
+        state.FirstPostListDone = true;
       })
       .addCase(loadPostListAsync.rejected, state => {
-        state.FistPostListLoading = false;
-        state.FistPostListDone = false;
+        state.FirstPostListLoading = false;
+        state.FirstPostListDone = false;
       })
 
       .addCase(loadMorePostListAsync.pending, state => {
@@ -63,7 +83,8 @@ export const postSlice = createSlice({
       })
       .addCase(loadMorePostListAsync.fulfilled, (state, action) => {
         console.log(action.payload);
-        state.postList.data = state.postList.data.concat(action.payload);
+        state.postListData = state.postListData.concat(action.payload);
+        state.postListShow = state.postListShow.concat(action.payload);
         state.MorePostListLoading = false;
         state.MorePostListDone = true;
       })
@@ -89,5 +110,7 @@ export const postSlice = createSlice({
       });
   },
 });
+
+export const { addStack, deleteStack, fuckyou } = postSlice.actions;
 
 export default postSlice.reducer;

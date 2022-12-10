@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import { ListItem } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteStack } from "../store/stack/stack";
+import { deleteStack } from "../store/post/post";
 import styled from "styled-components";
 import StackButton from "./StackButton/StackButton";
 import StackListJson from "../tech_stacks.json";
@@ -53,7 +53,7 @@ function a11yProps(index) {
 export default function BasicTabs() {
   const shortid = require("shortid");
   const [value, setValue] = React.useState(0);
-  const chipStackList = useSelector(state => state.stack.stackList);
+  const chipStackList = useSelector(state => state.post.stackList);
   const dispatch = useDispatch();
 
   const handleDelete = chipToDelete => () => {
