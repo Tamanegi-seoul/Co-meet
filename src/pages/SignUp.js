@@ -14,7 +14,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Controller, useForm } from "react-hook-form";
 import { Autocomplete } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { signUpAsync2 } from "../store/user/user";
+import { checkIdEmailAsync, signUpAsync2 } from "../store/user/user";
 import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
@@ -39,6 +39,10 @@ const theme = createTheme();
 // const ErrorMessage = styled.div`
 //   color: red;
 // `;
+const testData = {
+  nickname: "test",
+  email: "test@gmail.com",
+};
 
 export default function SignUp() {
   const dispatch = useDispatch();
@@ -54,15 +58,15 @@ export default function SignUp() {
     console.log("foreach start");
     let arr = []; //빈배열생성
     //arr 배열에 기존 Stacks 배열 value값 저장
-    data.Stacks.forEach(function (obj, index) {
+    data.prefer_stacks.forEach(function (obj, index) {
       console.log(obj.value);
       arr.push(obj.value);
     });
     //arr배열을 Stacks배열에 덮어쓰기
-    data.Stacks = [...arr];
-    dispatch(signUpAsync2(data));
-    alert("회원가입 완료");
-    navigate("/login");
+    data.prefer_stacks = [...arr];
+    // dispatch(signUpAsync2(data)); //회원가입
+    dispatch(checkIdEmailAsync(testData));
+    // navigate("/login");
   };
 
   const onError = error => {
@@ -165,7 +169,7 @@ export default function SignUp() {
               <Grid item xs={12}>
                 <Controller
                   control={control}
-                  name="Stacks"
+                  name="prefer_stacks"
                   render={({ field: { ref, onChange, ...field } }) => (
                     <Autocomplete
                       multiple

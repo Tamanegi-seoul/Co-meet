@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchUser } from "./userApi";
+import { checkIdEmail, fetchUser, signupUser } from "./userApi";
 
 const initialState = {
   me: null,
+  acessToken: {},
   logInLoading: false,
   logInDone: false,
   logInError: null,
@@ -34,10 +35,18 @@ export const logOutAsync2 = createAsyncThunk("logout", async () => {
   return;
 });
 export const signUpAsync2 = createAsyncThunk("signup", async data => {
-  const response = await fetchUser();
-  console.log(data);
+  const response = await signupUser(data);
+  console.log(response);
   return;
 });
+export const checkIdEmailAsync = createAsyncThunk(
+  "checkIdEmail",
+  async data => {
+    const response = await checkIdEmail(data);
+    console.log(response);
+    return;
+  }
+);
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -73,7 +82,13 @@ export const userSlice = createSlice({
       })
       .addCase(logOutAsync2.rejected, state => {
         state.logOutError = "error";
-      });
+      })
+
+      .addCase(checkIdEmailAsync.pending, state => {})
+      .addCase(checkIdEmailAsync.fulfilled, (state, action) => {
+        console.log("성공");
+      })
+      .addCase(checkIdEmailAsync.rejected, state => {});
   },
 });
 export const { logOut } = userSlice.actions;

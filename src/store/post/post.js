@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import postListRefresh from "../../hooks/postListRefresh";
 import { fetchMorePost, fetchPost, fetchViewPostDetail } from "../post/postAPI";
 
 const initialState = {
@@ -47,16 +48,20 @@ export const postSlice = createSlice({
   reducers: {
     addStack: (state, action) => {
       state.stackList.unshift(action.payload.stack);
-      state.postListShow = state.postListData.filter(data =>
-        data.designated_stacks.some(i => state.stackList.includes(i))
+      state.postListShow = postListRefresh(
+        state.postListShow,
+        state.postListData,
+        state.stackList
       );
     },
     deleteStack: (state, action) => {
       state.stackList = state.stackList.filter(
         element => element !== action.payload.stack
       );
-      state.postListShow = state.postListData.filter(data =>
-        data.designated_stacks.some(i => state.stackList.includes(i))
+      state.postListShow = postListRefresh(
+        state.postListShow,
+        state.postListData,
+        state.stackList
       );
     },
   },
@@ -84,7 +89,11 @@ export const postSlice = createSlice({
       .addCase(loadMorePostListAsync.fulfilled, (state, action) => {
         console.log(action.payload);
         state.postListData = state.postListData.concat(action.payload);
-        state.postListShow = state.postListShow.concat(action.payload);
+        state.postListShow = postListRefresh(
+          state.postListShow,
+          state.postListData,
+          state.stackList
+        );
         state.MorePostListLoading = false;
         state.MorePostListDone = true;
       })
