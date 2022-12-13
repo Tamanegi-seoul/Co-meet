@@ -15,6 +15,10 @@ const initialState = {
   signUpLoading: false,
   signUpDone: false,
   signUpError: null,
+
+  checkIdEmailLoading: false,
+  checkIdEmailDone: false,
+  checkIdEmailError: null,
 };
 
 const dummyUser = {
@@ -83,12 +87,14 @@ export const userSlice = createSlice({
       .addCase(logOutAsync2.rejected, state => {
         state.logOutError = "error";
       })
-
       .addCase(checkIdEmailAsync.pending, state => {})
       .addCase(checkIdEmailAsync.fulfilled, (state, action) => {
         console.log("성공");
       })
-      .addCase(checkIdEmailAsync.rejected, state => {});
+      .addCase(checkIdEmailAsync.rejected, state => {})
+      .addCase(signUpAsync2.pending, state => {})
+      .addCase(signUpAsync2.fulfilled, (state, action) => {})
+      .addCase(signUpAsync2.rejected, state => {});
   },
 });
 export const { logOut } = userSlice.actions;

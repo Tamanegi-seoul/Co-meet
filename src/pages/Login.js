@@ -38,6 +38,7 @@ export default function SignIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userInfo = useSelector(state => state.user.me);
+  const logInDone = useSelector(state => state.user.logInDone);
   console.log(userInfo);
   const {
     register,
@@ -47,7 +48,7 @@ export default function SignIn() {
 
   const onSubmit = data => {
     dispatch(loginAsync2(data));
-    navigate("/");
+    if (logInDone) navigate("/");
   };
 
   const onError = error => {
