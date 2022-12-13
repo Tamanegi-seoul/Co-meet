@@ -8,18 +8,25 @@ export function loginUser(logindata) {
     url: "http://3.39.32.185:8080/api/login",
     method: "post",
     data: logindata,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+    },
     withCredentials: true,
   }).then(res => {
-    const token = res.data.token;
-    if (res.data.token) {
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${res.data.token}`;
-    } else {
-      delete axios.defaults.headers.common["Authorization"];
-    }
-    const userInfo = res.data.user;
-    return { userInfo: userInfo };
+    console.log(res.headers);
+    console.log(res.headers.Cookie);
+    console.log(res.headers.Cookie.access_token);
+    console.log(res.headers.Cookie.refresh_token);
+    // if (res.data.token) {
+    //   axios.defaults.headers.common[
+    //     "Authorization"
+    //   ] = `Bearer ${res.data.token}`;
+    // } else {
+    //   delete axios.defaults.headers.common["Authorization"];
+    // }
+    // const userInfo = res.data.user;
+    // return { userInfo: userInfo };
   });
 }
 

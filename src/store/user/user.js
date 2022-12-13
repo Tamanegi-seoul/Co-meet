@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { checkIdEmail, fetchUser, signupUser } from "./userApi";
+import { checkIdEmail, fetchUser, loginUser, signupUser } from "./userApi";
 
 const initialState = {
   me: null,
@@ -29,8 +29,9 @@ const dummyUser = {
 };
 
 export const loginAsync2 = createAsyncThunk("login", async data => {
-  const response = await fetchUser();
+  const response = await loginUser(data);
   console.log(data);
+  console.log(response);
   return;
 });
 

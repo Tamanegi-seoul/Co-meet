@@ -48,7 +48,7 @@ export default function SignIn() {
 
   const onSubmit = data => {
     dispatch(loginAsync2(data));
-    if (logInDone) navigate("/");
+    // if (logInDone) navigate("/");
   };
 
   const onError = error => {
