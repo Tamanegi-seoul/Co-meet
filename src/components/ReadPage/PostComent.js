@@ -1,13 +1,25 @@
 import { ConstructionRounded } from "@mui/icons-material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../Header";
 import "./Post.css";
+import axios from "axios";
 
 import { FaRegTrashAlt } from "react-icons/fa";
 
 //게시물 작성 완료 페이지의 댓글창
 // const PostComent = ({ content, setContent, onRegisterClick, count }) => {
 const PostComent = () => {
+  // 덧글 조회
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "http://3.39.32.185:8080/api/user/validate",
+      responseType: "json",
+    }).then(function (response) {
+      console.log(response.data);
+    });
+  }, []);
+
   const [commentArray, setCommentArray] = useState([
     {
       id: 0, //사용자아이디
@@ -73,7 +85,7 @@ const PostComent = () => {
         value={comment}
         onChange={e => {
           setComment(e.target.value);
-          console.log({ id, setComment }); //log..?
+          // console.log({ id, setComment });
         }}
       ></textarea>
       <div className="buttonWrapper">
