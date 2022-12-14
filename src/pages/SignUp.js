@@ -34,7 +34,7 @@ function Copyright(props) {
     </Typography>
   );
 }
-const objOptions = [{ value: "A" }, { value: "B" }, { value: "C" }];
+const objOptions = [{ value: "JAVA" }, { value: "REACT" }, { value: "SPRING" }];
 const theme = createTheme();
 // const ErrorMessage = styled.div`
 //   color: red;
@@ -55,17 +55,14 @@ export default function SignUp() {
   } = useForm();
 
   const onSubmit = data => {
-    console.log("foreach start");
     let arr = []; //빈배열생성
     //arr 배열에 기존 Stacks 배열 value값 저장
     data.prefer_stacks.forEach(function (obj, index) {
-      console.log(obj.value);
       arr.push(obj.value);
     });
     //arr배열을 Stacks배열에 덮어쓰기
     data.prefer_stacks = [...arr];
-    // dispatch(signUpAsync2(data)); //회원가입
-    dispatch(checkIdEmailAsync(testData));
+    dispatch(signUpAsync2(data));
     // navigate("/login");
   };
 
@@ -134,8 +131,6 @@ export default function SignUp() {
                       message: "이메일 형식에 맞지 않습니다.",
                     },
                   })}
-                  // value={email}
-                  // onChange={onChangeEamil}
                 />
               </Grid>
               <Grid item xs={12}>
