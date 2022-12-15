@@ -50,7 +50,7 @@ export default function ModalUserInfo() {
   ];
   return (
     <div>
-      <Button onClick={handleOpen}>{userInfo.nickname}</Button>
+      <Button onClick={handleOpen}>{userInfo}</Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

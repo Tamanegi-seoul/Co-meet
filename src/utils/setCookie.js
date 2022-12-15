@@ -11,5 +11,5 @@ export const getCookie = name => {
 };
 
 export const removeCookie = name => {
-  removeCookie(name, { path: "/", secure: true });
+  cookies.remove(name, { path: "/", secure: true });
 };

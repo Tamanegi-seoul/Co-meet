@@ -16,6 +16,8 @@ import { Autocomplete } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { checkIdEmailAsync, signUpAsync2 } from "../store/user/user";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { Toast } from "../components/Alert/Alert";
 
 function Copyright(props) {
   return (
@@ -26,7 +28,7 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="/">
         Your Website
       </Link>{" "}
       {new Date().getFullYear()}
@@ -36,13 +38,9 @@ function Copyright(props) {
 }
 const objOptions = [{ value: "JAVA" }, { value: "REACT" }, { value: "SPRING" }];
 const theme = createTheme();
-// const ErrorMessage = styled.div`
-//   color: red;
-// `;
-const testData = {
-  nickname: "test",
-  email: "test@gmail.com",
-};
+const ErrorMessage = styled.div`
+  color: red;
+`;
 
 export default function SignUp() {
   const dispatch = useDispatch();
@@ -63,10 +61,12 @@ export default function SignUp() {
     //arr배열을 Stacks배열에 덮어쓰기
     data.prefer_stacks = [...arr];
     dispatch(signUpAsync2(data));
-    // navigate("/login");
+    Toast.fire({ icon: "success", title: "Signed up successfully" });
+    navigate("/login");
   };
 
   const onError = error => {
+    Toast.fire({ icon: "error", title: "Signed up false" });
     console.log(error);
   };
 
@@ -92,7 +92,6 @@ export default function SignUp() {
             component="form"
             noValidate
             onSubmit={handleSubmit(onSubmit, onError)}
-            // onSubmit={handleSubmit}
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
@@ -115,7 +114,9 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 {errors.nickName && (
-                  <small role="alert">{errors.nickName.message}</small>
+                  <small role="alert">
+                    <ErrorMessage>{errors.nickName.message}</ErrorMessage>
+                  </small>
                 )}
               </Grid>
               <Grid item xs={12}>
@@ -135,7 +136,9 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 {errors.email && (
-                  <small role="alert">{errors.email.message}</small>
+                  <small role="alert">
+                    <ErrorMessage>{errors.email.message}</ErrorMessage>
+                  </small>
                 )}
               </Grid>
               <Grid item xs={12}>
@@ -158,14 +161,19 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 {errors.password && (
-                  <small role="alert">{errors.password.message}</small>
+                  <small role="alert">
+                    <ErrorMessage>{errors.password.message}</ErrorMessage>
+                  </small>
                 )}
               </Grid>
               <Grid item xs={12}>
                 <Controller
                   control={control}
                   name="prefer_stacks"
-                  render={({ field: { ref, onChange, ...field } }) => (
+                  {...register("prefer_stacks", {
+                    required: "하나 이상의 스택을 선택해야합니다.",
+                  })}
+                  render={({ field: { onChange, ...field } }) => (
                     <Autocomplete
                       multiple
                       options={objOptions}
@@ -176,7 +184,6 @@ export default function SignUp() {
                           {...field}
                           {...params}
                           fullWidth
-                          inputRef={ref}
                           variant="filled"
                           label="object-complete"
                         />
@@ -184,6 +191,13 @@ export default function SignUp() {
                     />
                   )}
                 />
+              </Grid>
+              <Grid item xs={12}>
+                {errors.prefer_stacks && (
+                  <small role="alert">
+                    <ErrorMessage>{errors.prefer_stacks.message}</ErrorMessage>
+                  </small>
+                )}
               </Grid>
             </Grid>
             <Button
