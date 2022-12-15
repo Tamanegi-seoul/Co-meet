@@ -8,12 +8,13 @@ import styled from "styled-components";
 
 export default function MainCarousel(props) {
   const settings = {
+    autoplay: true,
+    autoplaySpeed: 4000,
     dots: false,
     infinite: true,
-    speed: 500,
+    speed: 1500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: false,
   };
 
   return (

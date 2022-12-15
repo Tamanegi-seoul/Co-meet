@@ -41,24 +41,29 @@ const ErrorMessage = styled.div`
 export default function SignIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userInfo = useSelector(state => state.user.me);
+  const isLogIn = useSelector(state => state.user.isLogIn);
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm();
-  async function onSubmit(data) {
-    await dispatch(loginAsync2(data)).then(res => {
-      res.payload.status_code === "200 OK" ? navigate("/") : onError();
-    });
-  }
 
+  useEffect(() => {
+    if (isLogIn) {
+      return navigate("/");
+    }
+  }, []);
   const onError = () => {
     Toast.fire({
       icon: "error",
       title: "Login error Check Your Email & Password",
     });
   };
+  async function onSubmit(data) {
+    await dispatch(loginAsync2(data)).then(res => {
+      res.payload.code == null ? navigate("/") : onError();
+    });
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -98,10 +103,6 @@ export default function SignIn() {
                   autoFocus
                   {...register("email", {
                     required: "이메일을 입력하여 주세요.",
-                    pattern: {
-                      value: /\S+@\S+\.\S+/,
-                      message: "이메일 형식에 맞지 않습니다.",
-                    },
                   })}
                 />
               </Grid>
