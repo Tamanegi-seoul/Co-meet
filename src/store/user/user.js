@@ -1,5 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { checkIdEmail, fetchUser, loginUser, signupUser } from "./userApi";
+import {
+  checkIdEmail,
+  fetchUser,
+  loginUser,
+  logoutUser,
+  signupUser,
+} from "./userApi";
 import jwt from "jwt-decode";
 import setAuthToken from "../../utils/setAuthToken";
 import { removeCookie, setCookie } from "../../utils/setCookie";
@@ -19,13 +25,6 @@ const initialState = {
   checkIdEmailError: null,
 };
 
-const dummyUser = {
-  id: 1,
-  nickname: "johndoe1",
-  email: "john.doe@gmail.com",
-  prefer_stacks: ["JAVA", "JAVA_SCRIPT"],
-};
-
 export const loginAsync2 = createAsyncThunk("login", async data => {
   return await loginUser(data)
     .then(res => {
@@ -41,10 +40,11 @@ export const loginAsync2 = createAsyncThunk("login", async data => {
 });
 
 export const logOutAsync2 = createAsyncThunk("logout", async () => {
-  return await fetchUser().then(() => {
+  return await logoutUser().then(() => {
     console.log(1);
     removeCookie("access_token");
     removeCookie("refresh_token");
+    setAuthToken();
     console.log(2);
   });
 });
