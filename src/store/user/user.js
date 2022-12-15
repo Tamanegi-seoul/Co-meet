@@ -4,9 +4,6 @@ import { checkIdEmail, fetchUser, loginUser, signupUser } from "./userApi";
 const initialState = {
   me: null,
   acessToken: {},
-  logInLoading: false,
-  logInDone: false,
-  logInError: null,
 
   logOutLoading: false,
   logOutDone: false,
@@ -29,10 +26,13 @@ const dummyUser = {
 };
 
 export const loginAsync2 = createAsyncThunk("login", async data => {
-  const response = await loginUser(data);
-  console.log(data);
-  console.log(response);
-  return;
+  return await loginUser(data)
+    .then(res => {
+      return res.data;
+    })
+    .catch(error => {
+      return error;
+    });
 });
 
 export const logOutAsync2 = createAsyncThunk("logout", async () => {
@@ -60,19 +60,15 @@ export const userSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(loginAsync2.pending, state => {
-        state.logInLoading = true;
-        state.logInError = null;
-        state.logInDone = false;
-      })
+      .addCase(loginAsync2.pending, state => {})
       .addCase(loginAsync2.fulfilled, (state, action) => {
-        state.logInLoading = true;
-        state.logInDone = true;
-        // state.me = action.payload;
+        console.log(action);
         state.me = dummyUser;
+        // state.me = action.payload;
+        // window.location.href = "/";
       })
-      .addCase(loginAsync2.rejected, state => {
-        state.logInError = "error";
+      .addCase(loginAsync2.rejected, (state, action) => {
+        console.log(action);
       })
       .addCase(logOutAsync2.pending, state => {
         state.logOutLoading = true;
@@ -82,6 +78,7 @@ export const userSlice = createSlice({
       .addCase(logOutAsync2.fulfilled, (state, action) => {
         state.logOutLoading = true;
         state.logOutDone = true;
+        state.logInDone = false;
         // state.me = action.payload;
         state.me = null;
       })

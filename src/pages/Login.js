@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -14,6 +14,8 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAsync2 } from "../store/user/user";
 import { useNavigate } from "react-router-dom";
+import { Toast } from "../components/Alert/Alert";
+import styled from "styled-components";
 
 function Copyright(props) {
   return (
@@ -24,8 +26,8 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="/">
+        Our Website
       </Link>
       {new Date().getFullYear()}
     </Typography>
@@ -33,26 +35,29 @@ function Copyright(props) {
 }
 
 const theme = createTheme();
-
+const ErrorMessage = styled.div`
+  color: red;
+`;
 export default function SignIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userInfo = useSelector(state => state.user.me);
-  const logInDone = useSelector(state => state.user.logInDone);
-  console.log(userInfo);
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm();
+  async function onSubmit(data) {
+    await dispatch(loginAsync2(data)).then(res => {
+      res.payload.status_code === "200 OK" ? navigate("/") : onError();
+    });
+  }
 
-  const onSubmit = data => {
-    dispatch(loginAsync2(data));
-    // if (logInDone) navigate("/");
-  };
-
-  const onError = error => {
-    console.log(error);
+  const onError = () => {
+    Toast.fire({
+      icon: "error",
+      title: "Login error Check Your Email & Password",
+    });
   };
 
   return (
@@ -71,65 +76,75 @@ export default function SignIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Log in
           </Typography>
+
           <Box
             component="form"
             onSubmit={handleSubmit(onSubmit, onError)}
             noValidate
             sx={{ mt: 1 }}
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              {...register("email", {
-                required: "이메일을 입력하여 주세요.",
-                pattern: {
-                  value: /\S+@\S+\.\S+/,
-                  message: "이메일 형식에 맞지 않습니다.",
-                },
-              })}
-            />
-            {errors.email && <small role="alert">{errors.email.message}</small>}
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              {...register("password", {
-                required: "비밀번호를 입력하여주세요.",
-              })}
-            />
-            {errors.password && (
-              <small role="alert">{errors.password.message}</small>
-            )}
-            <Grid item xs>
-              이메일 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시
-              확인해주세요.
-            </Grid>
-
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              disabled={isSubmitting}
-            >
-              Sign In
-            </Button>
             <Grid container>
-              <Grid item xs></Grid>
-              <Grid item>
+              <Grid item xs={12}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  {...register("email", {
+                    required: "이메일을 입력하여 주세요.",
+                    pattern: {
+                      value: /\S+@\S+\.\S+/,
+                      message: "이메일 형식에 맞지 않습니다.",
+                    },
+                  })}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                {errors.email && (
+                  <small role="alert">
+                    <ErrorMessage>{errors.email.message}</ErrorMessage>
+                  </small>
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  {...register("password", {
+                    required: "비밀번호를 입력하여주세요.",
+                  })}
+                />
+                {errors.password && (
+                  <small role="alert">
+                    <ErrorMessage>{errors.password.message}</ErrorMessage>
+                  </small>
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  disabled={isSubmitting}
+                >
+                  Sign In
+                </Button>
+              </Grid>
+
+              <Grid item xs={12}>
                 <Link href="/SignUp" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>

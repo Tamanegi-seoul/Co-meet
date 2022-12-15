@@ -8,26 +8,31 @@ export function loginUser(logindata) {
     url: "http://3.39.32.185:8080/api/login",
     method: "post",
     data: logindata,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Content-Type": "application/json",
-    },
     withCredentials: true,
-  }).then(res => {
-    console.log(res.headers);
-    console.log(res.headers.Cookie);
-    console.log(res.headers.Cookie.access_token);
-    console.log(res.headers.Cookie.refresh_token);
-    // if (res.data.token) {
-    //   axios.defaults.headers.common[
-    //     "Authorization"
-    //   ] = `Bearer ${res.data.token}`;
-    // } else {
-    //   delete axios.defaults.headers.common["Authorization"];
-    // }
-    // const userInfo = res.data.user;
-    // return { userInfo: userInfo };
   });
+  // .then(res => {
+  //   console.log(res.data);
+  //   console.log(res.headers);
+  //   console.log(res.cookies);
+  //   // console.log(res.headers["set-cookie"]);
+  //   // console.log(res.headers["access_token"]);
+  //   // console.log(res.headers["refresh_token"]);
+  //   // console.log(res.headers.get("cookie"));
+  //   // console.log(res.headers.get("Cookie"));
+  //   // console.log(res.headers.get("access_token"));
+  //   // console.log(res.cookies["access_token"]);
+  //   // console.log(res.cookies["refresh_token"]);
+  //   // console.log(1);
+  //   // if (res.data.token) {
+  //   //   axios.defaults.headers.common[
+  //   //     "Authorization"
+  //   //   ] = `Bearer ${res.data.token}`;
+  //   // } else {
+  //   //   delete axios.defaults.headers.common["Authorization"];
+  //   // }
+  //   // const userInfo = res.data.user;
+  //   // return { userInfo: userInfo };
+  // });
 }
 
 export function signupUser(signUpData) {
@@ -37,7 +42,7 @@ export function signupUser(signUpData) {
     new Blob([JSON.stringify(signUpData)], { type: "application/json" })
   );
   return axios({
-    url: "http://3.39.32.185:8080/api/user/join",
+    url: "http://3.39.32.185:8080/api/member/join",
     method: "post",
     data: formData,
   });
@@ -45,7 +50,7 @@ export function signupUser(signUpData) {
 
 export function checkIdEmail(data) {
   return axios({
-    url: "http://3.39.32.185:8080/api/user/validate",
+    url: "http://3.39.32.185:8080/api/member/validate",
     method: "get",
     params: data,
   });
