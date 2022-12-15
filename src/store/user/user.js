@@ -28,6 +28,7 @@ const dummyUser = {
 export const loginAsync2 = createAsyncThunk("login", async data => {
   return await loginUser(data)
     .then(res => {
+      console.log(res.headers);
       return res.data;
     })
     .catch(error => {
@@ -55,9 +56,7 @@ export const checkIdEmailAsync = createAsyncThunk(
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {
-    // addStack: (state, action) => {},
-  },
+  reducers: {},
   extraReducers: builder => {
     builder
       .addCase(loginAsync2.pending, state => {})
@@ -65,7 +64,6 @@ export const userSlice = createSlice({
         console.log(action);
         state.me = dummyUser;
         // state.me = action.payload;
-        // window.location.href = "/";
       })
       .addCase(loginAsync2.rejected, (state, action) => {
         console.log(action);
