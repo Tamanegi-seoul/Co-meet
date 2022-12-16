@@ -1,13 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { checkIdEmail, fetchUser, loginUser, signupUser } from "./userApi";
-
+import {
+  checkIdEmail,
+  fetchUser,
+  loginUser,
+  logoutUser,
+  signupUser,
+} from "./userApi";
+import jwt from "jwt-decode";
+import setAuthToken from "../../utils/setAuthToken";
+import { removeCookie, setCookie } from "../../utils/setCookie";
 const initialState = {
-  me: null,
-  acessToken: {},
-  logInLoading: false,
-  logInDone: false,
-  logInError: null,
-
+  me: "",
+  isLogIn: false,
   logOutLoading: false,
   logOutDone: false,
   logOutError: null,
@@ -21,23 +25,28 @@ const initialState = {
   checkIdEmailError: null,
 };
 
-const dummyUser = {
-  id: 1,
-  nickname: "johndoe1",
-  email: "john.doe@gmail.com",
-  prefer_stacks: ["JAVA", "JAVA_SCRIPT"],
-};
-
 export const loginAsync2 = createAsyncThunk("login", async data => {
-  const response = await loginUser(data);
-  console.log(data);
-  console.log(response);
-  return;
+  return await loginUser(data)
+    .then(res => {
+      const userInfo = jwt(res.data.access_token);
+      setAuthToken(res.data.access_token);
+      setCookie("access_token", res.data.access_token);
+      setCookie("refresh_token", res.data.refresh_token);
+      return userInfo.sub;
+    })
+    .catch(error => {
+      return error;
+    });
 });
 
 export const logOutAsync2 = createAsyncThunk("logout", async () => {
-  const response = await fetchUser();
-  return;
+  return await logoutUser().then(() => {
+    console.log(1);
+    removeCookie("access_token");
+    removeCookie("refresh_token");
+    setAuthToken();
+    console.log(2);
+  });
 });
 export const signUpAsync2 = createAsyncThunk("signup", async data => {
   const response = await signupUser(data);
@@ -55,24 +64,18 @@ export const checkIdEmailAsync = createAsyncThunk(
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {
-    // addStack: (state, action) => {},
-  },
+  reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(loginAsync2.pending, state => {
-        state.logInLoading = true;
-        state.logInError = null;
-        state.logInDone = false;
-      })
+      .addCase(loginAsync2.pending, state => {})
       .addCase(loginAsync2.fulfilled, (state, action) => {
-        state.logInLoading = true;
-        state.logInDone = true;
-        // state.me = action.payload;
-        state.me = dummyUser;
+        if (!action.payload.code) {
+          state.me = action.payload;
+          state.isLogIn = true;
+        }
       })
-      .addCase(loginAsync2.rejected, state => {
-        state.logInError = "error";
+      .addCase(loginAsync2.rejected, (state, action) => {
+        console.log(action);
       })
       .addCase(logOutAsync2.pending, state => {
         state.logOutLoading = true;
@@ -82,7 +85,7 @@ export const userSlice = createSlice({
       .addCase(logOutAsync2.fulfilled, (state, action) => {
         state.logOutLoading = true;
         state.logOutDone = true;
-        // state.me = action.payload;
+        state.isLogIn = false;
         state.me = null;
       })
       .addCase(logOutAsync2.rejected, state => {
