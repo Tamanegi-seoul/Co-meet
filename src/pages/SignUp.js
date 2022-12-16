@@ -17,7 +17,7 @@ import { useDispatch } from "react-redux";
 import { checkIdEmailAsync, signUpAsync2 } from "../store/user/user";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { Toast } from "../components/Alert/Alert";
+import { onErrorAlert, onSuccessAlert, Toast } from "../components/Alert/Alert";
 
 function Copyright(props) {
   return (
@@ -61,13 +61,12 @@ export default function SignUp() {
     //arr배열을 Stacks배열에 덮어쓰기
     data.prefer_stacks = [...arr];
     dispatch(signUpAsync2(data));
-    Toast.fire({ icon: "success", title: "Signed up successfully" });
+    onSuccessAlert("Signed up successfully");
     navigate("/login");
   };
 
   const onError = error => {
-    Toast.fire({ icon: "error", title: "Signed up false" });
-    console.log(error);
+    onErrorAlert("Signed up false");
   };
 
   return (

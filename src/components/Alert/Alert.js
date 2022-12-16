@@ -11,3 +11,17 @@ export const Toast = Swal.mixin({
     toast.addEventListener("mouseleave", Swal.resumeTimer);
   },
 });
+
+export const onErrorAlert = explain => {
+  Toast.fire({
+    icon: "error",
+    title: explain,
+  });
+};
+
+export const onSuccessAlert = explain => {
+  Toast.fire({
+    icon: "error",
+    title: explain,
+  });
+};

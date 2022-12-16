@@ -74,7 +74,7 @@ export default function BasicTabs() {
   };
   useEffect(() => {
     dispatch(loadPostListAsync());
-  }, [dispatch]);
+  }, []);
 
   return (
     <Box sx={{ width: "100%" }}>

@@ -31,7 +31,7 @@ export default function ModalUserInfo() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const userInfo = useSelector(state => state.user.me);
+  const userInfo = useSelector(state => state.user.email);
 
   const buttons = [
     <Button key="one">내작성글</Button>,

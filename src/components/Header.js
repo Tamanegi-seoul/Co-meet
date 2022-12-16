@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import ModalUserInfo from "./Modal/ModalUserInfo";
 
 const Header = () => {
-  const userInfo = useSelector(state => state.user.me);
+  const userInfo = useSelector(state => state.user.email);
   return (
     <AppBar
       position="static"

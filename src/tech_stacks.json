@@ -1,42 +1,42 @@
 {
   "language": {
-    "Java": "JAVA",
-    "JavaScript": "JAVA_SCRIPT",
-    "TypeScript": "TYPE_SCRIPT",
-    "Python": "PYTHON",
+    "JAVA": "JAVA",
+    "JAVA_SCRIPT": "JAVA_SCRIPT",
+    "TYPE_SCRIPT": "TYPE_SCRIPT",
+    "PYTHON": "PYTHON",
     "R": "R",
     "C": "C",
     "C++": "C++",
-    "Go": "GO",
-    "Swift": "SWIFT",
-    "Kotlin": "KOTLIN",
-    "MySQL": "MYSQL",
-    "MongoDB": "MONGO_DB",
-    "Php": "PHP",
-    "Flutter": "FLUTTER"
+    "GO": "GO",
+    "SWIFT": "SWIFT",
+    "KOTLIN": "KOTLIN",
+    "MYSQL": "MYSQL",
+    "MONGO_DB": "MONGO_DB",
+    "PHP": "PHP",
+    "FLUTTER": "FLUTTER"
   },
 
   "framework": {
-    "Spring": "SPRING",
-    "React": "REACT",
-    "ReactNative": "REACT_NATIVE",
-    "Vue": "VUE",
-    "NodeJs": "NODE_JS",
-    "NextJS": "NEXT_JS",
-    "NestJS": "NEST_JS",
-    "Express": "EXPRESS",
-    "Django": "DJANGO"
+    "SPRING": "SPRING",
+    "REACT": "REACT",
+    "REACT_NATIVE": "REACT_NATIVE",
+    "VUE": "VUE",
+    "NODE_JS": "NODE_JS",
+    "NEXT_JS": "NEXT_JS",
+    "NEST_JS": "NEST_JS",
+    "EXPRESS": "EXPRESS",
+    "DJANGO": "DJANGO"
   },
 
   "etc": {
-    "GraphQL": "GRAPH_QL",
-    "Firebase": "FIREBASE",
-    "Unity": "UNITY",
-    "Aws": "AWS",
-    "Kubernetes": "KUBERNETES",
-    "Docker": "DOCKER",
-    "Git": "GIT",
-    "Figma": "FIGMA",
-    "Zeplin": "ZEPLIN"
+    "GRAPH_QL": "GRAPH_QL",
+    "FIREBASE": "FIREBASE",
+    "UNITY": "UNITY",
+    "AWS": "AWS",
+    "KUBERNETES": "KUBERNETES",
+    "DOCKER": "DOCKER",
+    "GIT": "GIT",
+    "FIGMA": "FIGMA",
+    "ZEPLIN": "ZEPLIN"
   }
 }

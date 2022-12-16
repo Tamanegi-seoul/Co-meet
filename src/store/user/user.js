@@ -10,7 +10,9 @@ import jwt from "jwt-decode";
 import setAuthToken from "../../utils/setAuthToken";
 import { removeCookie, setCookie } from "../../utils/setCookie";
 const initialState = {
-  me: "",
+  nickName: null,
+  email: null,
+  memberId: null,
   isLogIn: false,
   logOutLoading: false,
   logOutDone: false,
@@ -32,7 +34,8 @@ export const loginAsync2 = createAsyncThunk("login", async data => {
       setAuthToken(res.data.access_token);
       setCookie("access_token", res.data.access_token);
       setCookie("refresh_token", res.data.refresh_token);
-      return userInfo.sub;
+      console.log(userInfo);
+      return userInfo;
     })
     .catch(error => {
       return error;
@@ -70,7 +73,8 @@ export const userSlice = createSlice({
       .addCase(loginAsync2.pending, state => {})
       .addCase(loginAsync2.fulfilled, (state, action) => {
         if (!action.payload.code) {
-          state.me = action.payload;
+          state.email = action.payload.sub;
+          state.memberId = action.payload.member_id;
           state.isLogIn = true;
         }
       })
@@ -86,7 +90,9 @@ export const userSlice = createSlice({
         state.logOutLoading = true;
         state.logOutDone = true;
         state.isLogIn = false;
-        state.me = null;
+        state.nickName = null;
+        state.email = null;
+        state.memberId = null;
       })
       .addCase(logOutAsync2.rejected, state => {
         state.logOutError = "error";
