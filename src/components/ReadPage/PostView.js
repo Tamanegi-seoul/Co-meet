@@ -21,8 +21,6 @@ const PostView = () => {
     axios({
       method: "get",
       url: "http://3.39.32.185:8080/api/post/search?post_id=5",
-
-      // responseType: "json",
     }).then(function (response) {
       console.log("게시글 가져오기 성공", response.data);
     });
