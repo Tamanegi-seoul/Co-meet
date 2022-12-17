@@ -36,7 +36,7 @@ const names = [
   "SPRING",
   "TYPE_SCRIPT",
   "ANGULAR",
-  "C++",
+  "CPP",
   "KOTILN",
   "SVELTE",
 ];
@@ -209,9 +209,10 @@ const UserImg = () => {
         <button
           onClick={() => {
             const data = {
-              password: password,
-              nickname: nickName,
-              prefer_stacks: personName,
+              member_id: member_id,
+              new_password: password,
+              new_nickname: nickName,
+              updated_stacks: personName,
             };
             console.log(data);
             const formData = new FormData();
