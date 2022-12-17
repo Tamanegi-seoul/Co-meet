@@ -32,10 +32,11 @@ export default function ModalUserInfo() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const userInfo = useSelector(state => state.user.email);
+  const memberId = useSelector(state => state.user.memberId);
 
   const buttons = [
     <Button key="one">내작성글</Button>,
-    <Button key="two" onClick={() => navigate("/information")}>
+    <Button key="two" onClick={() => navigate("/information/" + memberId)}>
       설정
     </Button>,
     <Button

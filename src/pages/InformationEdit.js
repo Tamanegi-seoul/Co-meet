@@ -15,10 +15,6 @@ const InformationEdit = () => {
       <Contents>
         <h1>내 정보 수정</h1>
         <UserImg />
-        <UserName />
-        <UserStack />
-        <button>완료</button>
-        <button>회원탈퇴</button>
       </Contents>
       <Footer />
     </div>

@@ -4,7 +4,9 @@ import {
   fetchUser,
   loginUser,
   logoutUser,
+  searchUser,
   signupUser,
+  updateUser,
 } from "./userApi";
 import jwt from "jwt-decode";
 import setAuthToken from "../../utils/setAuthToken";
@@ -64,6 +66,25 @@ export const checkIdEmailAsync = createAsyncThunk(
     return;
   }
 );
+export const searchAsync = createAsyncThunk("search", async data => {
+  return await searchUser(data)
+    .then(res => {
+      console.log(res);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
+
+export const updateAsync = createAsyncThunk("update", async data => {
+  return await updateUser(data)
+    .then(res => {
+      console.log(res);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
 export const userSlice = createSlice({
   name: "user",
   initialState,
