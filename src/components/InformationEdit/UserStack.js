@@ -60,21 +60,7 @@ const UserStack = () => {
   return (
     <>
       <TechWrapper>
-        <h3
-          style={{
-            width: "20rem",
-            margin: "30px",
-            display: "block",
-            fontSize: "1.17em",
-            marginBlockStart: "1em",
-            marginBlockEnd: "1em",
-            marginInlineStart: "0px",
-            marginInlineEnd: "0px",
-            fontWeight: "bold",
-          }}
-        >
-          관심 기술 태그
-        </h3>
+        <h3>관심 기술 태그</h3>
         <FormControl sx={{ m: 1, width: 300 }}>
           <InputLabel id="demo-multiple-chip-label">TechStack</InputLabel>
           <Select
@@ -124,5 +110,17 @@ const UserStack = () => {
 const TechWrapper = styled.div`
   display: flex;
   align-items: center;
+  h3 {
+    width: 20rem;
+    margin: 30px;
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    padding: 20px;
+  }
 `;
 export default UserStack;

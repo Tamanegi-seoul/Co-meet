@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import UserImg from "../components/InformationEdit/UserImg";
 import UserName from "../components/InformationEdit/UserName";
 import UserStack from "./../components/InformationEdit/UserStack";
+import UserPassword from "../components/InformationEdit/UserPassword";
 
 // 내정보 수정 페이지
 
@@ -17,6 +18,7 @@ const InformationEdit = () => {
         <UserImg />
         <UserName />
         <UserStack />
+        <UserPassword />
       </Contents>
       <EditButtons>
         <button className="save" name="save">
