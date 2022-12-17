@@ -22,15 +22,19 @@ const initialState = {
 };
 
 export const loadPostListAsync = createAsyncThunk("loadPostList", async () => {
-  const response = await fetchPost();
-  return response.data;
+  return await fetchPost().then(res => {
+    return res.data;
+  });
 });
 
 export const loadMorePostListAsync = createAsyncThunk(
   "loadMorePostList",
   async () => {
-    const response = await fetchMorePost();
-    return response.data;
+    return await fetchPost().then(res => {
+      console.log(res);
+      console.log(res.data);
+      return res.data;
+    });
   }
 );
 

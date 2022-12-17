@@ -1,16 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   checkIdEmail,
-  fetchUser,
   loginUser,
   logoutUser,
+  searchUser,
   signupUser,
+  updateUser,
 } from "./userApi";
 import jwt from "jwt-decode";
 import setAuthToken from "../../utils/setAuthToken";
 import { removeCookie, setCookie } from "../../utils/setCookie";
 const initialState = {
-  me: "",
+  nickName: null,
+  email: null,
+  memberId: null,
+  userStack: [],
   isLogIn: false,
   logOutLoading: false,
   logOutDone: false,
@@ -32,7 +36,7 @@ export const loginAsync2 = createAsyncThunk("login", async data => {
       setAuthToken(res.data.access_token);
       setCookie("access_token", res.data.access_token);
       setCookie("refresh_token", res.data.refresh_token);
-      return userInfo.sub;
+      return userInfo;
     })
     .catch(error => {
       return error;
@@ -41,11 +45,9 @@ export const loginAsync2 = createAsyncThunk("login", async data => {
 
 export const logOutAsync2 = createAsyncThunk("logout", async () => {
   return await logoutUser().then(() => {
-    console.log(1);
     removeCookie("access_token");
     removeCookie("refresh_token");
     setAuthToken();
-    console.log(2);
   });
 });
 export const signUpAsync2 = createAsyncThunk("signup", async data => {
@@ -61,6 +63,23 @@ export const checkIdEmailAsync = createAsyncThunk(
     return;
   }
 );
+export const searchAsync = createAsyncThunk("search", async data => {
+  return await searchUser(data)
+    .then(res => {
+      return res.data.data;
+    })
+    .catch(error => console.log(error));
+});
+
+export const updateAsync = createAsyncThunk("update", async data => {
+  return await updateUser(data)
+    .then(res => {
+      return res.data.data;
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -70,7 +89,9 @@ export const userSlice = createSlice({
       .addCase(loginAsync2.pending, state => {})
       .addCase(loginAsync2.fulfilled, (state, action) => {
         if (!action.payload.code) {
-          state.me = action.payload;
+          state.email = action.payload.sub;
+          state.memberId = action.payload.member_id;
+          state.nickName = action.payload.nickname;
           state.isLogIn = true;
         }
       })
@@ -86,19 +107,28 @@ export const userSlice = createSlice({
         state.logOutLoading = true;
         state.logOutDone = true;
         state.isLogIn = false;
-        state.me = null;
+        state.nickName = null;
+        state.email = null;
+        state.memberId = null;
       })
       .addCase(logOutAsync2.rejected, state => {
         state.logOutError = "error";
       })
       .addCase(checkIdEmailAsync.pending, state => {})
-      .addCase(checkIdEmailAsync.fulfilled, (state, action) => {
-        console.log("성공");
-      })
+      .addCase(checkIdEmailAsync.fulfilled, (state, action) => {})
       .addCase(checkIdEmailAsync.rejected, state => {})
       .addCase(signUpAsync2.pending, state => {})
       .addCase(signUpAsync2.fulfilled, (state, action) => {})
-      .addCase(signUpAsync2.rejected, state => {});
+      .addCase(signUpAsync2.rejected, state => {})
+      .addCase(searchAsync.pending, state => {})
+      .addCase(searchAsync.fulfilled, (state, action) => {})
+      .addCase(searchAsync.rejected, state => {})
+      .addCase(updateAsync.pending, state => {})
+      .addCase(updateAsync.fulfilled, (state, action) => {
+        state.nickName = action.payload.nickname;
+        state.userStack = [...action.payload.preferred_stacks];
+      })
+      .addCase(updateAsync.rejected, state => {});
   },
 });
 export const { logOut } = userSlice.actions;
