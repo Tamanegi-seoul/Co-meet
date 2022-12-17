@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   checkIdEmail,
-  fetchUser,
   loginUser,
   logoutUser,
   searchUser,
@@ -37,7 +36,6 @@ export const loginAsync2 = createAsyncThunk("login", async data => {
       setAuthToken(res.data.access_token);
       setCookie("access_token", res.data.access_token);
       setCookie("refresh_token", res.data.refresh_token);
-      console.log(userInfo);
       return userInfo;
     })
     .catch(error => {
@@ -47,11 +45,9 @@ export const loginAsync2 = createAsyncThunk("login", async data => {
 
 export const logOutAsync2 = createAsyncThunk("logout", async () => {
   return await logoutUser().then(() => {
-    console.log(1);
     removeCookie("access_token");
     removeCookie("refresh_token");
     setAuthToken();
-    console.log(2);
   });
 });
 export const signUpAsync2 = createAsyncThunk("signup", async data => {
@@ -70,18 +66,15 @@ export const checkIdEmailAsync = createAsyncThunk(
 export const searchAsync = createAsyncThunk("search", async data => {
   return await searchUser(data)
     .then(res => {
-      console.log(res.data.data);
-      return res.data.data.prefer_stacks;
+      return res.data.data;
     })
-    .catch(error => {
-      console.log(error);
-    });
+    .catch(error => console.log(error));
 });
 
 export const updateAsync = createAsyncThunk("update", async data => {
   return await updateUser(data)
     .then(res => {
-      console.log(res);
+      return res.data.data;
     })
     .catch(error => {
       console.log(error);
@@ -122,18 +115,20 @@ export const userSlice = createSlice({
         state.logOutError = "error";
       })
       .addCase(checkIdEmailAsync.pending, state => {})
-      .addCase(checkIdEmailAsync.fulfilled, (state, action) => {
-        console.log("성공");
-      })
+      .addCase(checkIdEmailAsync.fulfilled, (state, action) => {})
       .addCase(checkIdEmailAsync.rejected, state => {})
       .addCase(signUpAsync2.pending, state => {})
       .addCase(signUpAsync2.fulfilled, (state, action) => {})
       .addCase(signUpAsync2.rejected, state => {})
       .addCase(searchAsync.pending, state => {})
-      .addCase(searchAsync.fulfilled, (state, action) => {
-        state.userStack = [...action.payload];
+      .addCase(searchAsync.fulfilled, (state, action) => {})
+      .addCase(searchAsync.rejected, state => {})
+      .addCase(updateAsync.pending, state => {})
+      .addCase(updateAsync.fulfilled, (state, action) => {
+        state.nickName = action.payload.nickname;
+        state.userStack = [...action.payload.preferred_stacks];
       })
-      .addCase(searchAsync.rejected, state => {});
+      .addCase(updateAsync.rejected, state => {});
   },
 });
 export const { logOut } = userSlice.actions;
