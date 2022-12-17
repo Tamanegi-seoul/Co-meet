@@ -15,6 +15,7 @@ const initialState = {
   nickName: null,
   email: null,
   memberId: null,
+  userStack: [],
   isLogIn: false,
   logOutLoading: false,
   logOutDone: false,
@@ -69,7 +70,8 @@ export const checkIdEmailAsync = createAsyncThunk(
 export const searchAsync = createAsyncThunk("search", async data => {
   return await searchUser(data)
     .then(res => {
-      console.log(res);
+      console.log(res.data.data);
+      return res.data.data.prefer_stacks;
     })
     .catch(error => {
       console.log(error);
@@ -96,6 +98,7 @@ export const userSlice = createSlice({
         if (!action.payload.code) {
           state.email = action.payload.sub;
           state.memberId = action.payload.member_id;
+          state.nickName = action.payload.nickname;
           state.isLogIn = true;
         }
       })
@@ -125,7 +128,12 @@ export const userSlice = createSlice({
       .addCase(checkIdEmailAsync.rejected, state => {})
       .addCase(signUpAsync2.pending, state => {})
       .addCase(signUpAsync2.fulfilled, (state, action) => {})
-      .addCase(signUpAsync2.rejected, state => {});
+      .addCase(signUpAsync2.rejected, state => {})
+      .addCase(searchAsync.pending, state => {})
+      .addCase(searchAsync.fulfilled, (state, action) => {
+        state.userStack = [...action.payload];
+      })
+      .addCase(searchAsync.rejected, state => {});
   },
 });
 export const { logOut } = userSlice.actions;

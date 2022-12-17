@@ -3,8 +3,6 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import UserImg from "../components/InformationEdit/UserImg";
-import UserName from "../components/InformationEdit/UserName";
-import UserStack from "./../components/InformationEdit/UserStack";
 
 // 내정보 수정 페이지
 

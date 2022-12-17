@@ -21,7 +21,7 @@ export const onErrorAlert = explain => {
 
 export const onSuccessAlert = explain => {
   Toast.fire({
-    icon: "error",
+    icon: "success",
     title: explain,
   });
 };

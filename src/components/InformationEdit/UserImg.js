@@ -53,12 +53,13 @@ function getStyles(name, personName, theme) {
 const UserImg = () => {
   const { member_id } = useParams();
   const dispatch = useDispatch();
+  const nickName = useSelector(state => state.user.nickName);
   const email = useSelector(state => state.user.email);
-  // const stackList = useSelector(state=>state.user.stackList)
+  const userStack = useSelector(state => state.user.userStack);
   const theme = useTheme();
-  const [personName, setPersonName] = useState([]);
+  const [personName, setPersonName] = useState(userStack);
   const [updateEmail, setUpdateEmail] = useState(email);
-  const [nickName, setnickName] = useState(email);
+  const [updateNickName, setUpdateNickName] = useState(nickName);
   const [password, setPassword] = useState("");
   const [Image, setImage] = useState(
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
@@ -66,9 +67,7 @@ const UserImg = () => {
   console.log(personName);
   console.log(nickName);
   useEffect(() => {
-    console.log(member_id);
     dispatch(searchAsync(member_id));
-    console.log();
   }, []);
   const handleChange = event => {
     const {
@@ -156,9 +155,9 @@ const UserImg = () => {
         fullWidth
         id="nickName"
         label="닉네임"
-        value={nickName}
+        value={updateNickName}
         onChange={event => {
-          setnickName(event.target.value);
+          setUpdateNickName(event.target.value);
         }}
         autoFocus
       />
@@ -168,6 +167,10 @@ const UserImg = () => {
         fullWidth
         id="password"
         label="비밀번호"
+        value={password}
+        onChange={event => {
+          setPassword(event.target.value);
+        }}
         autoFocus
       />
       {/* 여기 밑에는 스택리스트 칩입니다 */}
@@ -206,11 +209,11 @@ const UserImg = () => {
         <button
           onClick={() => {
             const data = {
-              member_id: 4,
               password: password,
               nickname: nickName,
               prefer_stacks: personName,
             };
+            console.log(data);
             const formData = new FormData();
             formData.append(
               "request",

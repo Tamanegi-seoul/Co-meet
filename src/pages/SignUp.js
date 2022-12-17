@@ -60,6 +60,7 @@ export default function SignUp() {
     });
     //arr배열을 Stacks배열에 덮어쓰기
     data.prefer_stacks = [...arr];
+    console.log(data);
     dispatch(signUpAsync2(data));
     onSuccessAlert("Signed up successfully");
     navigate("/login");
@@ -97,11 +98,11 @@ export default function SignUp() {
               <Grid item xs={12}>
                 <TextField
                   type="text"
-                  name="nickName"
+                  name="nickname"
                   fullWidth
-                  id="nickName"
+                  id="nickname"
                   label="Nick Name"
-                  {...register("nickName", {
+                  {...register("nickname", {
                     required: "닉네임은 필수 입력입니다.",
                     minLength: {
                       value: 2,
@@ -112,9 +113,9 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
-                {errors.nickName && (
+                {errors.nickname && (
                   <small role="alert">
-                    <ErrorMessage>{errors.nickName.message}</ErrorMessage>
+                    <ErrorMessage>{errors.nickname.message}</ErrorMessage>
                   </small>
                 )}
               </Grid>
