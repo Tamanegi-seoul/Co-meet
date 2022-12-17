@@ -13,7 +13,7 @@ const PostComent = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "http://3.39.32.185:8080/api/user/validate",
+      url: "http://3.39.32.185:8080/api/comment/search?post_id=5",
       responseType: "json",
     }).then(function (response) {
       console.log(response.data);
