@@ -1,12 +1,15 @@
 import React, { useState, useRef } from "react";
+import { post, put, axios } from "axios";
 import Avatar from "@mui/material/Avatar";
 import styled from "styled-components";
 // 내 정보 수정 화면에서 이미지 부분
 
 const UserImg = () => {
-  const [Image, setImage] = useState(
-    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-  );
+  const [Image, setImage] = useState({
+    image_file: "",
+    preview_URL:
+      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+  });
   const fileInput = useRef(null);
   const onChange = e => {
     if (e.target.files[0]) {
@@ -30,10 +33,24 @@ const UserImg = () => {
     reader.readAsDataURL(e.target.files[0]);
   };
   const deleteImage = () => {
-    setImage(
-      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-    );
+    setImage({
+      image_file: "",
+      preview_URL:
+        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+    });
   };
+  // const sendImageToServer = async () => {
+  //   if (Image.image_file) {
+  //     const formData = new FormData();
+  //     formData.append("file", Image.image_file);
+  //     await axios.post("api주소", formData);
+  //     setImage({
+  //       image_file: "",
+  //       preview_URL:
+  //         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+  //     });
+  //   }
+  // };
   return (
     <div>
       <ImgBox>

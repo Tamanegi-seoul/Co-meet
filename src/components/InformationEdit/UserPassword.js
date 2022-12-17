@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-// import axios from "axios";
-// 내 정보 수정 화면에서 닉네임 부분
 
-const UserName = () => {
+// 내 정보 수정 화면에서 비밀번호 부분
+
+const UserPassword = () => {
   return (
     <>
-      <UserNameWrapper>
-        <h3 style={{ margin: "30px" }}>닉네임</h3>
+      <UserPasswordWrapper>
+        <h3 style={{ margin: "30px" }}>비밀번호</h3>
         <input type="text" name="nickNameInput"></input>
-      </UserNameWrapper>
+      </UserPasswordWrapper>
       <p
         style={{
           color: "#868e96",
@@ -20,13 +20,13 @@ const UserName = () => {
           borderBottom: "1px solid grey",
         }}
       >
-        Co-meet에서 사용되는 이름입니다.
+        비밀번호를 입력해주세요.
       </p>
     </>
   );
 };
 
-const UserNameWrapper = styled.div`
+const UserPasswordWrapper = styled.div`
   display: flex;
   align-items: center;
   h3 {
@@ -41,4 +41,4 @@ const UserNameWrapper = styled.div`
     padding: 1rem;
   }
 `;
-export default UserName;
+export default UserPassword;
