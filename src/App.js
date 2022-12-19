@@ -23,7 +23,10 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/write" element={<WritePage />}></Route>
-        <Route path="/information" element={<InformationEdit />}></Route>
+        <Route
+          path="/information/:member_id"
+          element={<InformationEdit />}
+        ></Route>
         <Route path="/post/:post_id" element={<PostView />}></Route>
         {/* 나중에 404페이지를 넣어야합니다 ↓ */}
         {/* <Route path="*" element={<PostView />}></Route> */}

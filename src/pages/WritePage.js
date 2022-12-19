@@ -14,6 +14,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Chip from "@mui/material/Chip";
+import Axios from "axios";
 
 //다중 select
 const ITEM_HEIGHT = 48;
@@ -27,40 +28,7 @@ const MenuProps = {
   },
 };
 
-const stacks = [
-  "Java",
-  "JavaScript",
-  "TypeScript",
-  "Python",
-  "R",
-  "C",
-  "C++",
-  "Go",
-  "Swift",
-  "Kotlin",
-  "MySQL",
-  "MongoDB",
-  "Php",
-  "Flutter",
-  "Spring",
-  "React",
-  "ReactNative",
-  "Vue",
-  "NodeJs",
-  "NextJS",
-  "NestJS",
-  "Express",
-  "Django",
-  "GraphQL",
-  "Firebase",
-  "Unity",
-  "Aws",
-  "Kubernetes",
-  "Docker",
-  "Git",
-  "Figma",
-  "Zeplin",
-];
+const stacks = ["JAVA", "JAVA_SCRIPT", "PYTHON", " SPRING", " REACT", "R"];
 
 function getStyles(option, stack, theme) {
   return {
@@ -89,15 +57,21 @@ const Circle = styled.div`
 `;
 
 const WritePage = () => {
+  const [title, setTitle] = useState("");
   const [recruit_status, setStatus] = useState(""); //모집구분
   const [recruit_capacity, setCapacity] = useState(""); //모집인원
-  const [type, setType] = useState(""); //진행방식
-  const [expected_term, setTerm] = useState(""); //진행기간
+  const [remote, setRemote] = useState(""); //진행방식
+  const [expexted_term, setTerm] = useState(""); //진행기간
 
-  const [startDate, setStartDate] = useState(new Date());
+  const [start_date, setStartDate] = useState(new Date());
 
   const theme = useTheme();
-  const [stack, setStack] = React.useState([]);
+  const [designated_stacks, setStack] = React.useState([]);
+
+  const [content] = useState("");
+  const [contact_type, setContactType] = useState("");
+
+  const poster_id = 7;
 
   const stackHandler = event => {
     const {
@@ -119,8 +93,8 @@ const WritePage = () => {
     console.log(e.target.value);
   };
 
-  const typeHandler = e => {
-    setType(e.target.value);
+  const remoteHandler = e => {
+    setRemote(e.target.value);
     console.log(e.target.value);
   };
 
@@ -129,17 +103,53 @@ const WritePage = () => {
     console.log(e.target.value);
   };
 
-  const addPost = e => {
-    console.log("글등록");
-    console.log({
-      recruit_status,
-      recruit_capacity,
-      type,
-      expected_term,
-      stack,
-      startDate,
-    });
+  const contact_typeHandler = e => {
+    setContactType(e.target.value);
+    console.log(e.target.value);
   };
+
+  const addPost = e => {
+    e.preventDefault();
+    Axios.post(
+      "http://3.39.32.185:8080/api/post/register",
+      {
+        title,
+        content,
+        contact_type,
+        poster_id, //user id
+        start_date,
+        expexted_term,
+        recruit_capacity,
+        designated_stacks,
+        remote,
+
+        // recruit_status,
+        // recruit_capacity,
+        // type,
+        // expected_term,
+        // stack,
+        // startDate,
+      },
+      {
+        headers: {
+          //       "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then(res => console.log("게시글 등록됨", res))
+      .catch(err => console.log(err));
+  };
+
+  // console.log("글등록");
+  // console.log({
+  //   recruit_status,
+  //   recruit_capacity,
+  //   type,
+  //   expected_term,
+  //   stack,
+  //   startDate,
+  // });
 
   const back = e => {
     console.log("취소");
@@ -200,16 +210,16 @@ const WritePage = () => {
                 label="form"
                 onChange={capacityHandler}
               >
-                <MenuItem value={"인원미정"}>인원미정</MenuItem>
-                <MenuItem value={"1명"}>1명</MenuItem>
-                <MenuItem value={"2명"}>2명</MenuItem>
-                <MenuItem value={"3명"}>3명</MenuItem>
-                <MenuItem value={"4명"}>4명</MenuItem>
-                <MenuItem value={"5명"}>5명</MenuItem>
-                <MenuItem value={"6명"}>6명</MenuItem>
-                <MenuItem value={"7명"}>7명</MenuItem>
-                <MenuItem value={"8명"}>8명</MenuItem>
-                <MenuItem value={"9명"}>9명</MenuItem>
+                {/* <MenuItem value={"인원미정"}>인원미정</MenuItem> */}
+                <MenuItem value={"1"}>1명</MenuItem>
+                <MenuItem value={"2"}>2명</MenuItem>
+                <MenuItem value={"3"}>3명</MenuItem>
+                <MenuItem value={"4"}>4명</MenuItem>
+                <MenuItem value={"5"}>5명</MenuItem>
+                <MenuItem value={"6"}>6명</MenuItem>
+                <MenuItem value={"7"}>7명</MenuItem>
+                <MenuItem value={"8"}>8명</MenuItem>
+                <MenuItem value={"9"}>9명</MenuItem>
                 <MenuItem value={"10명이상"}>10명이상</MenuItem>
               </Select>
             </FormControl>
@@ -221,9 +231,26 @@ const WritePage = () => {
               }}
             >
               <InputLabel>진행방식</InputLabel>
-              <Select value={type} label="form_how" onChange={typeHandler}>
-                <MenuItem value={"온라인"}>온라인</MenuItem>
-                <MenuItem value={"오프라인"}>오프라인</MenuItem>
+              <Select value={remote} label="form_how" onChange={remoteHandler}>
+                <MenuItem value={"true"}>온라인</MenuItem>
+                <MenuItem value={"FALSE"}>오프라인</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl
+              sx={{
+                minWidth: "40%",
+                margin: 1,
+                width: { md: "100%", lg: "47.9%" },
+              }}
+            >
+              <InputLabel>연락방법</InputLabel>
+              <Select
+                value={contact_type}
+                label="form_how"
+                onChange={contact_typeHandler}
+              >
+                <MenuItem value={"KAKAO_OPEN_CHAT"}>온라인</MenuItem>
+                <MenuItem value={"GOOGLE_FORM"}>오프라인</MenuItem>
               </Select>
             </FormControl>
             <FormControl
@@ -235,13 +262,13 @@ const WritePage = () => {
             >
               <InputLabel>진행기간</InputLabel>
               <Select
-                value={expected_term}
+                value={expexted_term}
                 label="form_term"
                 onChange={termHandler}
               >
-                <MenuItem value={"기간 미정"}>기간 미정</MenuItem>
-                <MenuItem value={"단기"}>단기</MenuItem>
-                <MenuItem value={"장기"}>장기</MenuItem>
+                <MenuItem value={"0"}>기간 미정</MenuItem>
+                <MenuItem value={"30"}>단기</MenuItem>
+                <MenuItem value={"60"}>장기</MenuItem>
               </Select>
             </FormControl>
             <FormControl
@@ -256,7 +283,7 @@ const WritePage = () => {
                 labelId="demo-multiple-name-label"
                 id="demo-multiple-name"
                 multiple
-                value={stack}
+                value={designated_stacks}
                 onChange={stackHandler}
                 input={<OutlinedInput label="Name" />}
                 renderValue={selected => (
@@ -272,7 +299,7 @@ const WritePage = () => {
                   <MenuItem
                     key={option}
                     value={option}
-                    style={getStyles(option, stack, theme)}
+                    style={getStyles(option, designated_stacks, theme)}
                   >
                     {option}
                   </MenuItem>
@@ -283,7 +310,7 @@ const WritePage = () => {
             <FormControl sx={{ margin: 1, width: { md: "100%", lg: "47.9%" } }}>
               <InputLabel>시작예정일</InputLabel>
               <DatePicker
-                selected={startDate}
+                selected={start_date}
                 onChange={date => setStartDate(date)}
               />
             </FormControl>
@@ -296,6 +323,16 @@ const WritePage = () => {
           <Title>
             <Circle>2</Circle> 프로젝트에 대해 소개해주세요.
           </Title>
+          <Title>제목</Title>
+          <textarea
+            // className="commentText"
+            placeholder="제목"
+            value={title}
+            onChange={e => {
+              setTitle(e.target.value);
+              console.log(setTitle);
+            }}
+          ></textarea>
           <CKEditor
             editor={ClassicEditor}
             data=""
@@ -305,6 +342,7 @@ const WritePage = () => {
             }}
             onChange={(event, editor) => {
               const data = editor.getData();
+              // content = data;
               console.log({ event, editor, data });
             }}
             onBlur={(event, editor) => {

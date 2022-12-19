@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAsync2 } from "../store/user/user";
 import { useNavigate } from "react-router-dom";
-import { Toast } from "../components/Alert/Alert";
+import { onErrorAlert } from "../components/Alert/Alert";
 import styled from "styled-components";
 
 function Copyright(props) {
@@ -53,15 +53,12 @@ export default function SignIn() {
       return navigate("/");
     }
   }, []);
-  const onError = () => {
-    Toast.fire({
-      icon: "error",
-      title: "Login error Check Your Email & Password",
-    });
-  };
+
   async function onSubmit(data) {
     await dispatch(loginAsync2(data)).then(res => {
-      res.payload.code == null ? navigate("/") : onError();
+      res.payload.code == null
+        ? navigate("/")
+        : onErrorAlert("Login error Check Your Email & Password");
     });
   }
 
@@ -86,7 +83,7 @@ export default function SignIn() {
 
           <Box
             component="form"
-            onSubmit={handleSubmit(onSubmit, onError)}
+            onSubmit={handleSubmit(onSubmit)}
             noValidate
             sx={{ mt: 1 }}
           >

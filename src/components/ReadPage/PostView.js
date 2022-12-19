@@ -3,19 +3,29 @@ import React, { useEffect } from "react";
 import "./Post.css";
 import Header from "../Header";
 import Footer from "../Footer";
-import PostComent from "./PostComent";
+// import PostComent from "./PostComent";
 import dummyPost from "../../dummyPost/dummyPost.json";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { viewPostDetailAsync } from "../../store/post/post";
+import axios from "axios";
 
 //게시물 작성 완료 페이지의 내용
 const PostView = () => {
   const { post_id } = useParams();
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(viewPostDetailAsync(post_id));
+
+    axios({
+      method: "get",
+      url: "http://3.39.32.185:8080/api/post/search?post_id=5",
+    }).then(function (response) {
+      console.log("게시글 가져오기 성공", response.data);
+    });
   }, []);
+
   return (
     <>
       <div>
@@ -97,7 +107,7 @@ const PostView = () => {
 
         <div className="postContent">{dummyPost.data[0].content}</div>
 
-        <PostComent />
+        {/* <PostComent /> */}
         <Footer />
       </div>
     </>
