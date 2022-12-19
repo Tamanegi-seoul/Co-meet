@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import postListRefresh from "../../hooks/postListRefresh";
+import postListRefresh from "../../utils/postListRefresh";
 import { fetchMorePost, fetchPost, fetchViewPostDetail } from "../post/postAPI";
 
 const initialState = {

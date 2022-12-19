@@ -15,6 +15,7 @@ const initialState = {
   email: null,
   memberId: null,
   userStack: [],
+  profileImage: null,
   isLogIn: false,
   logOutLoading: false,
   logOutDone: false,
@@ -66,6 +67,8 @@ export const checkIdEmailAsync = createAsyncThunk(
 export const searchAsync = createAsyncThunk("search", async data => {
   return await searchUser(data)
     .then(res => {
+      console.log(res.data.data);
+      console.log(res.data.data.profile_image);
       return res.data.data;
     })
     .catch(error => console.log(error));
@@ -74,6 +77,7 @@ export const searchAsync = createAsyncThunk("search", async data => {
 export const updateAsync = createAsyncThunk("update", async data => {
   return await updateUser(data)
     .then(res => {
+      console.log(res.data.data);
       return res.data.data;
     })
     .catch(error => {
@@ -110,6 +114,8 @@ export const userSlice = createSlice({
         state.nickName = null;
         state.email = null;
         state.memberId = null;
+        state.profileImage = null;
+        state.userStack = [];
       })
       .addCase(logOutAsync2.rejected, state => {
         state.logOutError = "error";
@@ -121,12 +127,15 @@ export const userSlice = createSlice({
       .addCase(signUpAsync2.fulfilled, (state, action) => {})
       .addCase(signUpAsync2.rejected, state => {})
       .addCase(searchAsync.pending, state => {})
-      .addCase(searchAsync.fulfilled, (state, action) => {})
+      .addCase(searchAsync.fulfilled, (state, action) => {
+        state.userStack = [...action.payload.prefer_stacks];
+      })
       .addCase(searchAsync.rejected, state => {})
       .addCase(updateAsync.pending, state => {})
       .addCase(updateAsync.fulfilled, (state, action) => {
         state.nickName = action.payload.nickname;
-        state.userStack = [...action.payload.preferred_stacks];
+        state.userStack = [...action.payload.prefer_stacks];
+        state.profileImage = action.payload.profile_image;
       })
       .addCase(updateAsync.rejected, state => {});
   },
