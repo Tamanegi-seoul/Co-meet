@@ -59,10 +59,16 @@ const UserImg = () => {
   const dispatch = useDispatch();
   const nickName = useSelector(state => state.user.nickName);
   const userStack = useSelector(state => state.user.userStack);
+  const profileImage = useSelector(state => state.user.profileImage);
   const theme = useTheme();
   const [personName, setPersonName] = useState(userStack);
   const [updateNickName, setUpdateNickName] = useState(nickName);
   const [password, setPassword] = useState("");
+  const [Image, setImage] = useState({
+    image_file:
+      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+  });
+  const [sendImage, setSendImage] = useState(null);
   useEffect(() => {
     dispatch(searchAsync(member_id));
   }, []);
@@ -76,37 +82,34 @@ const UserImg = () => {
     );
   };
   //--------------------스택관련 위 아래는 이미지관련
-  const [Image, setImage] = useState({
-    image_file: "",
-    preview_URL:
-      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-  });
+
   const fileInput = useRef(null);
   const onChange = e => {
     if (e.target.files[0]) {
-      setImage(e.target.files[0]);
+      setImage({ image_file: e.target.files[0] });
+      setSendImage(e.target.files[0]);
     } else {
       //업로드 취소할 시
-      setImage(
-        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-      );
+      setImage({
+        image_file:
+          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+      });
       return;
     }
-
     //화면에 프로필 사진 표시
     // https://www.habonyphp.com/2019/03/js-api-filereader.html
     const reader = new FileReader();
     reader.onload = () => {
       if (reader.readyState === 2) {
         setImage(reader.result);
+        console.log();
       }
     };
     reader.readAsDataURL(e.target.files[0]);
   };
   const deleteImage = () => {
     setImage({
-      image_file: "",
-      preview_URL:
+      image_file:
         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
     });
   };
@@ -267,6 +270,7 @@ const UserImg = () => {
                   type: "application/json",
                 })
               );
+              formData.append("image", sendImage);
               dispatch(updateAsync(formData));
             }}
           >

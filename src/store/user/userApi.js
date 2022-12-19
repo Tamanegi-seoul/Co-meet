@@ -5,7 +5,7 @@ export function fetchUser() {
 }
 export function loginUser(logindata) {
   return axios({
-    url: "http://3.39.32.185:8080/api/login",
+    url: "http://3.39.32.185:8080/api/auth/login",
     method: "post",
     data: logindata,
     withCredentials: true,
@@ -41,6 +41,7 @@ export function searchUser(memberId) {
   });
 }
 export function updateUser(formData) {
+  console.log(formData);
   return axios({
     url: "http://3.39.32.185:8080/api/member/update",
     method: "patch",
