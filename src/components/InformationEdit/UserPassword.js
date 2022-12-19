@@ -2,15 +2,14 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 // 내 정보 수정 화면에서 비밀번호 부분
-
 const UserPassword = () => {
   return (
     <>
       <UserPasswordWrapper>
         <h3 style={{ margin: "30px" }}>비밀번호</h3>
-        <input type="text" name="nickNameInput"></input>
+        <input type="password" name="nickNameInput"></input>
       </UserPasswordWrapper>
-      <p
+      {/* <p
         style={{
           color: "#868e96",
           fontSize: ".875rem",
@@ -21,7 +20,7 @@ const UserPassword = () => {
         }}
       >
         비밀번호를 입력해주세요.
-      </p>
+      </p> */}
     </>
   );
 };

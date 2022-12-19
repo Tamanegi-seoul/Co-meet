@@ -8,6 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
+
 // 내정보 수정 화면에서 기술스텍 부분
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;

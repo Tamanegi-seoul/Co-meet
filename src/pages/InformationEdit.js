@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import UserImg from "../components/InformationEdit/UserImg";
+import UserInfo from "../components/InformationEdit/UserInfo";
 import UserName from "../components/InformationEdit/UserName";
 import UserStack from "./../components/InformationEdit/UserStack";
 import UserPassword from "../components/InformationEdit/UserPassword";
@@ -15,10 +15,10 @@ const InformationEdit = () => {
       <Header />
       <Contents>
         <h1>내 정보 수정</h1>
-        <UserImg />
-        <UserName />
+        <UserInfo />
+        {/* <UserName />
         <UserStack />
-        <UserPassword />
+        <UserPassword /> */}
       </Contents>
       <EditButtons>
         <button className="save" name="save">
