@@ -59,19 +59,16 @@ const UserImg = () => {
   const dispatch = useDispatch();
   const nickName = useSelector(state => state.user.nickName);
   const userStack = useSelector(state => state.user.userStack);
-  const profileImage = useSelector(state => state.user.profileImage);
+  let profileImage = useSelector(state => state.user.profileImage);
+  profileImage = profileImage
+    ? `data:image/jpeg;base64,${profileImage.image_data}`
+    : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
   const theme = useTheme();
   const [personName, setPersonName] = useState(userStack);
   const [updateNickName, setUpdateNickName] = useState(nickName);
   const [password, setPassword] = useState("");
-  const [Image, setImage] = useState({
-    image_file:
-      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-  });
+  const [Image, setImage] = useState(profileImage);
   const [sendImage, setSendImage] = useState(null);
-  useEffect(() => {
-    dispatch(searchAsync(member_id));
-  }, []);
   const handleChange = event => {
     const {
       target: { value },
@@ -84,6 +81,7 @@ const UserImg = () => {
   //--------------------스택관련 위 아래는 이미지관련
 
   const fileInput = useRef(null);
+
   const onChange = e => {
     if (e.target.files[0]) {
       setImage({ image_file: e.target.files[0] });
@@ -102,7 +100,7 @@ const UserImg = () => {
     reader.onload = () => {
       if (reader.readyState === 2) {
         setImage(reader.result);
-        console.log();
+        console.log(Image);
       }
     };
     reader.readAsDataURL(e.target.files[0]);
@@ -270,6 +268,7 @@ const UserImg = () => {
                   type: "application/json",
                 })
               );
+
               formData.append("image", sendImage);
               dispatch(updateAsync(formData));
             }}
