@@ -10,12 +10,8 @@ import ModalUserInfo from "./Modal/ModalUserInfo";
 import { searchAsync } from "../store/user/user";
 
 const Header = () => {
-  const userInfo = useSelector(state => state.user.email);
-  const member_id = useSelector(state => state.user.memberId);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(searchAsync(member_id));
-  }, []);
+  const userInfo = useSelector(state => state.user.nickName);
+
   return (
     <AppBar
       position="static"

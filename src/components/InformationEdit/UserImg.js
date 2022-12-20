@@ -13,10 +13,11 @@ import {
   TextField,
   useTheme,
 } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { searchAsync, updateAsync } from "../../store/user/user";
+import { deleteAsync, searchAsync, updateAsync } from "../../store/user/user";
 import { useEffect } from "react";
+import { onErrorAlert, onSuccessAlert } from "../Alert/Alert";
 //-------------------------------------------------------------스택관련 함수
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -56,20 +57,36 @@ function getStyles(name, personName, theme) {
 // 내 정보 수정 화면에서 이미지 부분
 
 const UserImg = () => {
+  const navigate = useNavigate();
+  const memberId = useSelector(state => state.user.memberId);
   const { member_id } = useParams();
   const dispatch = useDispatch();
-  const nickName = useSelector(state => state.user.nickName);
-  const userStack = useSelector(state => state.user.userStack);
-  let profileImage = useSelector(state => state.user.profileImage);
-  profileImage = profileImage
-    ? `data:image/jpeg;base64,${profileImage.image_data}`
-    : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
   const theme = useTheme();
-  const [personName, setPersonName] = useState(userStack);
-  const [updateNickName, setUpdateNickName] = useState(nickName);
+  const [personName, setPersonName] = useState([]);
+  const [updateNickName, setUpdateNickName] = useState("");
   const [password, setPassword] = useState("");
-  const [Image, setImage] = useState(profileImage);
+  const [Image, setImage] = useState({
+    image_data:
+      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+  });
   const [sendImage, setSendImage] = useState(null);
+
+  useEffect(() => {
+    if (!memberId) {
+      onErrorAlert("로그인을 먼저 해주세요!");
+      navigate("/");
+    }
+    dispatch(searchAsync(member_id)).then(res => {
+      setUpdateNickName(res.payload.nickname);
+      setPersonName(res.payload.prefer_stacks);
+      if (res.payload.profile_image) {
+        setImage(
+          `data:image/jpeg;base64,${res.payload.profile_image.image_data}`
+        );
+      }
+      console.log(Image);
+    });
+  }, []);
   const handleChange = event => {
     const {
       target: { value },
@@ -90,7 +107,7 @@ const UserImg = () => {
     } else {
       //업로드 취소할 시
       setImage({
-        image_file:
+        image_data:
           "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
       });
       return;
@@ -108,9 +125,10 @@ const UserImg = () => {
   };
   const deleteImage = () => {
     setImage({
-      image_file:
+      image_data:
         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
     });
+    setSendImage(null);
   };
   // const sendImageToServer = async () => {
   //   if (Image.image_file) {
@@ -120,7 +138,7 @@ const UserImg = () => {
   //     setImage({
   //       image_file: "",
   //       preview_URL:
-  //         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+  //         ,
   //     });
   //   }
   // };
@@ -276,7 +294,16 @@ const UserImg = () => {
           >
             완료
           </button>
-          <button className="user_out" name="userOut">
+          <button
+            className="user_out"
+            name="userOut"
+            onClick={() => {
+              dispatch(deleteAsync(member_id)).then(() => {
+                onSuccessAlert("탈퇴완료");
+                navigate("/");
+              });
+            }}
+          >
             회원탈퇴
           </button>
         </EditButtons>

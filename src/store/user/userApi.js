@@ -41,11 +41,18 @@ export function searchUser(memberId) {
   });
 }
 export function updateUser(formData) {
-  console.log(formData);
   return axios({
     url: "http://3.39.32.185:8080/api/member/update",
     method: "patch",
     data: formData,
+  });
+}
+export function deleteUser(memberId) {
+  const member_id = Number(memberId);
+  return axios({
+    url: "http://3.39.32.185:8080/api/member/remove",
+    method: "delete",
+    params: { member_id },
   });
 }
 export function logoutUser() {
