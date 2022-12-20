@@ -35,7 +35,9 @@ export default function ModalUserInfo() {
   const memberId = useSelector(state => state.user.memberId);
 
   const buttons = [
-    <Button key="one">내작성글</Button>,
+    <Button key="one" onClick={() => navigate("/my_post_list/" + memberId)}>
+      내작성글
+    </Button>,
     <Button key="two" onClick={() => navigate("/information/" + memberId)}>
       설정
     </Button>,
