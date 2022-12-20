@@ -5,7 +5,7 @@ export function fetchUser() {
 }
 export function loginUser(logindata) {
   return axios({
-    url: "http://3.39.32.185:8080/api/login",
+    url: "http://3.39.32.185:8080/api/auth/login",
     method: "post",
     data: logindata,
     withCredentials: true,
@@ -30,6 +30,29 @@ export function checkIdEmail(data) {
     url: "http://3.39.32.185:8080/api/member/validate",
     method: "get",
     params: data,
+  });
+}
+export function searchUser(memberId) {
+  const member_id = Number(memberId);
+  return axios({
+    url: "http://3.39.32.185:8080/api/member/search",
+    method: "get",
+    params: { member_id },
+  });
+}
+export function updateUser(formData) {
+  return axios({
+    url: "http://3.39.32.185:8080/api/member/update",
+    method: "patch",
+    data: formData,
+  });
+}
+export function deleteUser(memberId) {
+  const member_id = Number(memberId);
+  return axios({
+    url: "http://3.39.32.185:8080/api/member/remove",
+    method: "delete",
+    params: { member_id },
   });
 }
 export function logoutUser() {

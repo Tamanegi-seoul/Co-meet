@@ -2,23 +2,16 @@ import React, { useState, useRef } from "react";
 import { post, put, axios } from "axios";
 import Avatar from "@mui/material/Avatar";
 import styled from "styled-components";
-import {
-  Box,
-  Chip,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  TextField,
-  useTheme,
-} from "@mui/material";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { deleteAsync, searchAsync, updateAsync } from "../../store/user/user";
-import { useEffect } from "react";
-import { onErrorAlert, onSuccessAlert } from "../Alert/Alert";
-//-------------------------------------------------------------스택관련 함수
+import { Theme, useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Chip from "@mui/material/Chip";
+
+// 스택관련 함수
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -32,16 +25,16 @@ const MenuProps = {
 
 const names = [
   "JAVA",
-  "JAVA_SCRIPT",
-  "REACT",
-  "VUE",
-  "PYTHON",
-  "SPRING",
-  "TYPE_SCRIPT",
-  "ANGULAR",
-  "CPP",
-  "KOTILIN",
-  "SVELTE",
+  "JavaScript",
+  "React",
+  "Vue",
+  "Python",
+  "Spring",
+  "TypeScript",
+  "Angular",
+  "C++",
+  "Kotlin",
+  "Svelte",
 ];
 
 function getStyles(name, personName, theme) {
@@ -53,82 +46,41 @@ function getStyles(name, personName, theme) {
   };
 }
 
-//------------------------------------------------------------------
-// 내 정보 수정 화면에서 이미지 부분
-
-const UserImg = () => {
-  const navigate = useNavigate();
-  const memberId = useSelector(state => state.user.memberId);
-  const { member_id } = useParams();
-  const dispatch = useDispatch();
-  const theme = useTheme();
-  const [personName, setPersonName] = useState([]);
-  const [updateNickName, setUpdateNickName] = useState("");
-  const [password, setPassword] = useState("");
+const UserInfo = () => {
+  // 내 정보 수정 화면에서 이미지 부분
   const [Image, setImage] = useState({
-    image_data:
+    image_file: "",
+    preview_URL:
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
   });
-  const [sendImage, setSendImage] = useState(null);
-
-  useEffect(() => {
-    if (!memberId) {
-      onErrorAlert("로그인을 먼저 해주세요!");
-      navigate("/");
-    }
-    dispatch(searchAsync(member_id)).then(res => {
-      setUpdateNickName(res.payload.nickname);
-      setPersonName(res.payload.prefer_stacks);
-      if (res.payload.profile_image) {
-        setImage(
-          `data:image/jpeg;base64,${res.payload.profile_image.image_data}`
-        );
-      }
-      console.log(Image);
-    });
-  }, []);
-  const handleChange = event => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
-  //--------------------스택관련 위 아래는 이미지관련
-
   const fileInput = useRef(null);
-
   const onChange = e => {
     if (e.target.files[0]) {
-      setImage({ image_file: e.target.files[0] });
-      setSendImage(e.target.files[0]);
+      setImage(e.target.files[0]);
     } else {
       //업로드 취소할 시
-      setImage({
-        image_data:
-          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-      });
+      setImage(
+        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+      );
       return;
     }
+
     //화면에 프로필 사진 표시
     // https://www.habonyphp.com/2019/03/js-api-filereader.html
     const reader = new FileReader();
     reader.onload = () => {
       if (reader.readyState === 2) {
         setImage(reader.result);
-        console.log(Image);
       }
     };
     reader.readAsDataURL(e.target.files[0]);
   };
   const deleteImage = () => {
     setImage({
-      image_data:
+      image_file: "",
+      preview_URL:
         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
     });
-    setSendImage(null);
   };
   // const sendImageToServer = async () => {
   //   if (Image.image_file) {
@@ -138,16 +90,31 @@ const UserImg = () => {
   //     setImage({
   //       image_file: "",
   //       preview_URL:
-  //         ,
+  //         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
   //     });
   //   }
   // };
+
+  // 내 정보화면에서 기술스택부분
+  const theme = useTheme();
+  const [personName, setPersonName] = React.useState([]);
+
+  const handleChange = event => {
+    const {
+      target: { value },
+    } = event;
+    setPersonName(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
   return (
     <div>
       <ImgBox>
         <Avatar
           src={Image}
-          style={{ margin: "20px" }}
+          style={{ margin: "20px", cursor: "pointer" }}
           // size={200}
           sx={{ width: 160, height: 160 }}
           onClick={() => {
@@ -174,17 +141,7 @@ const UserImg = () => {
       </ImgBox>
       <UserNameWrapper>
         <h3 style={{ margin: "30px" }}>닉네임</h3>
-        <TextField
-          margin="normal"
-          required
-          id="nickName"
-          label="닉네임"
-          value={updateNickName}
-          onChange={event => {
-            setUpdateNickName(event.target.value);
-          }}
-          autoFocus
-        />
+        <input type="text" name="nickNameInput"></input>
       </UserNameWrapper>
       <p
         style={{
@@ -244,70 +201,8 @@ const UserImg = () => {
       </p>
       <UserPasswordWrapper>
         <h3 style={{ margin: "30px" }}>비밀번호</h3>
-        <TextField
-          margin="normal"
-          required
-          id="password"
-          label="비밀번호"
-          value={password}
-          onChange={event => {
-            setPassword(event.target.value);
-          }}
-          autoFocus
-        />
+        <input type="password" name="nickNameInput"></input>
       </UserPasswordWrapper>
-      <p
-        style={{
-          color: "#868e96",
-          fontSize: ".875rem",
-          paddingTop: "15px",
-          paddingLeft: "30px",
-          paddingBottom: "15px",
-          borderBottom: "1px solid grey",
-        }}
-      >
-        비밀번호를 입력해주세요.
-      </p>
-      <div style={{ display: "flex", justifyContent: "start" }}>
-        <EditButtons>
-          <button
-            className="save"
-            name="save"
-            onClick={() => {
-              const data = {
-                member_id: member_id,
-                new_password: password,
-                new_nickname: updateNickName,
-                updated_stacks: personName,
-              };
-              const formData = new FormData();
-              formData.append(
-                "request",
-                new Blob([JSON.stringify(data)], {
-                  type: "application/json",
-                })
-              );
-
-              formData.append("image", sendImage);
-              dispatch(updateAsync(formData));
-            }}
-          >
-            완료
-          </button>
-          <button
-            className="user_out"
-            name="userOut"
-            onClick={() => {
-              dispatch(deleteAsync(member_id)).then(() => {
-                onSuccessAlert("탈퇴완료");
-                navigate("/");
-              });
-            }}
-          >
-            회원탈퇴
-          </button>
-        </EditButtons>
-      </div>
     </div>
   );
 };
@@ -390,21 +285,6 @@ const UserNameWrapper = styled.div`
     padding: 1rem;
   }
 `;
-const UserPasswordWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  h3 {
-    width: 20rem;
-  }
-  input {
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    width: 18rem;
-    min-height: 3rem;
-    padding: 1rem;
-  }
-`;
 const TechWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -421,34 +301,19 @@ const TechWrapper = styled.div`
     padding: 20px;
   }
 `;
-const EditButtons = styled.div`
-  width: 800px;
-  margin: 0 auto;
+const UserPasswordWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 1.5rem;
-  .save {
-    background-color: #262626;
-    font-weight: 700;
-    color: #fff;
-    border-radius: 4px;
-    width: 100px;
-    margin-right: 10px;
-    height: 2rem;
-    font-size: 1rem;
-    border: 0;
-    cursor: pointer;
+  h3 {
+    width: 20rem;
   }
-  .user_out {
-    background: #ff3217;
-    color: #fff;
+  input {
     border-radius: 4px;
-    width: 100px;
-    margin-right: 10px;
-    height: 2rem;
-    font-size: 1rem;
-    border: 0;
-    cursor: pointer;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    width: 18rem;
+    min-height: 3rem;
+    padding: 1rem;
   }
 `;
-export default UserImg;
+export default UserInfo;
