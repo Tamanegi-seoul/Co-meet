@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   checkIdEmail,
+  deleteUser,
   loginUser,
   logoutUser,
   searchUser,
@@ -84,6 +85,18 @@ export const updateAsync = createAsyncThunk("update", async data => {
       console.log(error);
     });
 });
+export const deleteAsync = createAsyncThunk("delete", async data => {
+  return await deleteUser(data)
+    .then(res => {
+      removeCookie("access_token");
+      removeCookie("refresh_token");
+      setAuthToken();
+      console.log("회원탈퇴 완료!");
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -127,17 +140,25 @@ export const userSlice = createSlice({
       .addCase(signUpAsync2.fulfilled, (state, action) => {})
       .addCase(signUpAsync2.rejected, state => {})
       .addCase(searchAsync.pending, state => {})
-      .addCase(searchAsync.fulfilled, (state, action) => {
-        state.userStack = [...action.payload.prefer_stacks];
-      })
+      .addCase(searchAsync.fulfilled, (state, action) => {})
       .addCase(searchAsync.rejected, state => {})
       .addCase(updateAsync.pending, state => {})
       .addCase(updateAsync.fulfilled, (state, action) => {
         state.nickName = action.payload.nickname;
-        state.userStack = [...action.payload.prefer_stacks];
-        state.profileImage = action.payload.profile_image;
       })
-      .addCase(updateAsync.rejected, state => {});
+      .addCase(updateAsync.rejected, state => {})
+      .addCase(deleteAsync.pending, state => {})
+      .addCase(deleteAsync.fulfilled, (state, action) => {
+        state.logOutLoading = true;
+        state.logOutDone = true;
+        state.isLogIn = false;
+        state.nickName = null;
+        state.email = null;
+        state.memberId = null;
+        state.profileImage = null;
+        state.userStack = [];
+      })
+      .addCase(deleteAsync.rejected, state => {});
   },
 });
 export const { logOut } = userSlice.actions;
