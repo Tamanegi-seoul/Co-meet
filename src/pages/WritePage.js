@@ -9,12 +9,18 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Chip from "@mui/material/Chip";
 import Axios from "axios";
+import TextField from "@mui/material/TextField";
+import { CenterFocusStrong } from "@mui/icons-material";
+
+import dayjs from "dayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 //다중 select
 const ITEM_HEIGHT = 48;
@@ -47,31 +53,31 @@ const Title = styled.div`
   margin-bottom: 20px;
 `;
 const Circle = styled.div`
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: Dodgerblue;
   text-align: center;
-  line-height: 50px;
-  font-size: 24px;
+  line-height: 40px;
+  font-size: 20px;
+  margin-right: 8px;
 `;
 
 const WritePage = () => {
   const [title, setTitle] = useState("");
-  const [recruit_status, setStatus] = useState(""); //모집구분
   const [recruit_capacity, setCapacity] = useState(""); //모집인원
   const [remote, setRemote] = useState(""); //진행방식
-  const [expexted_term, setTerm] = useState(""); //진행기간
-
-  const [start_date, setStartDate] = useState(new Date());
+  const [expected_term, setTerm] = useState(""); //진행기간
+  const [start_date, setStartDate] = React.useState(null);
+  const [contact_type, setContactType] = useState("");
+  const [contact, setContact] = useState("");
+  const [group_type, setGroupType] = useState(""); //모집구분
+  const [content, setContent] = useState(""); //내용
 
   const theme = useTheme();
   const [designated_stacks, setStack] = React.useState([]);
 
-  const [content] = useState("");
-  const [contact_type, setContactType] = useState("");
-
-  const poster_id = 7;
+  const poster_id = 1;
 
   const stackHandler = event => {
     const {
@@ -81,11 +87,6 @@ const WritePage = () => {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
-  };
-
-  const statusHandler = e => {
-    setStatus(e.target.value);
-    console.log(e.target.value);
   };
 
   const capacityHandler = e => {
@@ -108,6 +109,34 @@ const WritePage = () => {
     console.log(e.target.value);
   };
 
+  const contact_Handler = e => {
+    setContact(e.target.value);
+    console.log(e.target.value);
+  };
+
+  const group_type_Handler = e => {
+    setGroupType(e.target.value);
+    console.log(e.target.value);
+  };
+
+  const date_Hanler = newValue => {
+    setStartDate(newValue);
+    console.log(newValue);
+  };
+
+  const title_Hanler = e => {
+    setTitle(e.target.value);
+    console.log(e.target.value);
+  };
+
+  const content_Handler = (event, editor) => {
+    setContent(editor.getData());
+    console.log(editor.getData());
+    // Define your onSubmit function here
+    // ...
+    // for example, setData() here
+  };
+
   const addPost = e => {
     e.preventDefault();
     Axios.post(
@@ -115,10 +144,12 @@ const WritePage = () => {
       {
         title,
         content,
+        group_type,
         contact_type,
+        contact,
         poster_id, //user id
         start_date,
-        expexted_term,
+        expected_term,
         recruit_capacity,
         designated_stacks,
         remote,
@@ -173,7 +204,7 @@ const WritePage = () => {
         <Grid item xs={1}></Grid>
         <Grid item xs={10}>
           <Title>
-            <Circle>1</Circle> 프로젝트 기본 정보를 입력해주세요.
+            <Circle>1</Circle> <h3>프로젝트 기본 정보를 입력해주세요.</h3>
           </Title>
           <Box>
             <FormControl
@@ -185,16 +216,12 @@ const WritePage = () => {
             >
               <InputLabel>모집구분</InputLabel>
               <Select
-                value={recruit_status}
+                value={group_type}
                 label="setForm"
-                onChange={statusHandler}
+                onChange={group_type_Handler}
               >
-                <MenuItem name="스터디" value={"스터디"}>
-                  스터디
-                </MenuItem>
-                <MenuItem name="프로젝트" value={"프로젝트"}>
-                  프로젝트
-                </MenuItem>
+                <MenuItem value={"STUDY"}>스터디</MenuItem>
+                <MenuItem value={"PROJECT"}>프로젝트</MenuItem>
               </Select>
             </FormControl>
             <FormControl
@@ -220,7 +247,7 @@ const WritePage = () => {
                 <MenuItem value={"7"}>7명</MenuItem>
                 <MenuItem value={"8"}>8명</MenuItem>
                 <MenuItem value={"9"}>9명</MenuItem>
-                <MenuItem value={"10명이상"}>10명이상</MenuItem>
+                <MenuItem value={"10"}>10명</MenuItem>
               </Select>
             </FormControl>
             <FormControl
@@ -232,25 +259,8 @@ const WritePage = () => {
             >
               <InputLabel>진행방식</InputLabel>
               <Select value={remote} label="form_how" onChange={remoteHandler}>
-                <MenuItem value={"true"}>온라인</MenuItem>
-                <MenuItem value={"FALSE"}>오프라인</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl
-              sx={{
-                minWidth: "40%",
-                margin: 1,
-                width: { md: "100%", lg: "47.9%" },
-              }}
-            >
-              <InputLabel>연락방법</InputLabel>
-              <Select
-                value={contact_type}
-                label="form_how"
-                onChange={contact_typeHandler}
-              >
-                <MenuItem value={"KAKAO_OPEN_CHAT"}>온라인</MenuItem>
-                <MenuItem value={"GOOGLE_FORM"}>오프라인</MenuItem>
+                <MenuItem value={true}>온라인</MenuItem>
+                <MenuItem value={false}>오프라인</MenuItem>
               </Select>
             </FormControl>
             <FormControl
@@ -262,15 +272,20 @@ const WritePage = () => {
             >
               <InputLabel>진행기간</InputLabel>
               <Select
-                value={expexted_term}
+                value={expected_term}
                 label="form_term"
                 onChange={termHandler}
               >
                 <MenuItem value={"0"}>기간 미정</MenuItem>
-                <MenuItem value={"30"}>단기</MenuItem>
-                <MenuItem value={"60"}>장기</MenuItem>
+                <MenuItem value={"1"}>1개월</MenuItem>
+                <MenuItem value={"2"}>2개월</MenuItem>
+                <MenuItem value={"3"}>3개월</MenuItem>
+                <MenuItem value={"4"}>4개월</MenuItem>
+                <MenuItem value={"5"}>5개월</MenuItem>
+                <MenuItem value={"6"}>6개월</MenuItem>
               </Select>
             </FormControl>
+
             <FormControl
               sx={{
                 minWidth: "40%",
@@ -307,12 +322,72 @@ const WritePage = () => {
               </Select>
             </FormControl>
 
-            <FormControl sx={{ margin: 1, width: { md: "100%", lg: "47.9%" } }}>
-              <InputLabel>시작예정일</InputLabel>
-              <DatePicker
+            <FormControl
+              sx={{
+                minWidth: "40%",
+                margin: 1,
+                width: { md: "100%", lg: "47.9%" },
+              }}
+            >
+              <InputLabel></InputLabel>
+
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label="시작예정일"
+                  value={start_date}
+                  onChange={date_Hanler}
+                  renderInput={params => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+
+              {/* <DatePicker
                 selected={start_date}
                 onChange={date => setStartDate(date)}
+              
+              /> */}
+            </FormControl>
+            <FormControl
+              sx={{
+                minWidth: "40%",
+                margin: 1,
+                width: { md: "100%", lg: "47.9%" },
+              }}
+            >
+              <InputLabel>연락 방법</InputLabel>
+              <Select
+                value={contact_type}
+                label="form_how"
+                onChange={contact_typeHandler}
+                style={{
+                  marginBottom: 3,
+                }}
+              >
+                <MenuItem id="kakao" value={"KAKAO_OPEN_CHAT"}>
+                  카카오톡 오픈 채팅
+                </MenuItem>
+                <MenuItem id="google_form" value={"GOOGLE_FORM"}>
+                  구글 폼
+                </MenuItem>
+              </Select>
+              {/* <Select
+                labelId="demo-customized-select-label"
+                id="demo-customized-select"
+                value={contact}
+                onChange={contact_Handler}
+                // input={<BootstrapInput />}
+              > */}
+
+              <TextField
+                id="standard-basic"
+                value={contact}
+                onChange={contact_Handler}
+                label="연락 주소"
+                variant="outlined"
               />
+
+              {/* <MenuItem value={"KAKAO_OPEN_CHAT"}>온라인</MenuItem>
+                <MenuItem value={"GOOGLE_FORM"}>오프라인</MenuItem> */}
+              {/* </Select> */}
             </FormControl>
           </Box>
         </Grid>
@@ -321,30 +396,41 @@ const WritePage = () => {
         <Grid item xs={1}></Grid>
         <Grid item xs={10}>
           <Title>
-            <Circle>2</Circle> 프로젝트에 대해 소개해주세요.
+            <Circle>2</Circle> <h3>프로젝트에 대해 소개해주세요.</h3>
           </Title>
-          <Title>제목</Title>
-          <textarea
-            // className="commentText"
-            placeholder="제목"
+          {/* <Title>제목</Title>
+           */}
+          <label>
+            <h4 style={{ margin: "0px" }}>제목</h4>
+          </label>
+          <TextField
+            required
             value={title}
-            onChange={e => {
-              setTitle(e.target.value);
-              console.log(setTitle);
-            }}
-          ></textarea>
+            onChange={title_Hanler}
+            placeholder="글 제목을 입력해주세요"
+            variant="outlined"
+            margin="normal"
+            fullWidth
+          />
+
           <CKEditor
             editor={ClassicEditor}
-            data=""
+            data={content}
             onReady={editor => {
               // You can store the "editor" and use when it is needed.
               console.log("Editor is ready to use!", editor);
             }}
-            onChange={(event, editor) => {
-              const data = editor.getData();
-              // content = data;
-              console.log({ event, editor, data });
-            }}
+            onChange={content_Handler}
+            // onChange={
+            //   ((_, editor) => setContent(editor.getData()));
+            //   console.log({ _, editor, setContent }));
+            // }
+            // onChange={(_, editor) => {
+            //   setContent = editor.getData();
+
+            //   // content = data;
+            //   console.log({ _, editor, setContent });
+            // }}
             onBlur={(event, editor) => {
               console.log("Blur.", editor);
             }}
@@ -385,5 +471,9 @@ const WritePage = () => {
     </>
   );
 };
+
+// const sDatePicker = styled(DatePicker)`
+//   padding: 5px;
+// `;
 
 export default WritePage;
