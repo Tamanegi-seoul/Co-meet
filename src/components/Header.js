@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import { AiFillHeart } from "react-icons/ai";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ModalUserInfo from "./Modal/ModalUserInfo";
+import { searchAsync } from "../store/user/user";
 
 const Header = () => {
   const userInfo = useSelector(state => state.user.email);
+  const member_id = useSelector(state => state.user.memberId);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(searchAsync(member_id));
+  }, []);
   return (
     <AppBar
       position="static"
