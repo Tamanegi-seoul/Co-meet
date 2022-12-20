@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import { post, put, axios } from "axios";
 import Avatar from "@mui/material/Avatar";
 import styled from "styled-components";
 import {
@@ -13,7 +12,7 @@ import {
   TextField,
   useTheme,
 } from "@mui/material";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAsync, searchAsync, updateAsync } from "../../store/user/user";
 import { useEffect } from "react";
@@ -64,12 +63,11 @@ const UserImg = () => {
   const theme = useTheme();
   const [personName, setPersonName] = useState([]);
   const [updateNickName, setUpdateNickName] = useState("");
-  const [password, setPassword] = useState("");
+  const [sendImage, setSendImage] = useState(null);
   const [Image, setImage] = useState({
     image_data:
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
   });
-  const [sendImage, setSendImage] = useState(null);
 
   useEffect(() => {
     if (!memberId) {
@@ -87,6 +85,7 @@ const UserImg = () => {
       console.log(Image);
     });
   }, []);
+
   const handleChange = event => {
     const {
       target: { value },
@@ -130,18 +129,6 @@ const UserImg = () => {
     });
     setSendImage(null);
   };
-  // const sendImageToServer = async () => {
-  //   if (Image.image_file) {
-  //     const formData = new FormData();
-  //     formData.append("file", Image.image_file);
-  //     await axios.post("api주소", formData);
-  //     setImage({
-  //       image_file: "",
-  //       preview_URL:
-  //         ,
-  //     });
-  //   }
-  // };
   return (
     <div>
       <ImgBox>
@@ -162,7 +149,6 @@ const UserImg = () => {
             <input
               type="file"
               id="ex_file"
-              // style={{ display: "none" }}
               accept="image/jpg,image/png,image/jpeg"
               name="profile_img"
               onChange={onChange}
@@ -242,32 +228,7 @@ const UserImg = () => {
       >
         관심 있는 기술 태그를 입력해주세요.
       </p>
-      <UserPasswordWrapper>
-        <h3 style={{ margin: "30px" }}>비밀번호</h3>
-        <TextField
-          margin="normal"
-          required
-          id="password"
-          label="비밀번호"
-          value={password}
-          onChange={event => {
-            setPassword(event.target.value);
-          }}
-          autoFocus
-        />
-      </UserPasswordWrapper>
-      <p
-        style={{
-          color: "#868e96",
-          fontSize: ".875rem",
-          paddingTop: "15px",
-          paddingLeft: "30px",
-          paddingBottom: "15px",
-          borderBottom: "1px solid grey",
-        }}
-      >
-        비밀번호를 입력해주세요.
-      </p>
+
       <div style={{ display: "flex", justifyContent: "start" }}>
         <EditButtons>
           <button
@@ -276,7 +237,6 @@ const UserImg = () => {
             onClick={() => {
               const data = {
                 member_id: member_id,
-                new_password: password,
                 new_nickname: updateNickName,
                 updated_stacks: personName,
               };
@@ -289,7 +249,10 @@ const UserImg = () => {
               );
 
               formData.append("image", sendImage);
-              dispatch(updateAsync(formData));
+              dispatch(updateAsync(formData)).then(() => {
+                onSuccessAlert("수정완료되었습니다");
+                navigate("/");
+              });
             }}
           >
             완료
@@ -376,21 +339,6 @@ const ImageDelete = styled.button`
   }
 `;
 const UserNameWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  h3 {
-    width: 20rem;
-  }
-  input {
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    width: 18rem;
-    min-height: 3rem;
-    padding: 1rem;
-  }
-`;
-const UserPasswordWrapper = styled.div`
   display: flex;
   align-items: center;
   h3 {
