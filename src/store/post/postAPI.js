@@ -20,6 +20,11 @@ export function fetchViewPostDetail(post_id) {
   );
 }
 
+// export function fetchPostList(member_id) {
+//   return new Promise(resolve =>
+//     setTimeout(() => resolve({ data: member_id }), 0)
+//   );
+// }
 const generateDummyPost = number =>
   Array(number)
     .fill()
