@@ -29,9 +29,10 @@ const MyPostList = () => {
       onErrorAlert("로그인을 먼저 해주세요!");
       navigate("/");
     } else {
-      // memberId를 통한 작성글 get
       // dispatch(loadPostListAsync(poster_id));
       // console.log(postListShow);
+
+      // memberId를 통한 작성글 get
       axios({
         method: "get",
         url: `http://3.39.32.185:8080/api/post/search/by?member_id=3`,
@@ -77,7 +78,12 @@ const MyPostList = () => {
           {postList
             ? postList.map((item, index) => {
                 return (
-                  <CommonTableRow key={index}>
+                  <CommonTableRow
+                    key={index}
+                    onClick={() => {
+                      navigate("/post/" + item.post_id);
+                    }}
+                  >
                     <CommonTableColumn>{item.post_id}</CommonTableColumn>
                     <CommonTableColumn>{item.title}</CommonTableColumn>
                     <CommonTableColumn>
