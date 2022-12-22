@@ -80,7 +80,9 @@ const MyPostList = () => {
                   <CommonTableRow key={index}>
                     <CommonTableColumn>{item.post_id}</CommonTableColumn>
                     <CommonTableColumn>{item.title}</CommonTableColumn>
-                    <CommonTableColumn>{item.created_time}</CommonTableColumn>
+                    <CommonTableColumn>
+                      {item.created_time.slice(0, 10)}
+                    </CommonTableColumn>
                   </CommonTableRow>
                 );
               })
