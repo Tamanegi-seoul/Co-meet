@@ -7,13 +7,50 @@ import CommonTableColumn from "../components/Table/CommonTableColumn";
 import CommonTableRow from "../components/Table/CommonTableRow";
 import { HiClipboardList } from "react-icons/hi";
 import styled from "styled-components";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { onErrorAlert, onSuccessAlert } from "../components/Alert/Alert";
+import { deleteAsync, searchAsync } from "../store/user/user";
+import { loadPostListAsync } from "../store/post/post";
+import axios from "axios";
 // 내작성글 리스트를 볼 수 있는 페이지
 
 const MyPostList = () => {
+  const navigate = useNavigate();
+  const memberId = useSelector(state => state.user.memberId);
+  const { member_id } = useParams();
+  const { poster_id } = useParams();
+  const dispatch = useDispatch();
+  const postListShow = useSelector(state => state.post.postListShow);
   const [postList, setPostList] = useState([]);
 
   useEffect(() => {
-    setPostList(postList);
+    if (!memberId) {
+      onErrorAlert("로그인을 먼저 해주세요!");
+      navigate("/");
+    } else {
+      // memberId를 통한 작성글 get
+      // dispatch(loadPostListAsync(poster_id));
+      // console.log(postListShow);
+      axios({
+        method: "get",
+        url: `http://3.39.32.185:8080/api/post/search/by?member_id=3`,
+      }).then(res => {
+        console.log(res.data.data);
+        setPostList(res.data.data);
+        // function isMemberId(el) {
+        //   if (el.poster_id === "member_id") {
+        //     return;
+        //   }
+        // }
+        // const myList = postListShow.filter(isMemberId);
+        // console.log(myList);
+        // dispatch(loadPostListAsync(poster_id)).then(res => {
+        //   console.log(postListShow);
+        //   console.log(res.data);
+        // });
+      });
+    }
   }, []);
 
   return (
@@ -37,31 +74,17 @@ const MyPostList = () => {
           </span>
         </div>
         <CommonTable headersName={["글번호", "제목", "등록일"]}>
-          <CommonTableRow>
-            <CommonTableColumn>1</CommonTableColumn>
-            <CommonTableColumn>첫번째 게시글입니다.</CommonTableColumn>
-            <CommonTableColumn>2020-10-25</CommonTableColumn>
-          </CommonTableRow>
-          <CommonTableRow>
-            <CommonTableColumn>2</CommonTableColumn>
-            <CommonTableColumn>두번째 게시글입니다.</CommonTableColumn>
-            <CommonTableColumn>2020-10-25</CommonTableColumn>
-          </CommonTableRow>
-          <CommonTableRow>
-            <CommonTableColumn>3</CommonTableColumn>
-            <CommonTableColumn>세번째 게시글입니다.</CommonTableColumn>
-            <CommonTableColumn>2020-10-25</CommonTableColumn>
-          </CommonTableRow>
-          <CommonTableRow>
-            <CommonTableColumn>4</CommonTableColumn>
-            <CommonTableColumn>네번째 게시글입니다.</CommonTableColumn>
-            <CommonTableColumn>2020-10-25</CommonTableColumn>
-          </CommonTableRow>
-          <CommonTableRow>
-            <CommonTableColumn>5</CommonTableColumn>
-            <CommonTableColumn>다섯번째 게시글입니다.</CommonTableColumn>
-            <CommonTableColumn>2020-10-25</CommonTableColumn>
-          </CommonTableRow>
+          {postList
+            ? postList.map((item, index) => {
+                return (
+                  <CommonTableRow key={index}>
+                    <CommonTableColumn>{item.post_id}</CommonTableColumn>
+                    <CommonTableColumn>{item.title}</CommonTableColumn>
+                    <CommonTableColumn>{item.created_time}</CommonTableColumn>
+                  </CommonTableRow>
+                );
+              })
+            : ""}
         </CommonTable>
       </TableWrapper>
       <Footer />

@@ -27,6 +27,15 @@ export const loadPostListAsync = createAsyncThunk("loadPostList", async () => {
   });
 });
 
+// export const loadMyPostListAsync = createAsyncThunk(
+//   "loadMyPostList",
+//   async () => {
+//     return await fetchPost().then(res => {
+//       return res.data.data;
+//     });
+//   }
+// );
+
 export const loadMorePostListAsync = createAsyncThunk(
   "loadMorePostList",
   async () => {
