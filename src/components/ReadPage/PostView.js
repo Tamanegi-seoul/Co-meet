@@ -1,5 +1,5 @@
 import { textAlign } from "@mui/system";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Post.css";
 import Header from "../Header";
 import Footer from "../Footer";
@@ -9,11 +9,14 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { viewPostDetailAsync } from "../../store/post/post";
 import axios from "axios";
+import PostComent from "./PostComent";
 
 //게시물 작성 완료 페이지의 내용
 const PostView = () => {
   const { post_id } = useParams();
   const dispatch = useDispatch();
+
+  const [comment, setComment] = useState([]);
 
   useEffect(() => {
     dispatch(viewPostDetailAsync(post_id));
@@ -22,7 +25,10 @@ const PostView = () => {
       method: "get",
       url: "http://3.39.32.185:8080/api/post/search?post_id=5",
     }).then(function (response) {
+      setComment(response.data);
       console.log("게시글 가져오기 성공", response.data);
+      // console.log(comment.data.comments[0].commenter_nickname);
+      // console.log(comment.data.comments[0].content);
     });
   }, []);
 
@@ -107,7 +113,7 @@ const PostView = () => {
 
         <div className="postContent">{dummyPost.data[0].content}</div>
 
-        {/* <PostComent /> */}
+        <PostComent comment={comment} />
         <Footer />
       </div>
     </>

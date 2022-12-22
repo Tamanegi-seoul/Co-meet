@@ -1,105 +1,86 @@
-import { ConstructionRounded } from "@mui/icons-material";
 import React, { useState, useEffect } from "react";
-import Header from "../Header";
+import styled from "styled-components";
 import "./Post.css";
-import axios from "axios";
-
-import { FaRegTrashAlt } from "react-icons/fa";
 
 //게시물 작성 완료 페이지의 댓글창
 // const PostComent = ({ content, setContent, onRegisterClick, count }) => {
-const PostComent = () => {
+const PostComent = ({ comment }) => {
   // 덧글 조회
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: "http://3.39.32.185:8080/api/comment/search?post_id=5",
-      responseType: "json",
-    }).then(function (response) {
-      console.log(response.data);
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios({
+  //     method: "get",
+  //     url: "http://3.39.32.185:8080/api/comment/search?post_id=5",
+  //     responseType: "json",
+  //   }).then(function (response) {
+  //     console.log(response.data);
+  //   });
+  // }, []);
 
-  const [commentArray, setCommentArray] = useState([
-    {
-      id: 0, //사용자아이디
-      content: "어렵네요", //댓글 내용
-    },
-
-    {
-      id: 1, //사용자아이디
-      content: "저 스터디 참여하고 싶습니다 ! ", //댓글 내용
-    },
-  ]);
-
-  const removeComment = id => {
-    setCommentArray(
-      commentArray.filter(comment => {
-        return comment.id !== id;
-      })
-    );
-  };
-
-  const [id, setId] = useState(2);
-
-  const addComment = () => {
-    setId(id + 1);
-    const newComment = {
-      id: id,
-      content: comment,
-    };
-    setCommentArray([...commentArray, newComment]);
-    setComment("");
-  };
-
-  const [comment, setComment] = useState();
+  const Name = comment.data.comments[0].commenter_nickname;
+  const Time = comment.data.comments[0].created_time;
+  const Content = comment.data.comments[0].content;
 
   return (
     <div className="commentInput">
-      <div className="feed-comment-list">
-        {commentArray.map(comment => {
-          return (
-            <div key={comment.id}>
-              {comment.id} {comment.content}
-              <button
-                style={{
-                  border: "none",
-                  backgroundColor: "white",
-                  float: "right",
-                }}
-                onClick={() => removeComment(comment.id)}
-              >
-                <FaRegTrashAlt
-                  className="comment-delete"
-                  color="cornflowerblue"
-                  size="16px"
-                />
-              </button>
-            </div>
-          );
-        })}
-      </div>
+      <div>{}개의 댓글이 있습니다.</div>
       <textarea
         className="commentText"
         placeholder="댓글을 입력하세요."
-        value={comment}
-        onChange={e => {
-          setComment(e.target.value);
-          // console.log({ id, setComment });
-        }}
       ></textarea>
       <div className="buttonWrapper">
-        <button
-          onClick={addComment}
-          className="buttonComplete"
-          // className={styles.buttonComplete}
-          name="register"
-        >
+        <button className="buttonComplete" name="register">
           댓글 등록
         </button>
+      </div>
+      <div>
+        {/* 코맨트 렌더링 부분 */}
+        <Section>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <img src="/img/C.png" alt="사용자 이미지"></img>
+            <div>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <div className="Name">{Name}</div>
+                <div className="Time">{Time}</div>
+              </div>
+            </div>
+          </div>
+        </Section>
+        <p>{Content}</p>
       </div>
     </div>
   );
 };
+
+const Section = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 18px;
+
+  img {
+    display: block;
+    width: 52px;
+    height: 52px;
+    margin-right: 16px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .Name {
+    color: #333;
+    font-weight: 700;
+  }
+
+  .Time {
+    font-size: 14px;
+    line-height: 126.5%;
+    letter-spacing: -0.005em;
+    color: #9f9f9f;
+  }
+`;
 
 export default PostComent;
