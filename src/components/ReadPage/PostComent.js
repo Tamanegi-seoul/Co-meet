@@ -16,7 +16,7 @@ const PostComent = ({ comment }) => {
   //   });
   // }, []);
 
-  const COMMETNS = comment.data.comments;
+  const COMMETNS = comment?.data?.comments;
 
   return (
     <div className="commentInput">
