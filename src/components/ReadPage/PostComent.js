@@ -16,9 +16,7 @@ const PostComent = ({ comment }) => {
   //   });
   // }, []);
 
-  const Name = comment.data.comments[0].commenter_nickname;
-  const Time = comment.data.comments[0].created_time;
-  const Content = comment.data.comments[0].content;
+  const COMMETNS = comment.data.comments;
 
   return (
     <div className="commentInput">
@@ -34,23 +32,38 @@ const PostComent = ({ comment }) => {
       </div>
       <div>
         {/* 코맨트 렌더링 부분 */}
-        <Section>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <img src="/img/C.png" alt="사용자 이미지"></img>
-            <div>
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <div className="Name">{Name}</div>
-                <div className="Time">{Time}</div>
-              </div>
-            </div>
-          </div>
-        </Section>
-        <p>{Content}</p>
+        {COMMETNS
+          ? COMMETNS.map((item, index) => {
+              return (
+                <>
+                  <Section>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                      key={index}
+                    >
+                      <img src="/img/C.png" alt="사용자 이미지"></img>
+                      <div>
+                        <div
+                          style={{ display: "flex", flexDirection: "column" }}
+                        >
+                          <div className="Name">{item.commenter_nickname}</div>
+                          <div className="Time">
+                            {item.created_time.slice(0, 10)}
+                            &nbsp;
+                            {item.created_time.slice(11, 16)}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Section>
+                  <p>{item.content}</p>
+                </>
+              );
+            })
+          : null}
       </div>
     </div>
   );

@@ -24,12 +24,14 @@ const PostView = () => {
     axios({
       method: "get",
       url: "http://3.39.32.185:8080/api/post/search?post_id=5",
-    }).then(function (response) {
-      setComment(response.data);
-      console.log("게시글 가져오기 성공", response.data);
-      // console.log(comment.data.comments[0].commenter_nickname);
-      // console.log(comment.data.comments[0].content);
-    });
+    })
+      .then(response => {
+        setComment(response.data);
+        console.log("게시글 가져오기 성공", response.data);
+      })
+      .catch(Error => {
+        console.log(Error);
+      });
   }, []);
 
   return (
@@ -37,21 +39,16 @@ const PostView = () => {
       <div>
         <h2 align="center">{dummyPost.data[0].title}</h2>
       </div>
-
       <div id="content">
         <div className="TextBox">
           <div className="imagebox">
             <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTEwMThfMTI5%2FMDAxNjM0NTU2MDA4MDI3.zsBOZlr1ORTLG1JrR28FSt_UKlAbgTR2036EPOeSzfEg.9IXalR6AGH7G5i3j-Xjm1ht7-CFChgD2woGJDDWFN4Mg.JPEG.guskr0512%2FIMG_4659.JPG&type=sc960_832" />
           </div>
         </div>
-
         <div className="TextBox">{dummyPost.data[0].poster_nickname}</div>
-
         <div className="TextBox">|</div>
-
         <div className="TextBox">{dummyPost.data[0].created_date}</div>
       </div>
-
       <div>
         <hr></hr>
         <ul className="studyGrid">
@@ -104,15 +101,11 @@ const PostView = () => {
           </li>
         </ul>
       </div>
-
       {/* 프로젝트 소개  */}
-
       <div className="postContentWrapper">
         <h2 className="postInfo">프로젝트 소개</h2>
         <hr></hr>
-
         <div className="postContent">{dummyPost.data[0].content}</div>
-
         <PostComent comment={comment} />
         <Footer />
       </div>
