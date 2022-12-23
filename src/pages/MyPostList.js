@@ -7,13 +7,33 @@ import CommonTableColumn from "../components/Table/CommonTableColumn";
 import CommonTableRow from "../components/Table/CommonTableRow";
 import { HiClipboardList } from "react-icons/hi";
 import styled from "styled-components";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import { loadMorePostListAsync } from "../store/post/post";
+
 // 내작성글 리스트를 볼 수 있는 페이지
 
-const MyPostList = () => {
+const MyPostList = props => {
+  const { member_id } = useParams();
+  const dispatch = useDispatch();
   const [postList, setPostList] = useState([]);
 
   useEffect(() => {
-    setPostList(postList);
+    async function list() {
+      try {
+        const response = await axios.get(
+          // `http://3.39.32.185:8080/api/post/search/by?member_id=${member_id}`
+          `http://3.39.32.185:8080/api/post/search/by?member_id=3`
+        );
+        setPostList(response.data.data);
+        console.log(response.data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    // console.log(postList);
   }, []);
 
   return (
@@ -37,31 +57,17 @@ const MyPostList = () => {
           </span>
         </div>
         <CommonTable headersName={["글번호", "제목", "등록일"]}>
-          <CommonTableRow>
-            <CommonTableColumn>1</CommonTableColumn>
-            <CommonTableColumn>첫번째 게시글입니다.</CommonTableColumn>
-            <CommonTableColumn>2020-10-25</CommonTableColumn>
-          </CommonTableRow>
-          <CommonTableRow>
-            <CommonTableColumn>2</CommonTableColumn>
-            <CommonTableColumn>두번째 게시글입니다.</CommonTableColumn>
-            <CommonTableColumn>2020-10-25</CommonTableColumn>
-          </CommonTableRow>
-          <CommonTableRow>
-            <CommonTableColumn>3</CommonTableColumn>
-            <CommonTableColumn>세번째 게시글입니다.</CommonTableColumn>
-            <CommonTableColumn>2020-10-25</CommonTableColumn>
-          </CommonTableRow>
-          <CommonTableRow>
-            <CommonTableColumn>4</CommonTableColumn>
-            <CommonTableColumn>네번째 게시글입니다.</CommonTableColumn>
-            <CommonTableColumn>2020-10-25</CommonTableColumn>
-          </CommonTableRow>
-          <CommonTableRow>
-            <CommonTableColumn>5</CommonTableColumn>
-            <CommonTableColumn>다섯번째 게시글입니다.</CommonTableColumn>
-            <CommonTableColumn>2020-10-25</CommonTableColumn>
-          </CommonTableRow>
+          {postList
+            ? postList.map((item, index) => {
+                return (
+                  <CommonTableRow key={index}>
+                    <CommonTableColumn>{item.no}</CommonTableColumn>
+                    <CommonTableColumn>{item.title}</CommonTableColumn>
+                    <CommonTableColumn>{item.createDate}</CommonTableColumn>
+                  </CommonTableRow>
+                );
+              })
+            : ""}
         </CommonTable>
       </TableWrapper>
       <Footer />

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import postListRefresh from "../../utils/postListRefresh";
-import { fetchMorePost, fetchPost, fetchViewPostDetail } from "../post/postAPI";
+import { fetchPostList, fetchPost, fetchViewPostDetail } from "../post/postAPI";
 
 const initialState = {
   post: {},
@@ -27,6 +27,15 @@ export const loadPostListAsync = createAsyncThunk("loadPostList", async () => {
   });
 });
 
+// export const loadMyPostListAsync = createAsyncThunk(
+//   "loadMyPostList",
+//   async poster_id => {
+//     const res = await fetchPostList(poster_id);
+//     console.log(res.data);
+//     return res.data;
+//   }
+// );
+
 export const loadMorePostListAsync = createAsyncThunk(
   "loadMorePostList",
   async () => {
@@ -42,6 +51,7 @@ export const viewPostDetailAsync = createAsyncThunk(
   "viewPostDetailAsync",
   async post_id => {
     const response = await fetchViewPostDetail(post_id);
+    // console.log(response.data);
     return response.data;
   }
 );
