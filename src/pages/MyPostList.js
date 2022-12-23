@@ -37,8 +37,13 @@ const MyPostList = () => {
         method: "get",
         url: `http://3.39.32.185:8080/api/post/search/by?member_id=${member_id}`,
       }).then(res => {
-        console.log(res.data.data);
-        setPostList(res.data.data);
+        if (!res.data.data.length) {
+          setPostList(null);
+        } else {
+          console.log(res.data.data);
+          setPostList(res.data.data);
+        }
+
         // function isMemberId(el) {
         //   if (el.poster_id === "member_id") {
         //     return;
@@ -74,21 +79,32 @@ const MyPostList = () => {
             내 작성글
           </span>
         </div>
-        <CommonTable headersName={["글번호", "제목", "등록일"]}>
-          {postList
-            ? postList.map((item, index) => {
-                return (
-                  <CommonTableRow key={index} props={item.post_id}>
-                    <CommonTableColumn>{item.post_id}</CommonTableColumn>
-                    <CommonTableColumn>{item.title}</CommonTableColumn>
-                    <CommonTableColumn>
-                      {item.created_time.slice(0, 10)}
-                    </CommonTableColumn>
-                  </CommonTableRow>
-                );
-              })
-            : ""}
-        </CommonTable>
+
+        {postList ? (
+          postList.map((item, index) => {
+            return (
+              <CommonTable headersName={["글번호", "제목", "등록일"]}>
+                <CommonTableRow
+                  key={index}
+                  onClick={() => {
+                    navigate("/post/" + item.post_id);
+                  }}
+                >
+                  <CommonTableColumn>{item.post_id}</CommonTableColumn>
+                  <CommonTableColumn>{item.title}</CommonTableColumn>
+                  <CommonTableColumn>
+                    {item.created_time.slice(0, 10)}
+                  </CommonTableColumn>
+                </CommonTableRow>
+              </CommonTable>
+            );
+          })
+        ) : (
+          <div>
+            <p style={{ textAlign: "center" }}>작성된 게시물이 없습니다!</p>
+          </div>
+        )}
+
       </TableWrapper>
       <Footer />
     </>

@@ -74,11 +74,12 @@ const WritePage = () => {
   const [contact, setContact] = useState("");
   const [group_type, setGroupType] = useState(""); //모집구분
   const [content, setContent] = useState(""); //내용
-
+  const poster_id = useSelector(state => state.user.memberId);
   const theme = useTheme();
   const [designated_stacks, setStack] = React.useState([]);
 
   const poster_id = useSelector(state => state.user.memberId);
+
 
   const stackHandler = event => {
     const {
