@@ -58,7 +58,7 @@ export default function SignIn() {
     await dispatch(loginAsync2(data)).then(res => {
       res.payload.code == null
         ? navigate("/")
-        : onErrorAlert("Login error Check Your Email & Password");
+        : onErrorAlert("아이디와 비밀번호를 확인해주세요");
     });
   }
 

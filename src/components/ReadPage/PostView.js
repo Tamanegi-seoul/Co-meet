@@ -1,5 +1,5 @@
 import { textAlign } from "@mui/system";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Post.css";
 import Header from "../Header";
 import Footer from "../Footer";
@@ -9,11 +9,14 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { viewPostDetailAsync } from "../../store/post/post";
 import axios from "axios";
+import PostComent from "./PostComent";
 
 //게시물 작성 완료 페이지의 내용
 const PostView = () => {
   const { post_id } = useParams();
   const dispatch = useDispatch();
+
+  const [comment, setComment] = useState([]);
 
   useEffect(() => {
     dispatch(viewPostDetailAsync(post_id));
@@ -21,9 +24,14 @@ const PostView = () => {
     axios({
       method: "get",
       url: "http://3.39.32.185:8080/api/post/search?post_id=5",
-    }).then(function (response) {
-      console.log("게시글 가져오기 성공", response.data);
-    });
+    })
+      .then(response => {
+        setComment(response.data);
+        console.log("게시글 가져오기 성공", response.data);
+      })
+      .catch(Error => {
+        console.log(Error);
+      });
   }, []);
 
   return (
@@ -31,21 +39,16 @@ const PostView = () => {
       <div>
         <h2 align="center">{dummyPost.data[0].title}</h2>
       </div>
-
       <div id="content">
         <div className="TextBox">
           <div className="imagebox">
             <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTEwMThfMTI5%2FMDAxNjM0NTU2MDA4MDI3.zsBOZlr1ORTLG1JrR28FSt_UKlAbgTR2036EPOeSzfEg.9IXalR6AGH7G5i3j-Xjm1ht7-CFChgD2woGJDDWFN4Mg.JPEG.guskr0512%2FIMG_4659.JPG&type=sc960_832" />
           </div>
         </div>
-
         <div className="TextBox">{dummyPost.data[0].poster_nickname}</div>
-
         <div className="TextBox">|</div>
-
         <div className="TextBox">{dummyPost.data[0].created_date}</div>
       </div>
-
       <div>
         <hr></hr>
         <ul className="studyGrid">
@@ -98,16 +101,12 @@ const PostView = () => {
           </li>
         </ul>
       </div>
-
       {/* 프로젝트 소개  */}
-
       <div className="postContentWrapper">
         <h2 className="postInfo">프로젝트 소개</h2>
         <hr></hr>
-
         <div className="postContent">{dummyPost.data[0].content}</div>
-
-        {/* <PostComent /> */}
+        <PostComent comment={comment} />
         <Footer />
       </div>
     </>

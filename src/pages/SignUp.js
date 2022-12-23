@@ -61,13 +61,21 @@ export default function SignUp() {
     //arr배열을 Stacks배열에 덮어쓰기
     data.prefer_stacks = [...arr];
     console.log(data);
-    dispatch(signUpAsync2(data));
-    onSuccessAlert("Signed up successfully");
-    navigate("/login");
+    dispatch(signUpAsync2(data))
+      .then(res => {
+        if (res.error) {
+          onErrorAlert("회원가입 정보가 중복됩니다");
+          return;
+        } else {
+          onSuccessAlert("회원가입에 완료하였습니다");
+          navigate("/login");
+        }
+      })
+      .catch(error => onErrorAlert(error.data));
   };
 
   const onError = error => {
-    onErrorAlert("Signed up false");
+    onErrorAlert("빈칸을 조건에 맞게 채워주세요");
   };
 
   return (
