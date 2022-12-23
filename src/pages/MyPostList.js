@@ -79,7 +79,6 @@ const MyPostList = () => {
             내 작성글
           </span>
         </div>
-
         {postList ? (
           postList.map((item, index) => {
             return (
@@ -104,7 +103,6 @@ const MyPostList = () => {
             <p style={{ textAlign: "center" }}>작성된 게시물이 없습니다!</p>
           </div>
         )}
-
       </TableWrapper>
       <Footer />
     </>

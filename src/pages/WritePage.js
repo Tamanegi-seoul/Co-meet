@@ -78,9 +78,6 @@ const WritePage = () => {
   const theme = useTheme();
   const [designated_stacks, setStack] = React.useState([]);
 
-  const poster_id = useSelector(state => state.user.memberId);
-
-
   const stackHandler = event => {
     const {
       target: { value },
