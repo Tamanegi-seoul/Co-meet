@@ -35,7 +35,7 @@ const MyPostList = () => {
       // memberId를 통한 작성글 get
       axios({
         method: "get",
-        url: `http://3.39.32.185:8080/api/post/search/by?member_id=3`,
+        url: `http://3.39.32.185:8080/api/post/search/by?member_id=${member_id}`,
       }).then(res => {
         console.log(res.data.data);
         setPostList(res.data.data);
@@ -52,7 +52,6 @@ const MyPostList = () => {
         // });
       });
     }
-
   }, []);
 
   return (
@@ -79,12 +78,7 @@ const MyPostList = () => {
           {postList
             ? postList.map((item, index) => {
                 return (
-                  <CommonTableRow
-                    key={index}
-                    onClick={() => {
-                      navigate("/post/" + item.post_id);
-                    }}
-                  >
+                  <CommonTableRow key={index} props={item.post_id}>
                     <CommonTableColumn>{item.post_id}</CommonTableColumn>
                     <CommonTableColumn>{item.title}</CommonTableColumn>
                     <CommonTableColumn>

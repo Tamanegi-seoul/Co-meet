@@ -21,6 +21,7 @@ import dayjs from "dayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { useSelector } from "react-redux";
 
 //다중 select
 const ITEM_HEIGHT = 48;
@@ -77,7 +78,7 @@ const WritePage = () => {
   const theme = useTheme();
   const [designated_stacks, setStack] = React.useState([]);
 
-  const poster_id = 1;
+  const poster_id = useSelector(state => state.user.memberId);
 
   const stackHandler = event => {
     const {
