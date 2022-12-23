@@ -79,10 +79,11 @@ const MyPostList = () => {
             내 작성글
           </span>
         </div>
-        {postList ? (
-          postList.map((item, index) => {
-            return (
-              <CommonTable headersName={["글번호", "제목", "등록일"]}>
+
+        <CommonTable headersName={["글번호", "제목", "등록일"]}>
+          {postList ? (
+            postList.map((item, index) => {
+              return (
                 <CommonTableRow
                   key={index}
                   onClick={() => {
@@ -95,14 +96,14 @@ const MyPostList = () => {
                     {item.created_time.slice(0, 10)}
                   </CommonTableColumn>
                 </CommonTableRow>
-              </CommonTable>
-            );
-          })
-        ) : (
-          <div>
-            <p style={{ textAlign: "center" }}>작성된 게시물이 없습니다!</p>
-          </div>
-        )}
+              );
+            })
+          ) : (
+            <div>
+              <p style={{ textAlign: "center" }}>작성된 게시물이 없습니다!</p>
+            </div>
+          )}
+        </CommonTable>
       </TableWrapper>
       <Footer />
     </>
