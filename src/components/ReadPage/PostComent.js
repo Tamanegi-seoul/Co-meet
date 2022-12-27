@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { onErrorAlert } from "../Alert/Alert";
 import "./Post.css";
+import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Axios from "axios";
@@ -9,6 +10,7 @@ import Axios from "axios";
 //게시물 작성 완료 페이지의 댓글창
 // const PostComent = ({ content, setContent, onRegisterClick, count }) => {
 const PostComent = ({ comment }) => {
+
   const navigate = useNavigate();
   const memberId = useSelector(state => state.user.memberId);
 
@@ -74,7 +76,30 @@ const PostComent = ({ comment }) => {
   //   }
   // }, []);
 
-  const COMMETNS = comment?.data?.comments;
+  const addComment = e => {
+    e.preventDefault();
+    axios
+      .post(
+        "http://3.39.32.185:8080/api/comment/register",
+        {
+          comment_id,
+          post_id,
+          post_title,
+          commenter_id,
+          commenter_nickname,
+          content,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then(res => console.log("post 가져오기 성공", res))
+      .catch(err => console.log("post 에러", err));
+  };
+
+  const COMMETNS = comment.comments;
 
   return (
     <div className="commentInput">
