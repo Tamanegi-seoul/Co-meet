@@ -1,17 +1,80 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { onErrorAlert } from "../Alert/Alert";
 import "./Post.css";
 import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import Axios from "axios";
 
 //게시물 작성 완료 페이지의 댓글창
 // const PostComent = ({ content, setContent, onRegisterClick, count }) => {
 const PostComent = ({ comment }) => {
-  const [post_id, setPost_id] = useState([]);
-  const [comment_id, setComment_id] = useState([]);
-  const [content, setContent] = useState([]);
-  const [post_title, setPost_title] = useState([]);
-  const [commenter_id, setCommenter_id] = useState([]);
-  const [commenter_nickname, setCommenter_nickname] = useState([]);
+
+  const navigate = useNavigate();
+  const memberId = useSelector(state => state.user.memberId);
+
+  const { post_id } = useParams();
+  const dispatch = useDispatch();
+  const postListShow = useSelector(state => state.post.postListShow);
+  // const [postList, setPostList] = useState([]);
+  const { comment_id, setCommentId } = useState("");
+  const { post_title, setPostTitle } = useState("");
+  const { commenter_id, setCommenter_id } = useState("");
+  const { commenter_nickname, setNickname } = useState("");
+  const { content, setContent } = useState("");
+
+  // const [comment, setComment] = useState([]);
+
+  // 덧글 post
+  // useEffect(() => {
+  //   if (!memberId) {
+
+  //     <Button
+  //     key="three"
+  //     onClick={() => {
+  //       dispatch(logOutAsync2());
+  //       navigate("/");
+  //     }}
+  //   >
+
+  //     onErrorAlert("로그인을 먼저 해주세요!");
+  //   } else {
+  // axios({
+  //   method: 'post',
+  //   url: "http://3.39.32.185:8080/api/comment/register",
+  //   data: {
+  //     comment_id,
+  //     post_id,
+  //     post_title,
+  //     commenter_id,
+  //     commenter_nickname,
+  //     content,
+  //     // firstName: 'Fred',
+  //     // lastName: 'Flintstone'
+  //   }
+
+  //     Axios.post(
+  //       "http://3.39.32.185:8080/api/comment/register",
+  //       {
+  //         comment_id,
+  //         post_id,
+  //         post_title,
+  //         commenter_id,
+  //         commenter_nickname,
+  //         content,
+  //       },
+  //       {
+  //         headers: {
+  //           //       "Access-Control-Allow-Origin": "*",
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     )
+  //       .then(res => console.log("댓글 등록됨", res))
+  //       .catch(err => console.log(err));
+  //   }
+  // }, []);
 
   const addComment = e => {
     e.preventDefault();
@@ -46,7 +109,26 @@ const PostComent = ({ comment }) => {
         placeholder="댓글을 입력하세요."
       ></textarea>
       <div className="buttonWrapper">
-        <button onClick={addComment} className="buttonComplete" name="register">
+        <button
+          className="buttonComplete"
+          name="register"
+          onClick={() => {
+            if (!memberId) {
+              onErrorAlert("로그인을 먼저 해주세요!");
+            } else {
+              Axios.post("http://3.39.32.185:8080/api/comment/register", {
+                comment_id,
+                post_id,
+                post_title,
+                commenter_id,
+                commenter_nickname,
+                content,
+              })
+                .then(res => console.log("댓글 등록됨", res))
+                .catch(err => console.log(err));
+            }
+          }}
+        >
           댓글 등록
         </button>
       </div>
