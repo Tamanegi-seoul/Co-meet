@@ -8,7 +8,7 @@ import Axios from "axios";
 
 //게시물 작성 완료 페이지의 댓글창
 // const PostComent = ({ content, setContent, onRegisterClick, count }) => {
-const PostComent = ({ comment }) => {
+const PostComment = ({ comment }) => {
   const navigate = useNavigate();
   const memberId = useSelector(state => state.user.memberId);
   const { post_id } = useParams();
@@ -130,4 +130,4 @@ const Section = styled.div`
   }
 `;
 
-export default PostComent;
+export default PostComment;
