@@ -1,22 +1,42 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import "./Post.css";
+import axios from "axios";
 
 //게시물 작성 완료 페이지의 댓글창
 // const PostComent = ({ content, setContent, onRegisterClick, count }) => {
 const PostComent = ({ comment }) => {
-  // 덧글 조회
-  // useEffect(() => {
-  //   axios({
-  //     method: "get",
-  //     url: "http://3.39.32.185:8080/api/comment/search?post_id=5",
-  //     responseType: "json",
-  //   }).then(function (response) {
-  //     console.log(response.data);
-  //   });
-  // }, []);
+  const [post_id, setPost_id] = useState([]);
+  const [comment_id, setComment_id] = useState([]);
+  const [content, setContent] = useState([]);
+  const [post_title, setPost_title] = useState([]);
+  const [commenter_id, setCommenter_id] = useState([]);
+  const [commenter_nickname, setCommenter_nickname] = useState([]);
 
-  const COMMETNS = comment?.data?.comments;
+  const addComment = e => {
+    e.preventDefault();
+    axios
+      .post(
+        "http://3.39.32.185:8080/api/comment/register",
+        {
+          comment_id,
+          post_id,
+          post_title,
+          commenter_id,
+          commenter_nickname,
+          content,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then(res => console.log("post 가져오기 성공", res))
+      .catch(err => console.log("post 에러", err));
+  };
+
+  const COMMETNS = comment.comments;
 
   return (
     <div className="commentInput">
@@ -26,7 +46,7 @@ const PostComent = ({ comment }) => {
         placeholder="댓글을 입력하세요."
       ></textarea>
       <div className="buttonWrapper">
-        <button className="buttonComplete" name="register">
+        <button onClick={addComment} className="buttonComplete" name="register">
           댓글 등록
         </button>
       </div>
