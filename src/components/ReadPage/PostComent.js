@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { onErrorAlert } from "../Alert/Alert";
 import "./Post.css";
@@ -15,6 +15,14 @@ const PostComent = ({ comment }) => {
   const dispatch = useDispatch();
   const postListShow = useSelector(state => state.post.postListShow);
   // const [postList, setPostList] = useState([]);
+  const [message, setMessage] = useState("");
+
+  const ref = useRef(null);
+
+  const handleMessage = event => {
+    setMessage(event.target.value);
+    console.log(event.target.value);
+  };
 
   const addComment = e => {
     e.preventDefault();
@@ -25,8 +33,8 @@ const PostComent = ({ comment }) => {
         "http://3.39.32.185:8080/api/comment/register",
         {
           post_id: post_id,
-          member_id: 5,
-          content: "",
+          member_id: memberId,
+          content: message,
         },
         {
           headers: {
@@ -34,62 +42,10 @@ const PostComent = ({ comment }) => {
           },
         }
       )
-        .then(res => console.log("post 댓글 등록됨", res))
+        .then(res => console.log("post 댓글 등록됨", res.data))
         .catch(err => console.log(err));
     }
   };
-
-  // const [comment, setComment] = useState([]);
-
-  // 덧글 post
-  // useEffect(() => {
-  //   if (!memberId) {
-
-  //     <Button
-  //     key="three"
-  //     onClick={() => {
-  //       dispatch(logOutAsync2());
-  //       navigate("/");
-  //     }}
-  //   >
-
-  //     onErrorAlert("로그인을 먼저 해주세요!");
-  //   } else {
-  // axios({
-  //   method: 'post',
-  //   url: "http://3.39.32.185:8080/api/comment/register",
-  //   data: {
-  //     comment_id,
-  //     post_id,
-  //     post_title,
-  //     commenter_id,
-  //     commenter_nickname,
-  //     content,
-  //     // firstName: 'Fred',
-  //     // lastName: 'Flintstone'
-  //   }
-
-  //     Axios.post(
-  //       "http://3.39.32.185:8080/api/comment/register",
-  //       {
-  //         comment_id,
-  //         post_id,
-  //         post_title,
-  //         commenter_id,
-  //         commenter_nickname,
-  //         content,
-  //       },
-  //       {
-  //         headers: {
-  //           //       "Access-Control-Allow-Origin": "*",
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     )
-  //       .then(res => console.log("댓글 등록됨", res))
-  //       .catch(err => console.log(err));
-  //   }
-  // }, []);
 
   const COMMETNS = comment.comments;
 
@@ -99,6 +55,9 @@ const PostComent = ({ comment }) => {
       <textarea
         className="commentText"
         placeholder="댓글을 입력하세요."
+        value={message}
+        onChange={handleMessage}
+        ref={inputRef}
       ></textarea>
       <div className="buttonWrapper">
         <button className="buttonComplete" name="register" onClick={addComment}>
