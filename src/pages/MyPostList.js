@@ -84,12 +84,7 @@ const MyPostList = () => {
           {postList ? (
             postList.map((item, index) => {
               return (
-                <CommonTableRow
-                  key={index}
-                  onClick={() => {
-                    navigate("/post/" + item.post_id);
-                  }}
-                >
+                <CommonTableRow key={index} props={item.post_id}>
                   <CommonTableColumn>{item.post_id}</CommonTableColumn>
                   <CommonTableColumn>{item.title}</CommonTableColumn>
                   <CommonTableColumn>

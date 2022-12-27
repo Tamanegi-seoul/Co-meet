@@ -82,18 +82,6 @@ const UserInfo = () => {
         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
     });
   };
-  // const sendImageToServer = async () => {
-  //   if (Image.image_file) {
-  //     const formData = new FormData();
-  //     formData.append("file", Image.image_file);
-  //     await axios.post("api주소", formData);
-  //     setImage({
-  //       image_file: "",
-  //       preview_URL:
-  //         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-  //     });
-  //   }
-  // };
 
   // 내 정보화면에서 기술스택부분
   const theme = useTheme();
