@@ -11,16 +11,10 @@ import Axios from "axios";
 const PostComent = ({ comment }) => {
   const navigate = useNavigate();
   const memberId = useSelector(state => state.user.memberId);
-
   const { post_id } = useParams();
   const dispatch = useDispatch();
   const postListShow = useSelector(state => state.post.postListShow);
   // const [postList, setPostList] = useState([]);
-  const [comment_id, setCommentId] = useState("");
-  const [post_title, setPostTitle] = useState("");
-  const [commenter_id, setCommenter_id] = useState("");
-  const [commenter_nickname, setNickname] = useState("");
-  const [content, setContent] = useState("");
 
   const addComment = e => {
     e.preventDefault();
@@ -30,12 +24,9 @@ const PostComent = ({ comment }) => {
       Axios.post(
         "http://3.39.32.185:8080/api/comment/register",
         {
-          comment_id,
-          post_id,
-          post_title,
-          commenter_id,
-          commenter_nickname,
-          content,
+          post_id: post_id,
+          member_id: 5,
+          content: "",
         },
         {
           headers: {
