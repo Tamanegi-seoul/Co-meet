@@ -17,11 +17,16 @@ const PostComent = ({ comment }) => {
   // const [postList, setPostList] = useState([]);
   const [message, setMessage] = useState("");
 
-  const ref = useRef(null);
+  // const ref = useRef(null);
+
+  // const handleClick = event => {
+  // console.log(ref.current.value);
+  // ref.current.value = "";
+  // ref.current.focus();
+  // };
 
   const handleMessage = event => {
     setMessage(event.target.value);
-    console.log(event.target.value);
   };
 
   const addComment = e => {
@@ -42,7 +47,7 @@ const PostComent = ({ comment }) => {
           },
         }
       )
-        .then(res => console.log("post 댓글 등록됨", res.data))
+        .then(res => console.log("post 댓글 등록됨", res))
         .catch(err => console.log(err));
     }
   };
@@ -53,11 +58,11 @@ const PostComent = ({ comment }) => {
     <div className="commentInput">
       <div>{}개의 댓글이 있습니다.</div>
       <textarea
+        // ref={ref}
         className="commentText"
         placeholder="댓글을 입력하세요."
         value={message}
         onChange={handleMessage}
-        ref={inputRef}
       ></textarea>
       <div className="buttonWrapper">
         <button className="buttonComplete" name="register" onClick={addComment}>
