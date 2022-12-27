@@ -69,11 +69,11 @@ const PostView = () => {
           </li>
           <li className="contentWrapper">
             <span className="title">연락 방법</span>
-            <span className="title">{comment.start_date}</span>
+            <span className="title">{comment.contact}</span>
           </li>
           <li className="contentWrapper">
             <span className="title">예상 기간</span>
-            <span className="title">{comment.expected_term}</span>
+            <span className="title">{comment.expected_term}일</span>
           </li>
           <li className="contentWrapper">
             <span className="title">사용 언어</span>
