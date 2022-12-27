@@ -9,16 +9,18 @@
   display: flex;
   align-items: flex-end;
 }
+
 .imagebox {
   margin-top: 0px;
   margin-bottom: 0px;
-  margin-right: 5px;
-  height: 30px;
-  /* border: 5px solid #ffcc5c; */
+  margin-right: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   display: flex;
   align-items: flex-end;
   overflow: hidden;
-  border-radius: 70%;
+  /* border-radius: 70%; */
 }
 
 .profile {
