@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import PostComent from "./components/ReadPage/PostComent";
+import PostComment from "./components/ReadPage/PostComment";
 import PostView from "./components/ReadPage/PostView";
 import MainPage from "./pages/MainPage";
 import Login from "./pages/Login";
