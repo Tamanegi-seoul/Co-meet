@@ -47,7 +47,10 @@ const PostComment = ({ comment }) => {
           },
         }
       )
-        .then(res => console.log("post 댓글 등록됨", res))
+        .then(res => {
+          window.location.reload();
+          console.log("post 댓글 등록됨", res);
+        })
         .catch(err => console.log(err));
     }
   };
