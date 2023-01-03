@@ -55,8 +55,6 @@ const PostComment = ({ comment }) => {
     }
   };
 
-  useEffect(() => {}, [message]);
-
   const COMMETNS = comment.comments;
 
   return (
