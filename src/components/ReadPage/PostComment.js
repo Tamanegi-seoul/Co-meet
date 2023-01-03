@@ -5,11 +5,10 @@ import "./Post.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Axios from "axios";
-import { PropaneSharp } from "@mui/icons-material";
 
 //게시물 작성 완료 페이지의 댓글창
 // const PostComent = ({ content, setContent, onRegisterClick, count }) => {
-const PostComent = ({ comment, setData }) => {
+const PostComent = ({ comment }) => {
   const navigate = useNavigate();
   const memberId = useSelector(state => state.user.memberId);
   const { post_id } = useParams();
@@ -66,12 +65,7 @@ const PostComent = ({ comment, setData }) => {
         onChange={handleMessage}
       ></textarea>
       <div className="buttonWrapper">
-        <button
-          style={{ cursor: "pointer" }}
-          className="buttonComplete"
-          name="register"
-          onClick={addComment}
-        >
+        <button className="buttonComplete" name="register" onClick={addComment}>
           댓글 등록
         </button>
       </div>

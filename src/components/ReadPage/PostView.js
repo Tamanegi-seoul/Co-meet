@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import post, { viewPostDetailAsync } from "../../store/post/post";
 import axios from "axios";
-import PostComent from "./PostComent";
+import PostComment from "./PostComment";
 
 //게시물 작성 완료 페이지의 내용
 const PostView = () => {
@@ -68,11 +68,11 @@ const PostView = () => {
           </li>
           <li className="contentWrapper">
             <span className="title">연락 방법</span>
-            <span className="title">{comment.start_date}</span>
+            <span className="title">{comment.contact}</span>
           </li>
           <li className="contentWrapper">
             <span className="title">예상 기간</span>
-            <span className="title">{comment.expected_term}</span>
+            <span className="title">{comment.expected_term}일</span>
           </li>
           <li className="contentWrapper">
             <span className="title">사용 언어</span>
@@ -84,7 +84,7 @@ const PostView = () => {
         <h2 className="postInfo">프로젝트 소개</h2>
         <hr></hr>
         <div className="postContent">{comment.content}</div>
-        <PostComent comment={comment} />
+        <PostComment comment={comment} />
         <Footer />
       </div>
     </>
