@@ -8,7 +8,7 @@ import Axios from "axios";
 
 //게시물 작성 완료 페이지의 댓글창
 // const PostComent = ({ content, setContent, onRegisterClick, count }) => {
-const PostComment = ({ comment }) => {
+const PostComent = ({ comment }) => {
   const navigate = useNavigate();
   const memberId = useSelector(state => state.user.memberId);
   const { post_id } = useParams();
@@ -47,10 +47,7 @@ const PostComment = ({ comment }) => {
           },
         }
       )
-        .then(res => {
-          window.location.reload();
-          console.log("post 댓글 등록됨", res);
-        })
+        .then(res => console.log("post 댓글 등록됨", res))
         .catch(err => console.log(err));
     }
   };
@@ -138,4 +135,4 @@ const Section = styled.div`
   }
 `;
 
-export default PostComment;
+export default PostComent;
