@@ -16,7 +16,7 @@ import Chip from "@mui/material/Chip";
 import Axios from "axios";
 import TextField from "@mui/material/TextField";
 import { CenterFocusStrong } from "@mui/icons-material";
-
+import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -77,6 +77,7 @@ const WritePage = () => {
   const poster_id = useSelector(state => state.user.memberId);
   const theme = useTheme();
   const [designated_stacks, setStack] = React.useState([]);
+  const navigate = useNavigate();
 
   const stackHandler = event => {
     const {
@@ -167,7 +168,10 @@ const WritePage = () => {
         },
       }
     )
-      .then(res => console.log("게시글 등록됨", res))
+      .then(res => {
+        console.log("게시글 등록됨", res);
+        navigate("/post/" + res.data.data.post_id);
+      })
       .catch(err => console.log(err));
   };
 

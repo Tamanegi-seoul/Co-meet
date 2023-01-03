@@ -14,7 +14,6 @@ import PostComent from "./PostComent";
 const PostView = () => {
   const { post_id } = useParams();
   const dispatch = useDispatch();
-
   const [comment, setComment] = useState([]);
 
   useEffect(() => {
