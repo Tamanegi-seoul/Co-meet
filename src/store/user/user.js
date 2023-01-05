@@ -68,8 +68,6 @@ export const checkIdEmailAsync = createAsyncThunk(
 export const searchAsync = createAsyncThunk("search", async data => {
   return await searchUser(data)
     .then(res => {
-      console.log(res.data.data);
-      console.log(res.data.data.profile_image);
       return res.data.data;
     })
     .catch(error => console.log(error));

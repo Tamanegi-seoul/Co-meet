@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteAsync, searchAsync, updateAsync } from "../../store/user/user";
 import { useEffect } from "react";
 import { onErrorAlert, onSuccessAlert } from "../Alert/Alert";
+import { dataURLtoFile } from "../../utils/base64ImageToFile";
 //-------------------------------------------------------------스택관련 함수
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -65,16 +66,14 @@ const UserImg = () => {
   const [personName, setPersonName] = useState([]);
   const [updateNickName, setUpdateNickName] = useState("");
   const [sendImage, setSendImage] = useState(null);
-  const [Image, setImage] = useState({
-    image_data:
-      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-  });
+  const [Image, setImage] = useState(null);
 
   useEffect(() => {
     if (!memberId) {
       onErrorAlert("로그인을 먼저 해주세요!");
       navigate("/");
     }
+
     dispatch(searchAsync(member_id)).then(res => {
       setUpdateNickName(res.payload.nickname);
       setPersonName(res.payload.prefer_stacks);
@@ -82,8 +81,13 @@ const UserImg = () => {
         setImage(
           `data:image/jpeg;base64,${res.payload.profile_image.image_data}`
         );
+        setSendImage(
+          dataURLtoFile(
+            `data:image/jpeg;base64,${res.payload.profile_image.image_data}`,
+            res.payload.profile_image.file_name
+          )
+        );
       }
-      console.log(Image);
     });
   }, []);
 
@@ -104,6 +108,7 @@ const UserImg = () => {
     if (e.target.files[0]) {
       setImage({ image_file: e.target.files[0] });
       setSendImage(e.target.files[0]);
+      console.log(sendImage);
     } else {
       //업로드 취소할 시
       setImage({
@@ -118,7 +123,6 @@ const UserImg = () => {
     reader.onload = () => {
       if (reader.readyState === 2) {
         setImage(reader.result);
-        console.log(Image);
       }
     };
     reader.readAsDataURL(e.target.files[0]);
