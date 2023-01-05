@@ -16,6 +16,7 @@ const PostView = () => {
   const { post_id } = useParams();
   const dispatch = useDispatch();
   const [postContents, setPostContents] = useState([]);
+  const [postIntroduce, setPostIntroduce] = useState();
   const [userImg, setUserImg] = useState(
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
   );
@@ -29,6 +30,7 @@ const PostView = () => {
     })
       .then(response => {
         setPostContents(response.data.data);
+        setPostIntroduce(response.data.data.content);
         if (response.data.data.poster_profile) {
           setUserImg(
             `data:image/jpeg;base64,${response.data.data.poster_profile.image_data}`
@@ -98,7 +100,9 @@ const PostView = () => {
       <div className="postContentWrapper">
         <h2 className="postInfo">프로젝트 소개</h2>
         <hr></hr>
-        <div className="postContent">{postContents.content}</div>
+        <div className="postContent">
+          {postIntroduce.replace(/(<([^>]+)>)/gi, "")}
+        </div>
         <PostComment comment={postContents} />
         <Footer />
       </div>
