@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import post, { viewPostDetailAsync } from "../../store/post/post";
 import axios from "axios";
 import PostComment from "./PostComment";
-import UserImg from "../InformationEdit/UserImg";
+import { autoBatchEnhancer } from "@reduxjs/toolkit";
 
 //게시물 작성 완료 페이지의 내용
 const PostView = () => {
@@ -46,7 +46,11 @@ const PostView = () => {
       <div id="content">
         <div className="TextBox">
           <div className="imagebox">
-            <img src={userImg} />
+            <img
+              src={userImg}
+              style={{ height: "100%", margin: "0 auto" }}
+              alt="userProfileImg"
+            />
           </div>
         </div>
         <div className="TextBox">{postContents.poster_nickname}</div>
