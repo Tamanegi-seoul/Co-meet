@@ -16,7 +16,9 @@ const PostView = () => {
   const { post_id } = useParams();
   const dispatch = useDispatch();
   const [postContents, setPostContents] = useState([]);
-  const [userImg, setUserImg] = useState();
+  const [userImg, setUserImg] = useState(
+    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+  );
 
   useEffect(() => {
     dispatch(viewPostDetailAsync(post_id));
@@ -27,9 +29,12 @@ const PostView = () => {
     })
       .then(response => {
         setPostContents(response.data.data);
-        setUserImg(
-          `data:image/jpeg;base64,${response.data.data.poster_profile.image_data}`
-        );
+        if (response.data.data.poster_profile) {
+          setUserImg(
+            `data:image/jpeg;base64,${response.data.data.poster_profile.image_data}`
+          );
+        }
+
         // console.log(response.data.data.poster_profile.image_data);
         console.log("게시글 가져오기 성공", response.data.data);
       })
@@ -54,8 +59,8 @@ const PostView = () => {
           </div>
         </div>
         <div className="TextBox">{postContents.poster_nickname}</div>
-        <div className="TextBox">|</div>
-        <div className="TextBox">{postContents.created_date}</div>
+        <div className="TextBox"> | </div>
+        <div className="TextBox">{postContents.created_time}</div>
       </div>
       <div>
         <hr></hr>
