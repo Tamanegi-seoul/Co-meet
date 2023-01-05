@@ -8,7 +8,7 @@ import Axios from "axios";
 
 //게시물 작성 완료 페이지의 댓글창
 // const PostComent = ({ content, setContent, onRegisterClick, count }) => {
-const PostComent = ({ comment }) => {
+const PostComent = ({ commentData }) => {
   const navigate = useNavigate();
   const memberId = useSelector(state => state.user.memberId);
   const { post_id } = useParams();
@@ -16,14 +16,6 @@ const PostComent = ({ comment }) => {
   const postListShow = useSelector(state => state.post.postListShow);
   // const [postList, setPostList] = useState([]);
   const [message, setMessage] = useState("");
-
-  // const ref = useRef(null);
-
-  // const handleClick = event => {
-  // console.log(ref.current.value);
-  // ref.current.value = "";
-  // ref.current.focus();
-  // };
 
   const handleMessage = event => {
     setMessage(event.target.value);
@@ -49,13 +41,14 @@ const PostComent = ({ comment }) => {
       )
         .then(res => {
           window.location.reload();
-          console.log("post 댓글 등록됨", res);
         })
         .catch(err => console.log(err));
     }
   };
 
-  const COMMETNS = comment.comments;
+  // console.log(comment.comments[0].commenter_profile.image_data);
+
+  // const CommentImg = `data:image/jpeg;base64,${comment.commenter_profile.image_data}`;
 
   return (
     <div className="commentInput">
@@ -74,8 +67,8 @@ const PostComent = ({ comment }) => {
       </div>
       <div>
         {/* 코맨트 렌더링 부분 */}
-        {COMMETNS
-          ? COMMETNS.map((item, index) => {
+        {commentData
+          ? commentData.map((comment, index) => {
               return (
                 <>
                   <Section>
@@ -86,22 +79,40 @@ const PostComent = ({ comment }) => {
                       }}
                       key={index}
                     >
-                      <img src="/img/C.png" alt="사용자 이미지"></img>
+                      {comment.commenter_profile ? (
+                        <img
+                          src={
+                            "data:image/jpeg;base64," +
+                            comment.commenter_profile?.image_data
+                          }
+                          alt="사용자 이미지"
+                        />
+                      ) : (
+                        <img
+                          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                          alt="사용자 이미지"
+                        />
+                      )}
+
+                      {/* {console.log(comment.commenter_id)} */}
+                      {/* {console.log(comment.commenter_profile.image_data)} */}
                       <div>
                         <div
                           style={{ display: "flex", flexDirection: "column" }}
                         >
-                          <div className="Name">{item.commenter_nickname}</div>
+                          <div className="Name">
+                            {comment.commenter_nickname}
+                          </div>
                           <div className="Time">
-                            {item.created_time.slice(0, 10)}
+                            {comment.created_time.slice(0, 10)}
                             &nbsp;
-                            {item.created_time.slice(11, 16)}
+                            {comment.created_time.slice(11, 16)}
                           </div>
                         </div>
                       </div>
                     </div>
                   </Section>
-                  <p>{item.content}</p>
+                  <p>{comment.content}</p>
                 </>
               );
             })
