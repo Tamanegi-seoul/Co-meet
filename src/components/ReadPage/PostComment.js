@@ -47,14 +47,16 @@ const PostComent = ({ comment }) => {
           },
         }
       )
-        .then(res => console.log("post 댓글 등록됨", res))
+        .then(res => {
+          window.location.reload();
+          console.log("post 댓글 등록됨", res);
+        })
         .catch(err => console.log(err));
     }
   };
 
   const COMMETNS = comment.comments;
-  // console.log(comment.poster_profile.image_data);
-  // const USERIMG = `data:image/jpeg;base64,${comment.poster_profile.image_data}`;
+
   return (
     <div className="commentInput">
       <div>{}개의 댓글이 있습니다.</div>
