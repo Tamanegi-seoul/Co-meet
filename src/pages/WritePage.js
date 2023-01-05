@@ -425,7 +425,6 @@ const WritePage = () => {
                 console.log("Editor is ready to use!", editor);
               }}
               onChange={content_Handler}
-              style={{ height: "300px" }}
               // onChange={
               //   ((_, editor) => setContent(editor.getData()));
               //   console.log({ _, editor, setContent }));
