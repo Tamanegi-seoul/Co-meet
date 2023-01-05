@@ -16,14 +16,7 @@ const PostComent = ({ comment }) => {
   const postListShow = useSelector(state => state.post.postListShow);
   // const [postList, setPostList] = useState([]);
   const [message, setMessage] = useState("");
-
-  // const ref = useRef(null);
-
-  // const handleClick = event => {
-  // console.log(ref.current.value);
-  // ref.current.value = "";
-  // ref.current.focus();
-  // };
+  const [CommentUserImg, setCommentUserImg] = useState("");
 
   const handleMessage = event => {
     setMessage(event.target.value);
@@ -49,6 +42,9 @@ const PostComent = ({ comment }) => {
       )
         .then(res => {
           window.location.reload();
+          setCommentUserImg(
+            `data:image/jpeg;base64,${res.data.data.poster_profile.image_data}`
+          );
           console.log("post 댓글 등록됨", res);
         })
         .catch(err => console.log(err));
@@ -86,7 +82,7 @@ const PostComent = ({ comment }) => {
                       }}
                       key={index}
                     >
-                      <img src="/img/C.png" alt="사용자 이미지"></img>
+                      <img src={CommentUserImg} alt="사용자 이미지"></img>
                       <div>
                         <div
                           style={{ display: "flex", flexDirection: "column" }}
