@@ -9,12 +9,16 @@ import { useDispatch } from "react-redux";
 import post, { viewPostDetailAsync } from "../../store/post/post";
 import axios from "axios";
 import PostComment from "./PostComment";
+import { autoBatchEnhancer } from "@reduxjs/toolkit";
 
 //게시물 작성 완료 페이지의 내용
 const PostView = () => {
   const { post_id } = useParams();
   const dispatch = useDispatch();
   const [postContents, setPostContents] = useState([]);
+  const [userImg, setUserImg] = useState(
+    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+  );
 
   useEffect(() => {
     dispatch(viewPostDetailAsync(post_id));
@@ -25,6 +29,13 @@ const PostView = () => {
     })
       .then(response => {
         setPostContents(response.data.data);
+        if (response.data.data.poster_profile) {
+          setUserImg(
+            `data:image/jpeg;base64,${response.data.data.poster_profile.image_data}`
+          );
+        }
+
+        // console.log(response.data.data.poster_profile.image_data);
         console.log("게시글 가져오기 성공", response.data.data);
       })
       .catch(Error => {
@@ -40,12 +51,16 @@ const PostView = () => {
       <div id="content">
         <div className="TextBox">
           <div className="imagebox">
-            <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTEwMThfMTI5%2FMDAxNjM0NTU2MDA4MDI3.zsBOZlr1ORTLG1JrR28FSt_UKlAbgTR2036EPOeSzfEg.9IXalR6AGH7G5i3j-Xjm1ht7-CFChgD2woGJDDWFN4Mg.JPEG.guskr0512%2FIMG_4659.JPG&type=sc960_832" />
+            <img
+              src={userImg}
+              style={{ height: "100%", margin: "0 auto" }}
+              alt="userProfileImg"
+            />
           </div>
         </div>
         <div className="TextBox">{postContents.poster_nickname}</div>
-        <div className="TextBox">|</div>
-        <div className="TextBox">{postContents.created_date}</div>
+        <div className="TextBox"> | </div>
+        <div className="TextBox">{postContents.created_time}</div>
       </div>
       <div>
         <hr></hr>
