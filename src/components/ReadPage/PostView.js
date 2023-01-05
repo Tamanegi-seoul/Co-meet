@@ -101,7 +101,7 @@ const PostView = () => {
         <h2 className="postInfo">프로젝트 소개</h2>
         <hr></hr>
         <div className="postContent">
-          {postIntroduce.replace(/(<([^>]+)>)/gi, "")}
+          {postIntroduce?.replace(/(<([^>]+)>)/gi, "")}
         </div>
         <PostComment comment={postContents} />
         <Footer />
