@@ -134,7 +134,7 @@ const UserImg = () => {
       <ImgBox>
         <Avatar
           src={Image}
-          style={{ margin: "20px" }}
+          style={{ margin: "20px", cursor: "pointer" }}
           // size={200}
           sx={{ width: 160, height: 160 }}
           onClick={() => {
