@@ -2,6 +2,7 @@ import { Grid, inputAdornmentClasses, MenuList } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -15,9 +16,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import Chip from "@mui/material/Chip";
 import Axios from "axios";
 import TextField from "@mui/material/TextField";
-import { CenterFocusStrong } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import dayjs from "dayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -415,32 +414,33 @@ const WritePage = () => {
             margin="normal"
             fullWidth
           />
+          <WriteArea>
+            <CKEditor
+              editor={ClassicEditor}
+              data={content}
+              onReady={editor => {
+                // You can store the "editor" and use when it is needed.
+                console.log("Editor is ready to use!", editor);
+              }}
+              onChange={content_Handler}
+              // onChange={
+              //   ((_, editor) => setContent(editor.getData()));
+              //   console.log({ _, editor, setContent }));
+              // }
+              // onChange={(_, editor) => {
+              //   setContent = editor.getData();
 
-          <CKEditor
-            editor={ClassicEditor}
-            data={content}
-            onReady={editor => {
-              // You can store the "editor" and use when it is needed.
-              console.log("Editor is ready to use!", editor);
-            }}
-            onChange={content_Handler}
-            // onChange={
-            //   ((_, editor) => setContent(editor.getData()));
-            //   console.log({ _, editor, setContent }));
-            // }
-            // onChange={(_, editor) => {
-            //   setContent = editor.getData();
-
-            //   // content = data;
-            //   console.log({ _, editor, setContent });
-            // }}
-            onBlur={(event, editor) => {
-              console.log("Blur.", editor);
-            }}
-            onFocus={(event, editor) => {
-              console.log("Focus.", editor);
-            }}
-          />
+              //   // content = data;
+              //   console.log({ _, editor, setContent });
+              // }}
+              onBlur={(event, editor) => {
+                console.log("Blur.", editor);
+              }}
+              onFocus={(event, editor) => {
+                console.log("Focus.", editor);
+              }}
+            />
+          </WriteArea>
         </Grid>
         <Grid item xs={1}></Grid>
 
@@ -452,29 +452,40 @@ const WritePage = () => {
           direction="row"
           justifyContent="flex-end"
         >
-          <button
-            style={{
-              border: "none",
-              backgroundColor: "#999999",
-              color: "black",
-              float: "right",
-            }}
-            onClick={back}
-            className="buttonComplete"
-            name="register"
-          >
-            취소
-          </button>
-
-          <button onClick={addPost} className="buttonComplete" name="register">
-            글 등록
-          </button>
+          <div style={{ padding: "50px 0" }}>
+            <button
+              style={{
+                border: "none",
+                backgroundColor: "#999999",
+                color: "black",
+                float: "right",
+              }}
+              onClick={back}
+              className="buttonComplete"
+              name="register"
+            >
+              취소
+            </button>
+            <button
+              onClick={addPost}
+              className="buttonComplete"
+              name="register"
+            >
+              글 등록
+            </button>
+          </div>
         </Grid>
       </Grid>
+      <Footer />
     </>
   );
 };
 
+const WriteArea = styled.div`
+  .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
+    min-height: 300px;
+  }
+`;
 // const sDatePicker = styled(DatePicker)`
 //   padding: 5px;
 // `;
