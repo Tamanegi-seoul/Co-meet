@@ -19,6 +19,10 @@ const PostView = () => {
   const [userImg, setUserImg] = useState(
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
   );
+  const [CommentUserImg, setCommentUserImg] = useState(
+    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+  );
+  const [responseCommentData, setResponseCommentData] = useState(null);
 
   useEffect(() => {
     dispatch(viewPostDetailAsync(post_id));
@@ -29,19 +33,22 @@ const PostView = () => {
     })
       .then(response => {
         setPostContents(response.data.data);
+        setResponseCommentData(response.data.data.comments);
         if (response.data.data.poster_profile) {
           setUserImg(
             `data:image/jpeg;base64,${response.data.data.poster_profile.image_data}`
           );
         }
 
-        // console.log(response.data.data.poster_profile.image_data);
         console.log("게시글 가져오기 성공", response.data.data);
       })
       .catch(Error => {
         console.log("axios에러", Error);
       });
   }, []);
+
+  const stacks = postContents.designated_stacks;
+  // const CommentData = response.data.data.comments;
 
   return (
     <>
@@ -91,7 +98,7 @@ const PostView = () => {
           </li>
           <li className="contentWrapper">
             <span className="title">사용 언어</span>
-            <span className="title"> {postContents.designated_stacks} </span>
+            <span className="title">{`${stacks}`}</span>
           </li>
         </ul>
       </div>
@@ -99,7 +106,7 @@ const PostView = () => {
         <h2 className="postInfo">프로젝트 소개</h2>
         <hr></hr>
         <div className="postContent">{postContents.content}</div>
-        <PostComment comment={postContents} />
+        <PostComment commentData={responseCommentData} />
         <Footer />
       </div>
     </>
