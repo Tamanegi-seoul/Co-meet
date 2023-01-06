@@ -48,7 +48,7 @@ export default function BasicCard({
       <CardContent sx={{ lineHeight: "35px", cursor: "pointer" }}>
         Title : {title}
         <br />
-        Stacks : {designated_stacks}
+        Stacks : {designated_stacks.join(`,\n`)}
         <br />
         Name : {poster_nickname}
         <br />
