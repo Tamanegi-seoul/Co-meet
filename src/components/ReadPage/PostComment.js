@@ -101,9 +101,6 @@ const PostComent = ({ commentData }) => {
                           alt="사용자 이미지"
                         />
                       )}
-
-                      {/* {console.log(comment.commenter_id)} */}
-                      {/* {console.log(comment.commenter_profile.image_data)} */}
                       <div>
                         <div
                           style={{ display: "flex", flexDirection: "column" }}

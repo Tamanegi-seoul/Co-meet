@@ -10,7 +10,7 @@ import post, { viewPostDetailAsync } from "../../store/post/post";
 import axios from "axios";
 import PostComment from "./PostComment";
 import { autoBatchEnhancer } from "@reduxjs/toolkit";
-
+import ScrollTop from "../../scrollTop";
 //게시물 작성 완료 페이지의 내용
 const PostView = () => {
   const { post_id } = useParams();
@@ -54,6 +54,7 @@ const PostView = () => {
 
   return (
     <>
+      <ScrollTop />
       <div className="writeTitle">{postContents.title}</div>
       <div id="content">
         <div className="imagebox">
