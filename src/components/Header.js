@@ -49,7 +49,7 @@ const Header = () => {
             Co Meet
           </Link>
         </Typography>
-        <nav style={{ display: "flex" }}>
+        <nav style={{ display: "flex", alignItems: "center" }}>
           <Link
             style={{
               fontSize: "18px",
