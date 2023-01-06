@@ -21,8 +21,7 @@ const PostComent = ({ commentData }) => {
     setMessage(event.target.value);
   };
 
-  const addComment = e => {
-    e.preventDefault();
+  const addComment = () => {
     if (!memberId) {
       onErrorAlert("로그인을 먼저 해주세요!");
     } else {
@@ -45,6 +44,12 @@ const PostComent = ({ commentData }) => {
         .catch(err => console.log(err));
     }
   };
+  const keydown = e => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addComment();
+    }
+  };
 
   // console.log(comment.comments[0].commenter_profile.image_data);
 
@@ -59,6 +64,7 @@ const PostComent = ({ commentData }) => {
         placeholder="댓글을 입력하세요."
         value={message}
         onChange={handleMessage}
+        onKeyDown={keydown}
       ></textarea>
       <div className="buttonWrapper">
         <button className="buttonComplete" name="register" onClick={addComment}>
