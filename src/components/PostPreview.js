@@ -5,6 +5,7 @@ import CardContent from "@mui/material/CardContent";
 // import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import "../App.css";
 // Main page안의 카드 슬롯 형태
 
 export default function BasicCard({
@@ -71,6 +72,7 @@ const Title = styled.div`
 const CardContainer = styled.div`
   font-size: 14px;
   padding: 15px;
+  font-family: Nunito-black;
 
   .startDate {
     color: gray;

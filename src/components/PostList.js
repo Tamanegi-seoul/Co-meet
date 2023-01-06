@@ -11,6 +11,7 @@ import { loadPostListAsync } from "../store/post/post";
 import Loading from "../pages/Loading";
 import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
 import NoSearch from "./NoSearch";
+import "../App.css";
 // // Main page안의 카드 슬롯 형태 리스트
 
 const BigTable = styled.div`
