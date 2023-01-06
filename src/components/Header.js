@@ -49,20 +49,24 @@ const Header = () => {
             Co Meet
           </Link>
         </Typography>
-        <nav style={{ display: "flex" }}>
-          <Link
-            style={{
-              fontSize: "18px",
-              fontWeight: "900",
-            }}
-            variant="button"
-            color="text.primary"
-            underline="none"
-            href="/write"
-            sx={{ my: 1, mx: 2 }}
-          >
-            새 글 쓰기
-          </Link>
+        <nav style={{ display: "flex", alignItems: "center" }}>
+          {userInfo == null ? (
+            ""
+          ) : (
+            <Link
+              style={{
+                fontSize: "18px",
+                fontWeight: "900",
+              }}
+              variant="button"
+              color="text.primary"
+              underline="none"
+              href="/write"
+              sx={{ my: 1, mx: 2 }}
+            >
+              새 글 쓰기
+            </Link>
+          )}
           {userInfo == null ? (
             <Button
               href="/login"
