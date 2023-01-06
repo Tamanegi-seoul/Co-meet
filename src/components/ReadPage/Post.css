@@ -10,32 +10,41 @@
   align-items: flex-end;
 }
 
-.imagebox {
-  margin-top: 0px;
-  margin-bottom: 0px;
-  margin-right: 8px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: flex-end;
-  overflow: hidden;
-  /* border-radius: 70%; */
-}
-
-.profile {
+/* .profile {
   height: 120%;
   object-fit: cover;
-}
+} */
 
 #content {
   height: 30px;
   display: -webkit-flex;
   -webkit-flex-direction: column-reverse;
+  padding-bottom: 5px;
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
+.imagebox {
+  margin-right: 8px;
+  overflow: hidden;
+  border-radius: 50%;
+  /* border-radius: 70%; */
+}
+
+.userImg {
+  display: block;
+  width: 40px;
+  height: 40px;
+
+  object-fit: cover;
+}
+.userNickname {
+  margin-right: 8px;
+}
+.createTime {
+  margin-left: 8px;
+}
 /* 게시글 css */
 .studyGrid {
   display: grid;

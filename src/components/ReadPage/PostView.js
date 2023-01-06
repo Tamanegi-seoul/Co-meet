@@ -58,18 +58,12 @@ const PostView = () => {
         <h2 align="center">{postContents.title}</h2>
       </div>
       <div id="content">
-        <div className="TextBox">
-          <div className="imagebox">
-            <img
-              src={userImg}
-              style={{ height: "100%", margin: "0 auto" }}
-              alt="userProfileImg"
-            />
-          </div>
+        <div className="imagebox">
+          <img className="userImg" src={userImg} alt="userProfileImg" />
         </div>
-        <div className="TextBox">{postContents.poster_nickname}</div>
-        <div className="TextBox"> | </div>
-        <div className="TextBox">{postContents.created_time}</div>
+        <div className="userNickname">{postContents.poster_nickname}</div>
+        <div> | </div>
+        <div className="createTime">{postContents.created_time}</div>
       </div>
       <div>
         <hr></hr>

@@ -57,7 +57,9 @@ const PostComent = ({ commentData }) => {
 
   return (
     <div className="commentInput">
-      <div>{commentData?.length}개의 댓글이 있습니다.</div>
+      <div style={{ fontSize: "22px", fontWeight: "bold", padding: "10px" }}>
+        {commentData?.length}개의 댓글이 있습니다.
+      </div>
       <textarea
         // ref={ref}
         className="commentText"
