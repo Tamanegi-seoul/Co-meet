@@ -4,10 +4,9 @@ import Button from "@mui/material/Button";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
-import { AiFillHeart } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import ModalUserInfo from "./Modal/ModalUserInfo";
-import { searchAsync } from "../store/user/user";
+import "../App.css";
 
 const Header = () => {
   const userInfo = useSelector(state => state.user.nickName);
@@ -39,7 +38,7 @@ const Header = () => {
               paddingLeft: "100px",
               fontSize: "25px",
               fontWeight: "900",
-              fontStyle: "italic",
+              fontFamily: "Nunito-Black",
             }}
             variant="inherit"
             underline="none"

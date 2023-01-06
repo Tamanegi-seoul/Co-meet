@@ -1,3 +1,11 @@
+@font-face {
+  font-family: Nunito-Black;
+  src: url(./styles/font/Nunito-Black.ttf);
+}
+@font-face {
+  font-family: Nunito-Bold;
+  src: url(./styles/font/Nunito-Bold.ttf);
+}
 .App {
   text-align: center;
 }

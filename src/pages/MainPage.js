@@ -18,7 +18,7 @@ const MainPage = () => {
       <Header />
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <MainCarousel></MainCarousel>
+          <MainCarousel />
         </Grid>
         <Grid item xs={1}></Grid>
         <Grid item xs={10}>
