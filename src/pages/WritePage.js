@@ -454,6 +454,14 @@ const WritePage = () => {
         >
           <div style={{ padding: "50px 0" }}>
             <button
+              onClick={addPost}
+              className="buttonComplete"
+              name="register"
+              style={{ marginRight: "10px" }}
+            >
+              글 등록
+            </button>
+            <button
               style={{
                 border: "none",
                 backgroundColor: "#999999",
@@ -465,13 +473,6 @@ const WritePage = () => {
               name="register"
             >
               취소
-            </button>
-            <button
-              onClick={addPost}
-              className="buttonComplete"
-              name="register"
-            >
-              글 등록
             </button>
           </div>
         </Grid>
