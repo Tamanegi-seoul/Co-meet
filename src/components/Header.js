@@ -63,17 +63,6 @@ const Header = () => {
           >
             새 글 쓰기
           </Link>
-          {userInfo == null ? null : (
-            <Link
-              variant="button"
-              color="text.primary"
-              href="#"
-              sx={{ my: 1, mx: 2.5 }}
-            >
-              <AiFillHeart />
-            </Link>
-          )}
-
           {userInfo == null ? (
             <Button
               href="/login"
