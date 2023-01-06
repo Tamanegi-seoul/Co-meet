@@ -2,8 +2,9 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 // Main page안의 카드 슬롯 형태
 
 export default function BasicCard({
@@ -15,8 +16,6 @@ export default function BasicCard({
 }) {
   const navigate = useNavigate();
   return (
-    // <Link to={"/post/" + { post_id }}>
-    // </Link>
     <Card
       onClick={() => {
         navigate("/post/" + post_id);
@@ -24,11 +23,11 @@ export default function BasicCard({
       sx={{
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-between",
-        alignItems: "center",
-        borderRadius: 10,
-        height: 400,
+        boxSizing: "border-box",
+        borderRadius: 5,
+        height: 350,
         margin: 1,
+        paddingLeft: 1,
         width: {
           xs: "100%",
           sm: "100%",
@@ -37,26 +36,67 @@ export default function BasicCard({
         },
       }}
     >
-      <CardContent
-        sx={{
-          fontWeight: "900",
-          borderBottom: "2px solid #F8F8F8",
-        }}
-      >
-        Start Date : {start_date}
+      <CardContent sx={{ lineHeight: "45px", cursor: "pointer" }}>
+        <CardContainer>
+          <Title size="small">
+            <span>{poster_nickname}</span>
+            님이 연락을 원해요
+          </Title>
+          <div className="startDate">시작 예정일 | {start_date}</div>
+          <div className="title">{title}</div>
+          <Stack>
+            <div className="stack">
+              가능한 스텍 | {designated_stacks.join(`,\n`)}
+            </div>
+          </Stack>
+        </CardContainer>
       </CardContent>
-      <CardContent sx={{ lineHeight: "35px", cursor: "pointer" }}>
-        Title : {title}
-        <br />
-        Stacks : {designated_stacks.join(`,\n`)}
-        <br />
-        Name : {poster_nickname}
-        <br />
-        Post_Id:{post_id}
-      </CardContent>
-      <CardActions sx={{ borderTop: "2px solid #f8f8f8" }}>
-        <Button size="small">사용자 프로필이 보일 에정입니다.</Button>
-      </CardActions>
     </Card>
   );
 }
+
+const Title = styled.div`
+  font-size: 14px;
+  font-weight: 400;
+  color: #5e6774;
+  border-bottom: 1px solid #f1f1f1;
+
+  span {
+    font-weight: 700;
+    font-size: 15px;
+    color: rgb(61, 61, 61);
+  }
+`;
+
+const CardContainer = styled.div`
+  font-size: 14px;
+  padding: 15px;
+
+  .startDate {
+    color: gray;
+    padding-top: 20px;
+  }
+
+  .title {
+    font-weight: 700;
+    font-size: 22px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+`;
+
+const Stack = styled.div`
+  /* margin-top: 20px; */
+  .stack {
+    font-size: 14px;
+    font-weight: 600;
+    background: #fff;
+    /* border: 1px solid #d1d5dd; */
+    border-radius: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    /* padding: 10px; */
+  }
+`;
