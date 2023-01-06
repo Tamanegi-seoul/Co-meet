@@ -54,58 +54,54 @@ const PostView = () => {
 
   return (
     <>
-      <div>
-        <h2 align="center">{postContents.title}</h2>
-      </div>
+      <div className="writeTitle">{postContents.title}</div>
       <div id="content">
-        <div className="TextBox">
-          <div className="imagebox">
-            <img
-              src={userImg}
-              style={{ height: "100%", margin: "0 auto" }}
-              alt="userProfileImg"
-            />
-          </div>
+        <div className="imagebox">
+          <img className="userImg" src={userImg} alt="userProfileImg" />
         </div>
-        <div className="TextBox">{postContents.poster_nickname}</div>
-        <div className="TextBox"> | </div>
-        <div className="TextBox">{postContents.created_time}</div>
+        <div className="userNickname">{postContents.poster_nickname}</div>
+        <div style={{ color: "grey" }}> | </div>
+        <div className="createTime">
+          {postContents.created_time?.slice(0, 16)}
+        </div>
       </div>
       <div>
         <hr></hr>
         <ul className="studyGrid">
           <li className="contentWrapper">
             <span className="title">모집 구분</span>
-            <span className="title">{postContents.recruit_status}</span>
+            <span className="postInfo">{postContents.recruit_status}</span>
           </li>
           <li className="contentWrapper">
             <span className="title">진행 방식</span>
-            <span className="title">오프라인</span>
+            <span className="postInfo">
+              {postContents.remote === true ? "온라인" : "오프라인"}
+            </span>
           </li>
           <li className="contentWrapper">
             <span className="title">모집 인원</span>
-            <span className="title">{postContents.recruit_capacity}</span>
+            <span className="postInfo">{postContents.recruit_capacity}</span>
           </li>
           <li className="contentWrapper">
             <span className="title">시작 예정</span>
-            <span className="title">{postContents.start_date}</span>
+            <span className="postInfo">{postContents.start_date}</span>
           </li>
           <li className="contentWrapper">
             <span className="title">연락 방법</span>
-            <span className="title">{postContents.contact}</span>
+            <span className="postInfo">{postContents.contact}</span>
           </li>
           <li className="contentWrapper">
             <span className="title">예상 기간</span>
-            <span className="title">{postContents.expected_term}일</span>
+            <span className="postInfo">{postContents.expected_term}일</span>
           </li>
           <li className="contentWrapper">
             <span className="title">사용 언어</span>
-            <span className="title">{`${stacks}`}</span>
+            <span className="postInfo">{`${stacks}`}</span>
           </li>
         </ul>
       </div>
       <div className="postContentWrapper">
-        <h2 className="postInfo">프로젝트 소개</h2>
+        <h2>프로젝트 소개</h2>
         <hr></hr>
         <div className="postContent">
           {postIntroduce?.replace(/(<([^>]+)>)/gi, "")}

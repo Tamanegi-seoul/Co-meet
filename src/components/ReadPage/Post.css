@@ -10,30 +10,51 @@
   align-items: flex-end;
 }
 
-.imagebox {
-  margin-top: 0px;
-  margin-bottom: 0px;
-  margin-right: 8px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: flex-end;
-  overflow: hidden;
-  /* border-radius: 70%; */
-}
-
-.profile {
-  height: 120%;
-  object-fit: cover;
+.writeTitle {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  color: #000000;
+  margin-top: 15px;
+  padding: 20px;
 }
 
 #content {
-  height: 30px;
+  height: 70px;
   display: -webkit-flex;
   -webkit-flex-direction: column-reverse;
+  padding-bottom: 5px;
   display: flex;
   flex-direction: row;
+  align-items: center;
+}
+
+.imagebox {
+  margin-right: 12px;
+  overflow: hidden;
+  border-radius: 50%;
+  /* border-radius: 70%; */
+}
+
+.userImg {
+  display: block;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+.userNickname {
+  margin-top: 3px;
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.createTime {
+  color: #747474;
+  font-weight: bold;
+  margin-top: 2px;
+  margin-left: 8px;
+  font-size: 18px;
 }
 
 /* 게시글 css */
@@ -52,10 +73,13 @@
   font-size: 20px;
 }
 .title {
-  color: #717171;
+  color: #757575;
   margin-right: 40px;
 }
 
+.postInfo {
+  color: #000000;
+}
 .content {
   color: #333333;
 }
