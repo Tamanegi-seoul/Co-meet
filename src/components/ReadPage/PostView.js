@@ -10,34 +10,36 @@ import axios from "axios";
 import PostComment from "./PostComment";
 import ScrollTop from "../../scrollTop";
 import styled from "styled-components";
+import PostEdit from "./PostEdit";
+
 //게시물 작성 완료 페이지의 내용
 const PostView = () => {
-  const { post_id } = useParams();
+  const { postId } = useParams();
   const dispatch = useDispatch();
   const [postContents, setPostContents] = useState([]);
   const [postIntroduce, setPostIntroduce] = useState();
   const [userImg, setUserImg] = useState(
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
   );
-  const [CommentUserImg, setCommentUserImg] = useState(
-    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-  );
+  // const [CommentUserImg, setCommentUserImg] = useState(
+  //   "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+  // );
   const [responseCommentData, setResponseCommentData] = useState(null);
 
   useEffect(() => {
-    dispatch(viewPostDetailAsync(post_id));
+    dispatch(viewPostDetailAsync(postId));
 
     axios({
       method: "get",
-      url: `http://3.39.32.185:8080/api/post/search?post_id=${post_id}`,
+      url: `http://3.39.32.185:8080/api/post/search?postId=${postId}`,
     })
       .then(response => {
         setPostContents(response.data.data);
         setResponseCommentData(response.data.data.comments);
         setPostIntroduce(response.data.data.content);
-        if (response.data.data.poster_profile) {
+        if (response.data.data.posterProfile) {
           setUserImg(
-            `data:image/jpeg;base64,${response.data.data.poster_profile.image_data}`
+            `data:image/jpeg;base64,${response.data.data.posterProfile.imageData}`
           );
         }
 
@@ -48,30 +50,34 @@ const PostView = () => {
       });
   }, []);
 
-  const stacks = postContents.designated_stacks;
-  // const CommentData = response.data.data.comments;
+  const stacks = postContents.designatedStacks;
 
   return (
     <>
       <ScrollTop />
       <PostContent>
         <div className="writeTitle">{postContents.title}</div>
-        <div id="content">
-          <div className="imagebox">
-            <img className="userImg" src={userImg} alt="userProfileImg" />
+        <PostHeaderContainer>
+          <div id="content">
+            <div className="imagebox">
+              <img className="userImg" src={userImg} alt="userProfileImg" />
+            </div>
+            <div className="userNickname">{postContents.posterNickname}</div>
+            <div style={{ color: "grey" }}> | </div>
+            <div className="createTime">
+              {postContents.createdTime?.slice(0, 16)}
+            </div>
           </div>
-          <div className="userNickname">{postContents.poster_nickname}</div>
-          <div style={{ color: "grey" }}> | </div>
-          <div className="createTime">
-            {postContents.created_time?.slice(0, 16)}
-          </div>
-        </div>
+          <EditTool>
+            <PostEdit postContents={postContents} />
+          </EditTool>
+        </PostHeaderContainer>
         <div>
           <hr></hr>
           <ul className="studyGrid">
             <li className="contentWrapper">
               <span className="title">모집 구분</span>
-              <span className="postInfo">{postContents.recruit_status}</span>
+              <span className="postInfo">{postContents.recruitStatus}</span>
             </li>
             <li className="contentWrapper">
               <span className="title">진행 방식</span>
@@ -81,11 +87,11 @@ const PostView = () => {
             </li>
             <li className="contentWrapper">
               <span className="title">모집 인원</span>
-              <span className="postInfo">{postContents.recruit_capacity}</span>
+              <span className="postInfo">{postContents.recruitCapacity}</span>
             </li>
             <li className="contentWrapper">
               <span className="title">시작 예정</span>
-              <span className="postInfo">{postContents.start_date}</span>
+              <span className="postInfo">{postContents.startDate}</span>
             </li>
             <li className="contentWrapper">
               <span className="title">연락 방법</span>
@@ -93,7 +99,7 @@ const PostView = () => {
             </li>
             <li className="contentWrapper">
               <span className="title">예상 기간</span>
-              <span className="postInfo">{postContents.expected_term}일</span>
+              <span className="postInfo">{postContents.expectedTerm}일</span>
             </li>
             <li className="contentWrapper">
               <span className="title">사용 언어</span>
@@ -114,6 +120,17 @@ const PostView = () => {
     </>
   );
 };
+
+const PostHeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const EditTool = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const PostContent = styled.div`
   width: 900px;

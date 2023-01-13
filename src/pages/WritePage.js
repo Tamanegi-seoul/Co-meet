@@ -34,7 +34,40 @@ const MenuProps = {
   },
 };
 
-const stacks = ["JAVA", "JAVA_SCRIPT", "PYTHON", " SPRING", " REACT", "R"];
+const stacks = [
+  "JAVA",
+  "JAVA_SCRIPT",
+  "TYPE_SCRIPT",
+  "PYTHON",
+  "SPRING",
+  "REACT",
+  "R",
+  "C",
+  "C++",
+  "GO",
+  "SWIFT",
+  "KOTLIN",
+  "MYSQL",
+  "MONGO_DB",
+  "PHP",
+  "FLUTTER",
+  "REACT_NATVIE",
+  "VUE",
+  "NODE_JS",
+  "NEXT_JS",
+  "NEST_JS",
+  "EXPRESS",
+  "DJANGO",
+  "GRAPH_QL",
+  "FIREBASE",
+  "UNITY",
+  "AWS",
+  "KUBERNETES",
+  "DOCKER",
+  "GIT",
+  "FIGMA",
+  "ZEPLIN",
+];
 
 function getStyles(option, stack, theme) {
   return {
@@ -65,17 +98,17 @@ const Circle = styled.div`
 
 const WritePage = () => {
   const [title, setTitle] = useState("");
-  const [recruit_capacity, setCapacity] = useState(""); //모집인원
+  const [recruitCapacity, setCapacity] = useState(""); //모집인원
   const [remote, setRemote] = useState(""); //진행방식
-  const [expected_term, setTerm] = useState(""); //진행기간
-  const [start_date, setStartDate] = React.useState(null);
-  const [contact_type, setContactType] = useState("");
+  const [expectedTerm, setTerm] = useState(""); //진행기간
+  const [startDate, setStartDate] = React.useState(null);
+  const [contactType, setContactType] = useState("");
   const [contact, setContact] = useState("");
-  const [group_type, setGroupType] = useState(""); //모집구분
+  const [groupType, setGroupType] = useState(""); //모집구분
   const [content, setContent] = useState(""); //내용
-  const poster_id = useSelector(state => state.user.memberId);
+  const posterId = useSelector(state => state.user.memberId);
   const theme = useTheme();
-  const [designated_stacks, setStack] = React.useState([]);
+  const [designatedStacks, setStack] = React.useState([]);
   const navigate = useNavigate();
 
   const stackHandler = event => {
@@ -143,14 +176,14 @@ const WritePage = () => {
       {
         title,
         content,
-        group_type,
-        contact_type,
+        groupType,
+        contactType,
         contact,
-        poster_id, //user id
-        start_date,
-        expected_term,
-        recruit_capacity,
-        designated_stacks,
+        posterId, //user id
+        startDate,
+        expectedTerm,
+        recruitCapacity,
+        designatedStacks,
         remote,
 
         // recruit_status,
@@ -169,7 +202,7 @@ const WritePage = () => {
     )
       .then(res => {
         console.log("게시글 등록됨", res);
-        navigate("/post/" + res.data.data.post_id);
+        navigate("/post/" + res.data.data.postId);
       })
       .catch(err => console.log(err));
   };
@@ -218,7 +251,7 @@ const WritePage = () => {
             >
               <InputLabel>모집구분</InputLabel>
               <Select
-                value={group_type}
+                value={groupType}
                 label="setForm"
                 onChange={group_type_Handler}
               >
@@ -235,7 +268,7 @@ const WritePage = () => {
             >
               <InputLabel>모집인원</InputLabel>
               <Select
-                value={recruit_capacity}
+                value={recruitCapacity}
                 label="form"
                 onChange={capacityHandler}
               >
@@ -274,7 +307,7 @@ const WritePage = () => {
             >
               <InputLabel>진행기간</InputLabel>
               <Select
-                value={expected_term}
+                value={expectedTerm}
                 label="form_term"
                 onChange={termHandler}
               >
@@ -300,7 +333,7 @@ const WritePage = () => {
                 labelId="demo-multiple-name-label"
                 id="demo-multiple-name"
                 multiple
-                value={designated_stacks}
+                value={designatedStacks}
                 onChange={stackHandler}
                 input={<OutlinedInput label="Name" />}
                 renderValue={selected => (
@@ -316,7 +349,7 @@ const WritePage = () => {
                   <MenuItem
                     key={option}
                     value={option}
-                    style={getStyles(option, designated_stacks, theme)}
+                    style={getStyles(option, designatedStacks, theme)}
                   >
                     {option}
                   </MenuItem>
@@ -336,7 +369,7 @@ const WritePage = () => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label="시작예정일"
-                  value={start_date}
+                  value={startDate}
                   onChange={date_Hanler}
                   renderInput={params => <TextField {...params} />}
                 />
@@ -357,7 +390,7 @@ const WritePage = () => {
             >
               <InputLabel>연락 방법</InputLabel>
               <Select
-                value={contact_type}
+                value={contactType}
                 label="form_how"
                 onChange={contact_typeHandler}
                 style={{

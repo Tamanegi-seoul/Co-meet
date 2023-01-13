@@ -9,8 +9,6 @@ export function fetchPost(postOffset) {
   });
 }
 
-export function fetchViewPostDetail(post_id) {
-  return new Promise(resolve =>
-    setTimeout(() => resolve({ data: post_id }), 0)
-  );
+export function fetchViewPostDetail(postId) {
+  return new Promise(resolve => setTimeout(() => resolve({ data: postId }), 0));
 }

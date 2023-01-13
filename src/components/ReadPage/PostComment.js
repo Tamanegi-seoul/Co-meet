@@ -11,7 +11,7 @@ import Axios from "axios";
 const PostComent = ({ commentData }) => {
   const navigate = useNavigate();
   const memberId = useSelector(state => state.user.memberId);
-  const { post_id } = useParams();
+  const { postId } = useParams();
   const dispatch = useDispatch();
   const postListShow = useSelector(state => state.post.postListShow);
   // const [postList, setPostList] = useState([]);
@@ -28,8 +28,8 @@ const PostComent = ({ commentData }) => {
       Axios.post(
         "http://3.39.32.185:8080/api/comment/register",
         {
-          post_id: post_id,
-          member_id: memberId,
+          postId: postId,
+          memberId: memberId,
           content: message,
         },
         {
@@ -69,7 +69,12 @@ const PostComent = ({ commentData }) => {
         onKeyDown={keydown}
       ></textarea>
       <div className="buttonWrapper">
-        <button className="buttonComplete" name="register" onClick={addComment}>
+        <button
+          style={{ cursor: "pointer" }}
+          className="buttonComplete"
+          name="register"
+          onClick={addComment}
+        >
           댓글 등록
         </button>
       </div>
@@ -87,11 +92,11 @@ const PostComent = ({ commentData }) => {
                       }}
                       key={index}
                     >
-                      {comment.commenter_profile ? (
+                      {comment.commenterProfile ? (
                         <img
                           src={
                             "data:image/jpeg;base64," +
-                            comment.commenter_profile?.image_data
+                            comment.commenterProfile?.imageData
                           }
                           alt="사용자 이미지"
                         />
@@ -106,12 +111,12 @@ const PostComent = ({ commentData }) => {
                           style={{ display: "flex", flexDirection: "column" }}
                         >
                           <div className="Name">
-                            {comment.commenter_nickname}
+                            {comment.commenterNickname}
                           </div>
                           <div className="Time">
-                            {comment.created_time.slice(0, 10)}
+                            {comment.createdTime.slice(0, 10)}
                             &nbsp;
-                            {comment.created_time.slice(11, 16)}
+                            {comment.createdTime.slice(11, 16)}
                           </div>
                         </div>
                       </div>

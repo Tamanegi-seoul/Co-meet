@@ -36,8 +36,8 @@ export const loadMorePostListAsync = createAsyncThunk(
 
 export const viewPostDetailAsync = createAsyncThunk(
   "viewPostDetailAsync",
-  async post_id => {
-    const response = await fetchViewPostDetail(post_id);
+  async postId => {
+    const response = await fetchViewPostDetail(postId);
     return response.data;
   }
 );

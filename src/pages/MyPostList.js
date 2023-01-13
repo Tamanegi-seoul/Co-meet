@@ -17,25 +17,25 @@ import axios from "axios";
 
 const MyPostList = () => {
   const navigate = useNavigate();
-  const memberId = useSelector(state => state.user.memberId);
-  const { member_id } = useParams();
-  const { poster_id } = useParams();
+  const selectMemberId = useSelector(state => state.user.selectMemberId);
+  const { memberId } = useParams();
+  const { posterId } = useParams();
   const dispatch = useDispatch();
   const postListShow = useSelector(state => state.post.postListShow);
   const [postList, setPostList] = useState([]);
 
   useEffect(() => {
-    if (!memberId) {
+    if (!selectMemberId) {
       onErrorAlert("로그인을 먼저 해주세요!");
       navigate("/");
     } else {
-      // dispatch(loadPostListAsync(poster_id));
+      // dispatch(loadPostListAsync(posterId));
       // console.log(postListShow);
 
       // memberId를 통한 작성글 get
       axios({
         method: "get",
-        url: `http://3.39.32.185:8080/api/post/search/by?member_id=${member_id}`,
+        url: `http://3.39.32.185:8080/api/post/search/by?memberId=${memberId}`,
       }).then(res => {
         if (!res.data.data.length) {
           setPostList(null);
@@ -45,13 +45,13 @@ const MyPostList = () => {
         }
 
         // function isMemberId(el) {
-        //   if (el.poster_id === "member_id") {
+        //   if (el.posterId === "member_id") {
         //     return;
         //   }
         // }
         // const myList = postListShow.filter(isMemberId);
         // console.log(myList);
-        // dispatch(loadPostListAsync(poster_id)).then(res => {
+        // dispatch(loadPostListAsync(posterId)).then(res => {
         //   console.log(postListShow);
         //   console.log(res.data);
         // });
@@ -84,11 +84,11 @@ const MyPostList = () => {
           {postList ? (
             postList.map((item, index) => {
               return (
-                <CommonTableRow key={index} props={item.post_id}>
-                  <CommonTableColumn>{item.post_id}</CommonTableColumn>
+                <CommonTableRow key={index} props={item.postId}>
+                  <CommonTableColumn>{item.postId}</CommonTableColumn>
                   <CommonTableColumn>{item.title}</CommonTableColumn>
                   <CommonTableColumn>
-                    {item.created_time.slice(0, 10)}
+                    {item.createdTime.slice(0, 10)}
                   </CommonTableColumn>
                 </CommonTableRow>
               );

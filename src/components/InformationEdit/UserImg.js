@@ -59,8 +59,8 @@ function getStyles(name, personName, theme) {
 
 const UserImg = () => {
   const navigate = useNavigate();
-  const memberId = useSelector(state => state.user.memberId);
-  const { member_id } = useParams();
+  const selectmemberId = useSelector(state => state.user.selectmemberId);
+  const { memberId } = useParams();
   const dispatch = useDispatch();
   const theme = useTheme();
   const [personName, setPersonName] = useState([]);
@@ -69,22 +69,22 @@ const UserImg = () => {
   const [Image, setImage] = useState(null);
 
   useEffect(() => {
-    if (!memberId) {
+    if (!selectmemberId) {
       onErrorAlert("로그인을 먼저 해주세요!");
       navigate("/");
     }
 
-    dispatch(searchAsync(member_id)).then(res => {
+    dispatch(searchAsync(memberId)).then(res => {
       setUpdateNickName(res.payload.nickname);
-      setPersonName(res.payload.prefer_stacks);
-      if (res.payload.profile_image) {
+      setPersonName(res.payload.preferStacks);
+      if (res.payload.profileImage) {
         setImage(
-          `data:image/jpeg;base64,${res.payload.profile_image.image_data}`
+          `data:image/jpeg;base64,${res.payload.profileImage.imageData}`
         );
         setSendImage(
           dataURLtoFile(
-            `data:image/jpeg;base64,${res.payload.profile_image.image_data}`,
-            res.payload.profile_image.file_name
+            `data:image/jpeg;base64,${res.payload.profileImage.imageData}`,
+            res.payload.profileImage.fileName
           )
         );
       }
@@ -106,13 +106,13 @@ const UserImg = () => {
 
   const onChange = e => {
     if (e.target.files[0]) {
-      setImage({ image_file: e.target.files[0] });
+      setImage({ imageFile: e.target.files[0] });
       setSendImage(e.target.files[0]);
       console.log(sendImage);
     } else {
       //업로드 취소할 시
       setImage({
-        image_data:
+        imageData:
           "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
       });
       return;
@@ -129,7 +129,7 @@ const UserImg = () => {
   };
   const deleteImage = () => {
     setImage({
-      image_data:
+      imageData:
         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
     });
     setSendImage(null);
@@ -241,7 +241,7 @@ const UserImg = () => {
             name="save"
             onClick={() => {
               const data = {
-                member_id: member_id,
+                memberId: memberId,
                 new_nickname: updateNickName,
                 updated_stacks: personName,
               };
@@ -266,7 +266,7 @@ const UserImg = () => {
             className="user_out"
             name="userOut"
             onClick={() => {
-              dispatch(deleteAsync(member_id)).then(() => {
+              dispatch(deleteAsync(memberId)).then(() => {
                 onSuccessAlert("탈퇴완료");
                 navigate("/");
               });
