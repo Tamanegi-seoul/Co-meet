@@ -26,7 +26,7 @@ const PostComent = ({ commentData }) => {
       onErrorAlert("로그인을 먼저 해주세요!");
     } else {
       Axios.post(
-        "http://3.39.32.185:8080/api/comment/register",
+        "http://3.39.32.185:8080/api/comment",
         {
           postId: postId,
           memberId: memberId,

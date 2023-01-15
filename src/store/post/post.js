@@ -93,10 +93,10 @@ export const postSlice = createSlice({
         state.MorePostListLoading = false;
       })
       .addCase(viewPostDetailAsync.pending, state => {
-        console.log("postid전송 시작");
+        console.log("postId전송 시작");
       })
       .addCase(viewPostDetailAsync.fulfilled, (state, action) => {
-        console.log("postid완료 및 데이터 받아오기 완료");
+        console.log("postId완료 및 데이터 받아오기 완료");
       })
       .addCase(viewPostDetailAsync.rejected, state => {});
   },

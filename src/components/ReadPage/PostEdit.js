@@ -10,7 +10,7 @@ const PostEdit = ({ postContents }) => {
   console.log("edit컴포넌트로 Props 받기 성공", postContents);
   const Edit = () => {
     Axios.patch(
-      "http://3.39.32.185:8080/api/post/update",
+      "http://3.39.32.185:8080/api/post",
       {
         postId: postContents.postId,
         title: postContents.title,

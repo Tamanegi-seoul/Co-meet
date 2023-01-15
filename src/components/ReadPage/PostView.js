@@ -31,7 +31,8 @@ const PostView = () => {
 
     axios({
       method: "get",
-      url: `http://3.39.32.185:8080/api/post/search?postId=${postId}`,
+      // url: `http://3.39.32.185:8080/api/post/?postId=${postId}`,
+      url: `http://3.39.32.185:8080/api/post/${postId}`,
     })
       .then(response => {
         setPostContents(response.data.data);
