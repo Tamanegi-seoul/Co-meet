@@ -46,9 +46,7 @@ export default function BasicCard({
           <div className="startDate">시작 예정일 | {startDate}</div>
           <div className="title">{title}</div>
           <Stack>
-            <div className="stack">
-              가능한 스텍 | {designatedStacks.join(`,\n`)}
-            </div>
+            <div className="stack">가능한 스텍 | {designatedStacks}</div>
           </Stack>
         </CardContainer>
       </CardContent>
