@@ -55,11 +55,11 @@ export default function SignUp() {
   const onSubmit = data => {
     let arr = []; //빈배열생성
     //arr 배열에 기존 Stacks 배열 value값 저장
-    data.prefer_stacks.forEach(function (obj, index) {
+    data.preferStacks.forEach(function (obj, index) {
       arr.push(obj.value);
     });
     //arr배열을 Stacks배열에 덮어쓰기
-    data.prefer_stacks = [...arr];
+    data.preferStacks = [...arr];
     console.log(data);
     dispatch(signUpAsync2(data))
       .then(res => {
@@ -177,8 +177,8 @@ export default function SignUp() {
               <Grid item xs={12}>
                 <Controller
                   control={control}
-                  name="prefer_stacks"
-                  {...register("prefer_stacks", {
+                  name="preferStacks"
+                  {...register("preferStacks", {
                     required: "하나 이상의 스택을 선택해야합니다.",
                   })}
                   render={({ field: { onChange, ...field } }) => (
@@ -201,9 +201,9 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
-                {errors.prefer_stacks && (
+                {errors.preferStacks && (
                   <small role="alert">
-                    <ErrorMessage>{errors.prefer_stacks.message}</ErrorMessage>
+                    <ErrorMessage>{errors.preferStacks.message}</ErrorMessage>
                   </small>
                 )}
               </Grid>

@@ -100,10 +100,10 @@ export default function BasicTabs() {
                   return (
                     <PostPreview
                       title={data.title}
-                      start_date={data.start_date}
-                      designated_stacks={data.designated_stacks}
-                      poster_nickname={data.poster_nickname}
-                      post_id={data.post_id}
+                      startDate={data.startDate}
+                      designatedStacks={data.designatedStacks}
+                      posterNickname={data.posterNickname}
+                      postId={data.postId}
                     />
                   );
                 })}
@@ -126,10 +126,10 @@ export default function BasicTabs() {
                   return (
                     <PostPreview
                       title={data.title}
-                      start_date={data.start_date}
-                      designated_stacks={data.designated_stacks}
-                      poster_nickname={data.poster_nickname}
-                      post_id={data.post_id}
+                      startDate={data.startDate}
+                      designatedStacks={data.designatedStacks}
+                      posterNickname={data.posterNickname}
+                      postId={data.postId}
                     />
                   );
                 })}
@@ -150,10 +150,10 @@ export default function BasicTabs() {
               return (
                 <PostPreview
                   title={data.title}
-                  start_date={data.start_date}
-                  designated_stacks={data.designated_stacks}
-                  poster_nickname={data.poster_nickname}
-                  post_id={data.post_id}
+                  startDsate={data.startDsate}
+                  designatedStacks={data.designatedStacks}
+                  posterNickname={data.posterNickname}
+                  postId={data.postId}
                 />
               );
             })}

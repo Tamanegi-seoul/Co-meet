@@ -10,16 +10,16 @@ import "../App.css";
 
 export default function BasicCard({
   title,
-  start_date,
-  designated_stacks,
-  poster_nickname,
-  post_id,
+  startDate,
+  designatedStacks,
+  posterNickname,
+  postId,
 }) {
   const navigate = useNavigate();
   return (
     <Card
       onClick={() => {
-        navigate("/post/" + post_id);
+        navigate("/post/" + postId);
       }}
       sx={{
         display: "flex",
@@ -40,15 +40,13 @@ export default function BasicCard({
       <CardContent sx={{ lineHeight: "45px", cursor: "pointer" }}>
         <CardContainer>
           <Title size="small">
-            <span>{poster_nickname}</span>
+            <span>{posterNickname}</span>
             님이 연락을 원해요
           </Title>
-          <div className="startDate">시작 예정일 | {start_date}</div>
+          <div className="startDate">시작 예정일 | {startDate}</div>
           <div className="title">{title}</div>
           <Stack>
-            <div className="stack">
-              가능한 스텍 | {designated_stacks.join(`,\n`)}
-            </div>
+            <div className="stack">가능한 스텍 | {designatedStacks}</div>
           </Stack>
         </CardContainer>
       </CardContent>
