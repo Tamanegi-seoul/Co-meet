@@ -34,10 +34,11 @@ const initialState = {
 export const loginAsync2 = createAsyncThunk("login", async data => {
   return await loginUser(data)
     .then(res => {
-      const userInfo = jwt(res.data.access_token);
-      setAuthToken(res.data.access_token);
-      setCookie("access_token", res.data.access_token);
-      setCookie("refresh_token", res.data.refresh_token);
+      console.log(res.data);
+      const userInfo = jwt(res.data.accessToken);
+      setAuthToken(res.data.accessToken);
+      setCookie("accessToken", res.data.accessToken);
+      setCookie("refreshToken", res.data.refreshToken);
       return userInfo;
     })
     .catch(error => {
@@ -47,8 +48,8 @@ export const loginAsync2 = createAsyncThunk("login", async data => {
 
 export const logOutAsync2 = createAsyncThunk("logout", async () => {
   return await logoutUser().then(() => {
-    removeCookie("access_token");
-    removeCookie("refresh_token");
+    removeCookie("accessToken");
+    removeCookie("refreshToken");
     setAuthToken();
   });
 });
@@ -86,8 +87,8 @@ export const updateAsync = createAsyncThunk("update", async data => {
 export const deleteAsync = createAsyncThunk("delete", async data => {
   return await deleteUser(data)
     .then(res => {
-      removeCookie("access_token");
-      removeCookie("refresh_token");
+      removeCookie("accessToken");
+      removeCookie("refreshToken");
       setAuthToken();
       console.log("회원탈퇴 완료!");
     })
@@ -105,7 +106,7 @@ export const userSlice = createSlice({
       .addCase(loginAsync2.fulfilled, (state, action) => {
         if (!action.payload.code) {
           state.email = action.payload.sub;
-          state.memberId = action.payload.member_id;
+          state.memberId = action.payload.memberId;
           state.nickName = action.payload.nickname;
           state.isLogIn = true;
         }
