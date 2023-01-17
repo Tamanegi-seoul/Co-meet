@@ -44,7 +44,7 @@ export function searchUser(memberId) {
 }
 export function updateUser(formData) {
   return axios({
-    url: "http://3.39.32.185:8080/api/member/update",
+    url: "http://3.39.32.185:8080/api/member",
     method: "patch",
     data: formData,
   });
