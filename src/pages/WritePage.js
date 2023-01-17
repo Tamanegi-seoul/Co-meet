@@ -172,7 +172,7 @@ const WritePage = () => {
   const addPost = e => {
     e.preventDefault();
     Axios.post(
-      "http://3.39.32.185:8080/api/post/register",
+      "http://3.39.32.185:8080/api/post",
       {
         title,
         content,
