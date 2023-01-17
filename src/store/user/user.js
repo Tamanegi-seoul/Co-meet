@@ -34,6 +34,7 @@ const initialState = {
 export const loginAsync2 = createAsyncThunk("login", async data => {
   return await loginUser(data)
     .then(res => {
+      console.log(data);
       console.log(res.data);
       const userInfo = jwt(res.data.accessToken);
       setAuthToken(res.data.accessToken);
@@ -55,6 +56,7 @@ export const logOutAsync2 = createAsyncThunk("logout", async () => {
 });
 export const signUpAsync2 = createAsyncThunk("signup", async data => {
   const response = await signupUser(data);
+  console.log(data);
   console.log(response);
   return;
 });
@@ -69,6 +71,7 @@ export const checkIdEmailAsync = createAsyncThunk(
 export const searchAsync = createAsyncThunk("search", async data => {
   return await searchUser(data)
     .then(res => {
+      console.log(res.data.data);
       return res.data.data;
     })
     .catch(error => console.log(error));
