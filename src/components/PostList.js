@@ -144,25 +144,29 @@ export default function BasicTabs() {
       </TabPanel>
 
       <TabPanel value={value} index={2}>
-        {postListShow.length !== 0 ? (
-          <>
-            {postListShow.map(data => {
-              return (
-                <PostPreview
-                  title={data.title}
-                  startDsate={data.startDsate}
-                  designatedStacks={data.designatedStacks}
-                  posterNickname={data.posterNickname}
-                  postId={data.postId}
-                />
-              );
-            })}
-            {isLoading && <Loading />}
-            {!isLoading && <Blank ref={setInfiniteScroll}></Blank>}
-          </>
-        ) : (
-          <NoSearch />
-        )}
+        <BigTable>
+          <Table>
+            {postListShow.length !== 0 ? (
+              <>
+                {postListShow.map(data => {
+                  return (
+                    <PostPreview
+                      title={data.title}
+                      startDsate={data.startDsate}
+                      designatedStacks={data.designatedStacks}
+                      posterNickname={data.posterNickname}
+                      postId={data.postId}
+                    />
+                  );
+                })}
+                {isLoading && <Loading />}
+                {!isLoading && <Blank ref={setInfiniteScroll}></Blank>}
+              </>
+            ) : (
+              <NoSearch />
+            )}
+          </Table>
+        </BigTable>
       </TabPanel>
     </Box>
   );
