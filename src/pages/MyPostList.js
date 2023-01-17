@@ -13,11 +13,13 @@ import { onErrorAlert, onSuccessAlert } from "../components/Alert/Alert";
 import { deleteAsync, searchAsync } from "../store/user/user";
 import { loadPostListAsync } from "../store/post/post";
 import axios from "axios";
+import { type } from "@testing-library/user-event/dist/type";
 // 내작성글 리스트를 볼 수 있는 페이지
 
 const MyPostList = () => {
   const navigate = useNavigate();
-  const selectMemberId = useSelector(state => state.user.selectMemberId);
+  const selectMemberId = useSelector(state => state.user.memberId);
+  console.log(selectMemberId);
   const { memberId } = useParams();
   const { posterId } = useParams();
   const dispatch = useDispatch();
@@ -35,8 +37,11 @@ const MyPostList = () => {
       // memberId를 통한 작성글 get
       axios({
         method: "get",
-        url: `http://3.39.32.185:8080/api/post/search/by?memberId=${memberId}`,
+        url: `http://3.39.32.185:8080/api/post/my?memberId=${selectMemberId}`,
       }).then(res => {
+        console.log(memberId);
+        console.log(typeof memberId);
+        console.log(res.data.data);
         if (!res.data.data.length) {
           setPostList(null);
         } else {
