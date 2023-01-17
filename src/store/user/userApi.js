@@ -19,7 +19,7 @@ export function signupUser(signUpData) {
     new Blob([JSON.stringify(signUpData)], { type: "application/json" })
   );
   return axios({
-    url: "http://3.39.32.185:8080/api/member/join",
+    url: "http://3.39.32.185:8080/api/member/",
     method: "post",
     data: formData,
   });
@@ -34,8 +34,10 @@ export function checkIdEmail(data) {
 }
 export function searchUser(memberId) {
   const member_id = Number(memberId);
+  //console.log(memberId);
+  //console.log(member_id);
   return axios({
-    url: "http://3.39.32.185:8080/api/member/search",
+    url: `http://3.39.32.185:8080/api/member?memberId=${member_id}`,
     method: "get",
     params: { member_id },
   });
