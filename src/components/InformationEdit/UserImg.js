@@ -60,13 +60,13 @@ function getStyles(name, personName, theme) {
 const UserImg = () => {
   const navigate = useNavigate();
   const selectmemberId = useSelector(state => state.user.memberId);
-  // console.log(selectmemberId);
+  console.log(selectmemberId);
   const { memberId } = useParams();
   const dispatch = useDispatch();
   const theme = useTheme();
   const [personName, setPersonName] = useState([]);
-  const [newNickname, setNewNickname] = useState("");
   const [prevNickname, setPrevNickname] = useState("");
+  const [newNickname, setNewNickname] = useState("");
   const [sendImage, setSendImage] = useState(null);
   const [Image, setImage] = useState(null);
 
@@ -137,6 +137,18 @@ const UserImg = () => {
     });
     setSendImage(null);
   };
+  const [newNicknameNull, setNewNicknameNull] = useState(true);
+  const onChangeNickname = event => {
+    // if (event.target.value === "") {
+    //   setNewNickname(prevNickname);
+    // } else {
+    //   console.log(event.target.value);
+    //   setNewNickname(event.target.value);
+    //   console.log(typeof event.target.value);
+    //   console.log(newNickname);
+    // }
+    setNewNickname(event.target.value);
+  };
   return (
     <div>
       <ImgBox>
@@ -175,10 +187,7 @@ const UserImg = () => {
           label="닉네임"
           placeholder={prevNickname}
           value={newNickname}
-          onChange={event => {
-            event.preventDefault();
-            setNewNickname(event.target.value);
-          }}
+          onChange={onChangeNickname}
           autoFocus
         />
       </UserNameWrapper>
@@ -248,7 +257,7 @@ const UserImg = () => {
               const data = {
                 memberId: memberId,
                 prevNickname: prevNickname,
-                newNickname: newNickname,
+                newNickname: newNickname ? newNickname : prevNickname,
                 updatedStacks: personName,
               };
               const formData = new FormData();
