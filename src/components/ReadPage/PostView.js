@@ -105,7 +105,7 @@ const PostView = () => {
             </li>
             <li className="contentWrapper">
               <span className="title">사용 언어</span>
-              <span className="postInfo">{`${stacks}`}</span>
+              <span className="postInfo">{stacks.join(", ")}</span>
             </li>
           </ul>
         </div>

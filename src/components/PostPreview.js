@@ -16,6 +16,7 @@ export default function BasicCard({
   postId,
 }) {
   const navigate = useNavigate();
+
   return (
     <Card
       onClick={() => {
@@ -46,7 +47,9 @@ export default function BasicCard({
           <div className="startDate">시작 예정일 | {startDate}</div>
           <div className="title">{title}</div>
           <Stack>
-            <div className="stack">가능한 스텍 | {designatedStacks}</div>
+            <div className="stack">
+              가능한 스텍 | {designatedStacks.join(",  ")}
+            </div>
           </Stack>
         </CardContainer>
       </CardContent>
