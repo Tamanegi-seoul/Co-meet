@@ -77,6 +77,10 @@ export default function BasicTabs() {
     dispatch(loadPostListAsync());
   }, []);
 
+  const isStudy = postListShow.filter(data => data.groupType === "STUDY");
+  const isProject = postListShow.filter(data => data.groupType === "PROJECT");
+
+  console.log(isProject);
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -90,7 +94,6 @@ export default function BasicTabs() {
           <Tab label="프로젝트" {...a11yProps(2)} />
         </Tabs>
       </Box>
-
       <TabPanel value={value} index={0}>
         <BigTable>
           <Table>
@@ -116,13 +119,13 @@ export default function BasicTabs() {
           </Table>
         </BigTable>
       </TabPanel>
-
       <TabPanel value={value} index={1}>
         <BigTable>
           <Table>
-            {postListShow.length !== 0 ? (
+            {console.log(isStudy)}
+            {isStudy.length !== 0 ? (
               <>
-                {postListShow.map(data => {
+                {isStudy.map(data => {
                   return (
                     <PostPreview
                       title={data.title}
@@ -146,13 +149,14 @@ export default function BasicTabs() {
       <TabPanel value={value} index={2}>
         <BigTable>
           <Table>
-            {postListShow.length !== 0 ? (
+            {console.log(isProject)}
+            {isProject.length !== 0 ? (
               <>
-                {postListShow.map(data => {
+                {isProject.map(data => {
                   return (
                     <PostPreview
                       title={data.title}
-                      startDsate={data.startDsate}
+                      startDate={data.startDate}
                       designatedStacks={data.designatedStacks}
                       posterNickname={data.posterNickname}
                       postId={data.postId}
