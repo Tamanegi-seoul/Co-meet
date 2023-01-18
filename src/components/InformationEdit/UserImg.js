@@ -177,6 +177,7 @@ const UserImg = () => {
           placeholder={prevNickname}
           value={newNickname}
           onChange={event => {
+            event.preventDefault();
             setNewNickname(event.target.value);
           }}
           autoFocus
@@ -410,4 +411,4 @@ const EditButtons = styled.div`
     cursor: pointer;
   }
 `;
-export default UserImg;
+export default React.memo(UserImg);
