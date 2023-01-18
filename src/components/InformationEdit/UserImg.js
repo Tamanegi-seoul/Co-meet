@@ -60,9 +60,8 @@ function getStyles(name, personName, theme) {
 const UserImg = () => {
   const navigate = useNavigate();
   const selectmemberId = useSelector(state => state.user.memberId);
-  console.log(selectmemberId);
+  // console.log(selectmemberId);
   const { memberId } = useParams();
-  console.log(memberId);
   const dispatch = useDispatch();
   const theme = useTheme();
   const [personName, setPersonName] = useState([]);
