@@ -56,7 +56,9 @@ const PostView = () => {
     <>
       <ScrollTop />
       <PostContent>
-        <div className="writeTitle">{postContents.title}</div>
+        <div className="writeTitle">
+          <span>{postContents.title}</span>
+        </div>
         <PostHeaderContainer>
           <div id="content">
             <div className="imagebox">
@@ -134,7 +136,7 @@ const EditTool = styled.div`
 
 const PostContent = styled.div`
   width: 900px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   padding: 60px 0;
 `;
 
