@@ -79,7 +79,7 @@ const PostView = () => {
           <ul className="studyGrid">
             <li className="contentWrapper">
               <span className="title">모집 구분</span>
-              <span className="postInfo">{postContents.recruitStatus}</span>
+              <span className="postInfo">{postContents.groupType}</span>
             </li>
             <li className="contentWrapper">
               <span className="title">진행 방식</span>
@@ -136,7 +136,7 @@ const EditTool = styled.div`
 
 const PostContent = styled.div`
   width: 900px;
-  /* margin: 0 auto; */
+  margin: 0 auto;
   padding: 60px 0;
 `;
 
