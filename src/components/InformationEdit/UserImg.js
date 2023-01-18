@@ -66,7 +66,8 @@ const UserImg = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const [personName, setPersonName] = useState([]);
-  const [updateNickName, setUpdateNickName] = useState("");
+  const [newNickname, setNewNickname] = useState("");
+  const [prevNickname, setPrevNickname] = useState("");
   const [sendImage, setSendImage] = useState(null);
   const [Image, setImage] = useState(null);
 
@@ -77,7 +78,8 @@ const UserImg = () => {
     }
 
     dispatch(searchAsync(memberId)).then(res => {
-      setUpdateNickName(res.payload.nickname);
+      setPrevNickname(res.payload.nickname);
+      // setNewNickname(res.payload.nickname);
       setPersonName(res.payload.preferStacks);
       if (res.payload.profileImage) {
         setImage(
@@ -172,9 +174,11 @@ const UserImg = () => {
           required
           id="nickName"
           label="닉네임"
-          value={updateNickName}
+          placeholder={prevNickname}
+          value={newNickname}
           onChange={event => {
-            setUpdateNickName(event.target.value);
+            event.preventDefault();
+            setNewNickname(event.target.value);
           }}
           autoFocus
         />
@@ -244,7 +248,8 @@ const UserImg = () => {
             onClick={() => {
               const data = {
                 memberId: memberId,
-                newNickname: updateNickName,
+                prevNickname: prevNickname,
+                newNickname: newNickname,
                 updatedStacks: personName,
               };
               const formData = new FormData();
@@ -406,4 +411,4 @@ const EditButtons = styled.div`
     cursor: pointer;
   }
 `;
-export default UserImg;
+export default React.memo(UserImg);
