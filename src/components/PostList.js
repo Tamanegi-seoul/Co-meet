@@ -79,8 +79,7 @@ export default function BasicTabs() {
 
   const isStudy = postListShow.filter(data => data.groupType === "STUDY");
   const isProject = postListShow.filter(data => data.groupType === "PROJECT");
-
-  console.log(isProject);
+  // console.log(postListShow);
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -122,7 +121,7 @@ export default function BasicTabs() {
       <TabPanel value={value} index={1}>
         <BigTable>
           <Table>
-            {console.log(isStudy)}
+            {/* {console.log(isStudy)} */}
             {isStudy.length !== 0 ? (
               <>
                 {isStudy.map(data => {
@@ -149,7 +148,7 @@ export default function BasicTabs() {
       <TabPanel value={value} index={2}>
         <BigTable>
           <Table>
-            {console.log(isProject)}
+            {/* {console.log(isProject)} */}
             {isProject.length !== 0 ? (
               <>
                 {isProject.map(data => {

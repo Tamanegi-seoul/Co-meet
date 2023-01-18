@@ -48,7 +48,7 @@ export default function BasicCard({
           <div className="title">{title}</div>
           <Stack>
             <div className="stack">
-              가능한 스텍 | {designatedStacks.join(",  ")}
+              가능한 스택 | {designatedStacks.join(",  ")}
             </div>
           </Stack>
         </CardContainer>
