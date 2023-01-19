@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 const PostEdit = ({ postContents }) => {
   const navigate = useNavigate();
 
-  console.log("edit컴포넌트로 Props 받기 성공", postContents);
+  // console.log("edit컴포넌트로 Props 받기 성공", postContents);
   const Edit = () => {
     const AxiosData = {
       postId: postContents.postId,
@@ -28,8 +28,7 @@ const PostEdit = ({ postContents }) => {
 
     Axios.patch("http://3.39.32.185:8080/api/post", AxiosData)
       .then(res => {
-        console.log("edit patch 성공", res);
-        navigate(`/write`, { state: { AxiosData } });
+        navigate(`/write`, { state: { postContents } });
       })
       .catch(err => console.log("edit patch 실패", err));
   };

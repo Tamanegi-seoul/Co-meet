@@ -113,8 +113,8 @@ const WritePage = () => {
   const location = useLocation();
 
   //Data 받아오기
-  const AxiosData = location.state;
-  console.log(AxiosData);
+  const postContents = location.state;
+  console.log(postContents);
 
   const stackHandler = event => {
     const {
@@ -155,7 +155,7 @@ const WritePage = () => {
   const group_type_Handler = e => {
     setGroupType(e.target.value);
     console.log(e.target.value);
-    // console.log(AxiosData);
+    // console.log(postContents);
   };
 
   const date_Hanler = newValue => {
@@ -236,7 +236,9 @@ const WritePage = () => {
             >
               <InputLabel>모집구분</InputLabel>
               <Select
-                value={AxiosData ? AxiosData.AxiosData.groupType : groupType}
+                value={
+                  postContents ? postContents.postContents.groupType : groupType
+                }
                 label="setForm"
                 onChange={group_type_Handler}
               >
@@ -254,8 +256,8 @@ const WritePage = () => {
               <InputLabel>모집인원</InputLabel>
               <Select
                 value={
-                  AxiosData
-                    ? AxiosData.AxiosData.recruitCapacity
+                  postContents
+                    ? postContents.postContents.recruitCapacity
                     : recruitCapacity
                 }
                 label="form"
@@ -282,7 +284,11 @@ const WritePage = () => {
               }}
             >
               <InputLabel>진행방식</InputLabel>
-              <Select value={remote} label="form_how" onChange={remoteHandler}>
+              <Select
+                value={postContents ? postContents.postContents.remote : remote}
+                label="form_how"
+                onChange={remoteHandler}
+              >
                 <MenuItem value={true}>온라인</MenuItem>
                 <MenuItem value={false}>오프라인</MenuItem>
               </Select>
@@ -297,7 +303,9 @@ const WritePage = () => {
               <InputLabel>진행기간</InputLabel>
               <Select
                 value={
-                  AxiosData ? AxiosData.AxiosData.expectedTerm : expectedTerm
+                  postContents
+                    ? postContents.postContents.expectedTerm
+                    : expectedTerm
                 }
                 label="form_term"
                 onChange={termHandler}
@@ -325,8 +333,8 @@ const WritePage = () => {
                 id="demo-multiple-name"
                 multiple
                 value={
-                  AxiosData
-                    ? AxiosData.AxiosData.designatedStacks
+                  postContents
+                    ? postContents.postContents.designatedStacks
                     : designatedStacks
                 }
                 onChange={stackHandler}
@@ -364,7 +372,11 @@ const WritePage = () => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label="시작예정일"
-                  value={AxiosData ? AxiosData.AxiosData.startDate : startDate}
+                  value={
+                    postContents
+                      ? postContents.postContents.startDate
+                      : startDate
+                  }
                   onChange={date_Hanler}
                   renderInput={params => <TextField {...params} />}
                 />
@@ -386,7 +398,9 @@ const WritePage = () => {
               <InputLabel>연락 방법</InputLabel>
               <Select
                 value={
-                  AxiosData ? AxiosData.AxiosData.contactType : contactType
+                  postContents
+                    ? postContents.postContents.contactType
+                    : contactType
                 }
                 label="form_how"
                 onChange={contact_typeHandler}
@@ -411,7 +425,9 @@ const WritePage = () => {
 
               <TextField
                 id="standard-basic"
-                value={AxiosData ? AxiosData.AxiosData.contact : contact}
+                value={
+                  postContents ? postContents.postContents.contact : contact
+                }
                 onChange={contact_Handler}
                 label="연락 주소"
                 variant="outlined"
@@ -437,7 +453,7 @@ const WritePage = () => {
           </label>
           <TextField
             required
-            value={AxiosData ? AxiosData.AxiosData.title : title}
+            value={postContents ? postContents.postContents.title : title}
             onChange={title_Hanler}
             placeholder="글 제목을 입력해주세요"
             variant="outlined"
@@ -447,7 +463,7 @@ const WritePage = () => {
           <WriteArea>
             <CKEditor
               editor={ClassicEditor}
-              data={AxiosData ? AxiosData.AxiosData.content : content}
+              data={postContents ? postContents.postContents.content : content}
               onReady={editor => {
                 // You can store the "editor" and use when it is needed.
                 console.log("Editor is ready to use!", editor);
@@ -483,7 +499,7 @@ const WritePage = () => {
           justifyContent="flex-end"
         >
           <div style={{ padding: "50px 0" }}>
-            {AxiosData ? (
+            {postContents ? (
               <button
                 onClick={addPost}
                 className="buttonComplete"
