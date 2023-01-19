@@ -19,6 +19,7 @@ const PostEdit = ({ postContents }) => {
       recruitStatus: postContents.recruitStatus,
       groupType: postContents.groupType,
       recruitCapacity: postContents.recruitCapacity,
+      remote: postContents.remote,
       contactType: postContents.contactType,
       contact: postContents.contact,
       startDate: postContents.startDate,
@@ -26,11 +27,11 @@ const PostEdit = ({ postContents }) => {
       designatedStacks: postContents.designatedStacks,
     };
 
-    Axios.patch("http://3.39.32.185:8080/api/post", AxiosData)
-      .then(res => {
-        navigate(`/write`, { state: { postContents } });
-      })
-      .catch(err => console.log("edit patch 실패", err));
+    // Axios.patch("http://3.39.32.185:8080/api/post", AxiosData)
+    //   .then(res => {
+    navigate(`/write`, { state: { AxiosData } });
+    // })
+    // .catch(err => console.log("edit patch 실패", err));
   };
 
   return (

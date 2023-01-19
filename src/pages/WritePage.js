@@ -112,10 +112,6 @@ const WritePage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  //Data 받아오기
-  const postContents = location.state;
-  console.log(postContents);
-
   const stackHandler = event => {
     const {
       target: { value },
@@ -174,6 +170,33 @@ const WritePage = () => {
     // Define your onSubmit function here
     // ...
     // for example, setData() here
+  };
+
+  //Data 받아오기
+  const AxiosData = location.state;
+
+  const EditPost = e => {
+    const EditData = {
+      postId: AxiosData.AxiosData.postId,
+      title: AxiosData.AxiosData.title,
+      content: AxiosData.AxiosData.content,
+      recruitStatus: AxiosData.AxiosData.recruitStatus,
+      groupType: AxiosData.AxiosData.groupType,
+      recruitCapacity: AxiosData.AxiosData.recruitCapacity,
+      remote: AxiosData.AxiosData.remote,
+      contactType: AxiosData.AxiosData.contactType,
+      contact: AxiosData.AxiosData.contact,
+      startDate: AxiosData.AxiosData.startDate,
+      expectedTerm: AxiosData.AxiosData.expectedTerm,
+      designatedStacks: AxiosData.AxiosData.designatedStacks,
+    };
+    e.preventDefault();
+
+    Axios.patch("http://3.39.32.185:8080/api/post", EditData)
+      .then(res => {
+        navigate("/post/" + res.data.data.postId);
+      })
+      .catch(err => console.log("edit patch 실패", err));
   };
 
   const addPost = e => {
@@ -236,9 +259,7 @@ const WritePage = () => {
             >
               <InputLabel>모집구분</InputLabel>
               <Select
-                value={
-                  postContents ? postContents.postContents.groupType : groupType
-                }
+                value={AxiosData ? AxiosData.AxiosData.groupType : groupType}
                 label="setForm"
                 onChange={group_type_Handler}
               >
@@ -256,8 +277,8 @@ const WritePage = () => {
               <InputLabel>모집인원</InputLabel>
               <Select
                 value={
-                  postContents
-                    ? postContents.postContents.recruitCapacity
+                  AxiosData
+                    ? AxiosData.AxiosData.recruitCapacity
                     : recruitCapacity
                 }
                 label="form"
@@ -285,7 +306,7 @@ const WritePage = () => {
             >
               <InputLabel>진행방식</InputLabel>
               <Select
-                value={postContents ? postContents.postContents.remote : remote}
+                value={AxiosData ? AxiosData.AxiosData.remote : remote}
                 label="form_how"
                 onChange={remoteHandler}
               >
@@ -303,9 +324,7 @@ const WritePage = () => {
               <InputLabel>진행기간</InputLabel>
               <Select
                 value={
-                  postContents
-                    ? postContents.postContents.expectedTerm
-                    : expectedTerm
+                  AxiosData ? AxiosData.AxiosData.expectedTerm : expectedTerm
                 }
                 label="form_term"
                 onChange={termHandler}
@@ -333,8 +352,8 @@ const WritePage = () => {
                 id="demo-multiple-name"
                 multiple
                 value={
-                  postContents
-                    ? postContents.postContents.designatedStacks
+                  AxiosData
+                    ? AxiosData.AxiosData.designatedStacks
                     : designatedStacks
                 }
                 onChange={stackHandler}
@@ -372,11 +391,7 @@ const WritePage = () => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label="시작예정일"
-                  value={
-                    postContents
-                      ? postContents.postContents.startDate
-                      : startDate
-                  }
+                  value={AxiosData ? AxiosData.AxiosData.startDate : startDate}
                   onChange={date_Hanler}
                   renderInput={params => <TextField {...params} />}
                 />
@@ -398,9 +413,7 @@ const WritePage = () => {
               <InputLabel>연락 방법</InputLabel>
               <Select
                 value={
-                  postContents
-                    ? postContents.postContents.contactType
-                    : contactType
+                  AxiosData ? AxiosData.AxiosData.contactType : contactType
                 }
                 label="form_how"
                 onChange={contact_typeHandler}
@@ -425,9 +438,7 @@ const WritePage = () => {
 
               <TextField
                 id="standard-basic"
-                value={
-                  postContents ? postContents.postContents.contact : contact
-                }
+                value={AxiosData ? AxiosData.AxiosData.contact : contact}
                 onChange={contact_Handler}
                 label="연락 주소"
                 variant="outlined"
@@ -440,7 +451,6 @@ const WritePage = () => {
           </Box>
         </Grid>
         <Grid item xs={1}></Grid>
-
         <Grid item xs={1}></Grid>
         <Grid item xs={10}>
           <Title>
@@ -453,7 +463,7 @@ const WritePage = () => {
           </label>
           <TextField
             required
-            value={postContents ? postContents.postContents.title : title}
+            value={AxiosData ? AxiosData.AxiosData.title : title}
             onChange={title_Hanler}
             placeholder="글 제목을 입력해주세요"
             variant="outlined"
@@ -463,7 +473,7 @@ const WritePage = () => {
           <WriteArea>
             <CKEditor
               editor={ClassicEditor}
-              data={postContents ? postContents.postContents.content : content}
+              data={AxiosData ? AxiosData.AxiosData.content : content}
               onReady={editor => {
                 // You can store the "editor" and use when it is needed.
                 console.log("Editor is ready to use!", editor);
@@ -489,7 +499,6 @@ const WritePage = () => {
           </WriteArea>
         </Grid>
         <Grid item xs={1}></Grid>
-
         <Grid
           item
           // xs={12}
@@ -499,9 +508,9 @@ const WritePage = () => {
           justifyContent="flex-end"
         >
           <div style={{ padding: "50px 0" }}>
-            {postContents ? (
+            {AxiosData ? (
               <button
-                onClick={addPost}
+                onClick={EditPost}
                 className="buttonComplete"
                 name="register"
                 style={{ marginRight: "10px" }}
