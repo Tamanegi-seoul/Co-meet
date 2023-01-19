@@ -16,7 +16,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import Chip from "@mui/material/Chip";
 import Axios from "axios";
 import TextField from "@mui/material/TextField";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -98,7 +98,7 @@ const Circle = styled.div`
 
 const WritePage = () => {
   const [title, setTitle] = useState("");
-  const [recruitCapacity, setCapacity] = useState(""); //모집인원
+  const [recruitCapacity, setRecruitCapacity] = useState(""); //모집인원
   const [remote, setRemote] = useState(""); //진행방식
   const [expectedTerm, setTerm] = useState(""); //진행기간
   const [startDate, setStartDate] = React.useState(null);
@@ -110,6 +110,7 @@ const WritePage = () => {
   const theme = useTheme();
   const [designatedStacks, setStack] = React.useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const stackHandler = event => {
     const {
@@ -121,8 +122,9 @@ const WritePage = () => {
     );
   };
 
+  // 모집 인원
   const capacityHandler = e => {
-    setCapacity(e.target.value);
+    setRecruitCapacity(e.target.value);
     console.log(e.target.value);
   };
 
@@ -149,6 +151,7 @@ const WritePage = () => {
   const group_type_Handler = e => {
     setGroupType(e.target.value);
     console.log(e.target.value);
+    // console.log(postContents);
   };
 
   const date_Hanler = newValue => {
@@ -169,6 +172,33 @@ const WritePage = () => {
     // for example, setData() here
   };
 
+  //Data 받아오기
+  const AxiosData = location.state;
+
+  const EditPost = e => {
+    const EditData = {
+      postId: AxiosData.AxiosData.postId,
+      title: AxiosData.AxiosData.title,
+      content: AxiosData.AxiosData.content,
+      recruitStatus: AxiosData.AxiosData.recruitStatus,
+      groupType: AxiosData.AxiosData.groupType,
+      recruitCapacity: AxiosData.AxiosData.recruitCapacity,
+      remote: AxiosData.AxiosData.remote,
+      contactType: AxiosData.AxiosData.contactType,
+      contact: AxiosData.AxiosData.contact,
+      startDate: AxiosData.AxiosData.startDate,
+      expectedTerm: AxiosData.AxiosData.expectedTerm,
+      designatedStacks: AxiosData.AxiosData.designatedStacks,
+    };
+    e.preventDefault();
+
+    Axios.patch("http://3.39.32.185:8080/api/post", EditData)
+      .then(res => {
+        navigate("/post/" + res.data.data.postId);
+      })
+      .catch(err => console.log("edit patch 실패", err));
+  };
+
   const addPost = e => {
     e.preventDefault();
     Axios.post(
@@ -185,7 +215,6 @@ const WritePage = () => {
         recruitCapacity,
         designatedStacks,
         remote,
-
         // recruit_status,
         // recruit_capacity,
         // type,
@@ -195,7 +224,7 @@ const WritePage = () => {
       },
       {
         headers: {
-          //       "Access-Control-Allow-Origin": "*",
+          //"Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
         },
       }
@@ -207,30 +236,9 @@ const WritePage = () => {
       .catch(err => console.log(err));
   };
 
-  // console.log("글등록");
-  // console.log({
-  //   recruit_status,
-  //   recruit_capacity,
-  //   type,
-  //   expected_term,
-  //   stack,
-  //   startDate,
-  // });
-
   const back = e => {
-    console.log("취소");
+    navigate(-1);
   };
-
-  // useEffect(() => {
-  //   console.log({
-  //     recruit_status,
-  //     recruit_capacity,
-  //     type,
-  //     expected_term,
-  //     stacklist,
-  //     startDate,
-  //   });
-  // });
 
   return (
     <>
@@ -251,7 +259,7 @@ const WritePage = () => {
             >
               <InputLabel>모집구분</InputLabel>
               <Select
-                value={groupType}
+                value={AxiosData ? AxiosData.AxiosData.groupType : groupType}
                 label="setForm"
                 onChange={group_type_Handler}
               >
@@ -268,7 +276,11 @@ const WritePage = () => {
             >
               <InputLabel>모집인원</InputLabel>
               <Select
-                value={recruitCapacity}
+                value={
+                  AxiosData
+                    ? AxiosData.AxiosData.recruitCapacity
+                    : recruitCapacity
+                }
                 label="form"
                 onChange={capacityHandler}
               >
@@ -293,7 +305,11 @@ const WritePage = () => {
               }}
             >
               <InputLabel>진행방식</InputLabel>
-              <Select value={remote} label="form_how" onChange={remoteHandler}>
+              <Select
+                value={AxiosData ? AxiosData.AxiosData.remote : remote}
+                label="form_how"
+                onChange={remoteHandler}
+              >
                 <MenuItem value={true}>온라인</MenuItem>
                 <MenuItem value={false}>오프라인</MenuItem>
               </Select>
@@ -307,7 +323,9 @@ const WritePage = () => {
             >
               <InputLabel>진행기간</InputLabel>
               <Select
-                value={expectedTerm}
+                value={
+                  AxiosData ? AxiosData.AxiosData.expectedTerm : expectedTerm
+                }
                 label="form_term"
                 onChange={termHandler}
               >
@@ -333,7 +351,11 @@ const WritePage = () => {
                 labelId="demo-multiple-name-label"
                 id="demo-multiple-name"
                 multiple
-                value={designatedStacks}
+                value={
+                  AxiosData
+                    ? AxiosData.AxiosData.designatedStacks
+                    : designatedStacks
+                }
                 onChange={stackHandler}
                 input={<OutlinedInput label="Name" />}
                 renderValue={selected => (
@@ -369,7 +391,7 @@ const WritePage = () => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label="시작예정일"
-                  value={startDate}
+                  value={AxiosData ? AxiosData.AxiosData.startDate : startDate}
                   onChange={date_Hanler}
                   renderInput={params => <TextField {...params} />}
                 />
@@ -390,7 +412,9 @@ const WritePage = () => {
             >
               <InputLabel>연락 방법</InputLabel>
               <Select
-                value={contactType}
+                value={
+                  AxiosData ? AxiosData.AxiosData.contactType : contactType
+                }
                 label="form_how"
                 onChange={contact_typeHandler}
                 style={{
@@ -414,7 +438,7 @@ const WritePage = () => {
 
               <TextField
                 id="standard-basic"
-                value={contact}
+                value={AxiosData ? AxiosData.AxiosData.contact : contact}
                 onChange={contact_Handler}
                 label="연락 주소"
                 variant="outlined"
@@ -427,7 +451,6 @@ const WritePage = () => {
           </Box>
         </Grid>
         <Grid item xs={1}></Grid>
-
         <Grid item xs={1}></Grid>
         <Grid item xs={10}>
           <Title>
@@ -440,7 +463,7 @@ const WritePage = () => {
           </label>
           <TextField
             required
-            value={title}
+            value={AxiosData ? AxiosData.AxiosData.title : title}
             onChange={title_Hanler}
             placeholder="글 제목을 입력해주세요"
             variant="outlined"
@@ -450,7 +473,7 @@ const WritePage = () => {
           <WriteArea>
             <CKEditor
               editor={ClassicEditor}
-              data={content}
+              data={AxiosData ? AxiosData.AxiosData.content : content}
               onReady={editor => {
                 // You can store the "editor" and use when it is needed.
                 console.log("Editor is ready to use!", editor);
@@ -476,7 +499,6 @@ const WritePage = () => {
           </WriteArea>
         </Grid>
         <Grid item xs={1}></Grid>
-
         <Grid
           item
           // xs={12}
@@ -486,14 +508,25 @@ const WritePage = () => {
           justifyContent="flex-end"
         >
           <div style={{ padding: "50px 0" }}>
-            <button
-              onClick={addPost}
-              className="buttonComplete"
-              name="register"
-              style={{ marginRight: "10px" }}
-            >
-              글 등록
-            </button>
+            {AxiosData ? (
+              <button
+                onClick={EditPost}
+                className="buttonComplete"
+                name="register"
+                style={{ marginRight: "10px" }}
+              >
+                게시글 수정
+              </button>
+            ) : (
+              <button
+                onClick={addPost}
+                className="buttonComplete"
+                name="register"
+                style={{ marginRight: "10px" }}
+              >
+                글 등록
+              </button>
+            )}
             <button
               style={{
                 border: "none",
