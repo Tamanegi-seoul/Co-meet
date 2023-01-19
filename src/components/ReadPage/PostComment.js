@@ -44,6 +44,7 @@ const PostComent = ({ commentData }) => {
         .catch(err => console.log(err));
     }
   };
+
   const keydown = e => {
     if (e.key === "Enter") {
       e.preventDefault();
