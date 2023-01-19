@@ -269,10 +269,17 @@ const UserImg = () => {
               );
 
               formData.append("image", sendImage);
-              dispatch(updateAsync(formData)).then(() => {
-                onSuccessAlert("수정완료되었습니다");
-                navigate("/");
-              });
+              dispatch(updateAsync(formData))
+                .then(res => {
+                  console.log(res.payload);
+                  onSuccessAlert("수정완료되었습니다");
+                  navigate("/");
+                })
+                .catch(error => {
+                  console.log("에러났어요");
+                  onErrorAlert("닉네임이 중복됩니다");
+                  console.log(error);
+                });
             }}
           >
             완료
