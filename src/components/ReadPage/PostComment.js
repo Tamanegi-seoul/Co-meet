@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { onErrorAlert } from "../Alert/Alert";
 import "./Post.css";
-import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Axios from "axios";
 
 //게시물 작성 완료 페이지의 댓글창
 // const PostComent = ({ content, setContent, onRegisterClick, count }) => {
 const PostComent = ({ commentData }) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const memberId = useSelector(state => state.user.memberId);
   const { postId } = useParams();
-  const dispatch = useDispatch();
-  const postListShow = useSelector(state => state.post.postListShow);
+  // const dispatch = useDispatch();
+  // const postListShow = useSelector(state => state.post.postListShow);
   // const [postList, setPostList] = useState([]);
   const [message, setMessage] = useState("");
 
