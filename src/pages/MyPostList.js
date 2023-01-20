@@ -8,12 +8,12 @@ import CommonTableRow from "../components/Table/CommonTableRow";
 import { HiClipboardList } from "react-icons/hi";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { onErrorAlert } from "../components/Alert/Alert";
-// import { deleteAsync, searchAsync } from "../store/user/user";
-// import { loadPostListAsync } from "../store/post/post";
+import { useDispatch, useSelector } from "react-redux";
+import { onErrorAlert, onSuccessAlert } from "../components/Alert/Alert";
+import { deleteAsync, searchAsync } from "../store/user/user";
+import { loadPostListAsync } from "../store/post/post";
 import axios from "axios";
-// import { type } from "@testing-library/user-event/dist/type";
+import { type } from "@testing-library/user-event/dist/type";
 // 내작성글 리스트를 볼 수 있는 페이지
 
 const MyPostList = () => {
@@ -21,9 +21,9 @@ const MyPostList = () => {
   const selectMemberId = useSelector(state => state.user.memberId);
   console.log(selectMemberId);
   const { memberId } = useParams();
-  // const { posterId } = useParams();
-  // const dispatch = useDispatch();
-  // const postListShow = useSelector(state => state.post.postListShow);
+  const { posterId } = useParams();
+  const dispatch = useDispatch();
+  const postListShow = useSelector(state => state.post.postListShow);
   const [postList, setPostList] = useState([]);
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const MyPostList = () => {
         // });
       });
     }
-  }, [memberId, navigate, selectMemberId]);
+  }, []);
 
   return (
     <>
