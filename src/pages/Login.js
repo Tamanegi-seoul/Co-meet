@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -52,7 +52,7 @@ export default function SignIn() {
     if (isLogIn) {
       return navigate("/");
     }
-  }, []);
+  }, [isLogIn, navigate]);
 
   async function onSubmit(data) {
     await dispatch(loginAsync2(data)).then(res => {

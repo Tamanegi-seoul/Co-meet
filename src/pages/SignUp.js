@@ -14,10 +14,10 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Controller, useForm } from "react-hook-form";
 import { Autocomplete } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { checkIdEmailAsync, signUpAsync2 } from "../store/user/user";
+import { signUpAsync2 } from "../store/user/user";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { onErrorAlert, onSuccessAlert, Toast } from "../components/Alert/Alert";
+import { onErrorAlert, onSuccessAlert } from "../components/Alert/Alert";
 
 function Copyright(props) {
   return (

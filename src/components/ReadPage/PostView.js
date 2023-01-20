@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./Post.css";
-import Header from "../Header";
+// import Header from "../Header";
 import Footer from "../Footer";
 // import PostComent from "./PostComent";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import post, { viewPostDetailAsync } from "../../store/post/post";
+import { viewPostDetailAsync } from "../../store/post/post";
 import axios from "axios";
 import PostComment from "./PostComment";
 import ScrollTop from "../../scrollTop";
@@ -48,7 +48,7 @@ const PostView = () => {
       .catch(Error => {
         console.log("axios에러", Error);
       });
-  }, []);
+  }, [dispatch, postId]);
 
   const stacks = postContents.designatedStacks;
 
