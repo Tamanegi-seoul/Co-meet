@@ -75,7 +75,7 @@ export default function BasicTabs() {
   };
   useEffect(() => {
     dispatch(loadPostListAsync());
-  }, [dispatch]);
+  }, []);
 
   const isStudy = postListShow.filter(data => data.groupType === "STUDY");
   const isProject = postListShow.filter(data => data.groupType === "PROJECT");
