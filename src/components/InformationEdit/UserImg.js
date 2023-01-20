@@ -92,7 +92,7 @@ const UserImg = () => {
         );
       }
     });
-  }, []);
+  }, [dispatch, memberId, navigate, selectmemberId]);
 
   const handleChange = event => {
     const {
@@ -137,7 +137,7 @@ const UserImg = () => {
     });
     setSendImage(null);
   };
-  const [newNicknameNull, setNewNicknameNull] = useState(true);
+  // const [newNicknameNull, setNewNicknameNull] = useState(true);
   const onChangeNickname = event => {
     // if (event.target.value === "") {
     //   setNewNickname(prevNickname);
