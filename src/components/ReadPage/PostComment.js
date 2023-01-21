@@ -46,6 +46,7 @@ const PostComent = ({ commentData }) => {
   };
 
   const keydown = e => {
+    if (e.nativeEvent.isComposing) return;
     if (e.key === "Enter") {
       e.preventDefault();
       addComment();

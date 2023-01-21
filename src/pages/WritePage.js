@@ -1,5 +1,5 @@
-import { Grid } from "@mui/material";
-import React, { useState } from "react";
+import { Grid, inputAdornmentClasses, MenuList } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -111,11 +111,15 @@ const WritePage = () => {
   const [designatedStacks, setStack] = React.useState([]);
   const navigate = useNavigate();
   const location = useLocation();
+  const [contentData, setContentData] = useState(setContent);
 
   const stackHandler = event => {
     const {
       target: { value },
     } = event;
+    if (AxiosData.AxiosData.designatedStacks) {
+      AxiosData.AxiosData.designatedStacks = event.target.value;
+    }
     setStack(
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
@@ -124,47 +128,73 @@ const WritePage = () => {
 
   // 모집 인원
   const capacityHandler = e => {
+    if (AxiosData.AxiosData.recruitCapacity) {
+      AxiosData.AxiosData.recruitCapacity = e.target.value;
+    }
     setRecruitCapacity(e.target.value);
     console.log(e.target.value);
   };
 
   const remoteHandler = e => {
+    if (AxiosData.AxiosData.remote || e.target.value == true) {
+      AxiosData.AxiosData.remote = e.target.value;
+    }
     setRemote(e.target.value);
     console.log(e.target.value);
   };
 
   const termHandler = e => {
+    if (AxiosData.AxiosData.expectedTerm) {
+      AxiosData.AxiosData.expectedTerm = e.target.value;
+    }
     setTerm(e.target.value);
     console.log(e.target.value);
   };
 
   const contact_typeHandler = e => {
+    if (AxiosData.AxiosData.contactType) {
+      AxiosData.AxiosData.contactType = e.target.value;
+    }
     setContactType(e.target.value);
     console.log(e.target.value);
   };
 
   const contact_Handler = e => {
+    if (AxiosData.AxiosData.contact) {
+      AxiosData.AxiosData.contact = e.target.value;
+    }
     setContact(e.target.value);
     console.log(e.target.value);
   };
 
   const group_type_Handler = e => {
+    if (AxiosData.AxiosData.groupType) {
+      AxiosData.AxiosData.groupType = e.target.value;
+    }
     setGroupType(e.target.value);
     console.log(e.target.value);
-    // console.log(postContents);
   };
 
   const date_Hanler = newValue => {
+    if (AxiosData.AxiosData.startDate) {
+      AxiosData.AxiosData.startDate = newValue;
+    }
     setStartDate(newValue);
     console.log(newValue);
   };
 
-  const title_Hanler = e => {
+  const title_Handler = e => {
+    if (AxiosData.AxiosData.title) {
+      AxiosData.AxiosData.title = e.target.value;
+    }
     setTitle(e.target.value);
     console.log(e.target.value);
   };
 
-  const content_Handler = (event, editor) => {
+  const content_Handler = (e, editor) => {
+    if (AxiosData.AxiosData.content) {
+      AxiosData.AxiosData.content = editor.getData();
+    }
     setContent(editor.getData());
     console.log(editor.getData());
     // Define your onSubmit function here
@@ -194,6 +224,7 @@ const WritePage = () => {
 
     Axios.patch("http://3.39.32.185:8080/api/post", EditData)
       .then(res => {
+        // console.log("patch 성공~", res.data.data);
         navigate("/post/" + res.data.data.postId);
       })
       .catch(err => console.log("edit patch 실패", err));
@@ -359,17 +390,23 @@ const WritePage = () => {
                 onChange={stackHandler}
                 input={<OutlinedInput label="Name" />}
                 renderValue={selected => (
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                    {selected.map(value => (
-                      <Chip key={value} label={value} />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: 0.5,
+                    }}
+                  >
+                    {selected.map((value, index) => (
+                      <Chip key={index} label={value} />
                     ))}
                   </Box>
                 )}
                 MenuProps={MenuProps}
               >
-                {stacks.map(option => (
+                {stacks.map((option, index) => (
                   <MenuItem
-                    key={option}
+                    key={index}
                     value={option}
                     style={getStyles(option, designatedStacks, theme)}
                   >
@@ -464,7 +501,7 @@ const WritePage = () => {
           <TextField
             required
             value={AxiosData ? AxiosData.AxiosData.title : title}
-            onChange={title_Hanler}
+            onChange={title_Handler}
             placeholder="글 제목을 입력해주세요"
             variant="outlined"
             margin="normal"
@@ -490,10 +527,10 @@ const WritePage = () => {
               //   console.log({ _, editor, setContent });
               // }}
               onBlur={(event, editor) => {
-                console.log("Blur.", editor);
+                // console.log("Blur.", editor);
               }}
               onFocus={(event, editor) => {
-                console.log("Focus.", editor);
+                // console.log("Focus.", editor);
               }}
             />
           </WriteArea>
