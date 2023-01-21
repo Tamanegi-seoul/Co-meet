@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Post.css";
-// import Header from "../Header";
 import Footer from "../Footer";
-// import PostComent from "./PostComent";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { viewPostDetailAsync } from "../../store/post/post";
 import axios from "axios";
 import PostComment from "./PostComment";
@@ -16,14 +14,13 @@ import PostEdit from "./PostEdit";
 const PostView = () => {
   const { postId } = useParams();
   const dispatch = useDispatch();
+  const MemberId = useSelector(state => state.user.memberId);
+  console.log(MemberId);
   const [postContents, setPostContents] = useState([]);
   const [postIntroduce, setPostIntroduce] = useState();
   const [userImg, setUserImg] = useState(
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
   );
-  // const [CommentUserImg, setCommentUserImg] = useState(
-  //   "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-  // );
   const [responseCommentData, setResponseCommentData] = useState(null);
 
   useEffect(() => {
@@ -42,13 +39,19 @@ const PostView = () => {
             `data:image/jpeg;base64,${response.data.data.posterProfile.imageData}`
           );
         }
-
         console.log("게시글 가져오기 성공", response.data.data);
       })
       .catch(Error => {
         console.log("axios에러", Error);
       });
   }, [dispatch, postId]);
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "",
+    });
+  }, []);
 
   const stacks = postContents.designatedStacks;
 
@@ -71,7 +74,9 @@ const PostView = () => {
             </div>
           </div>
           <EditTool>
-            <PostEdit postContents={postContents} />
+            {postContents.posterId == MemberId && (
+              <PostEdit postContents={postContents} />
+            )}
           </EditTool>
         </PostHeaderContainer>
         <div>

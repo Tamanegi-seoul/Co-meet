@@ -4,6 +4,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 // import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 import "../App.css";
 // Main page안의 카드 슬롯 형태
