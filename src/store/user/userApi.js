@@ -34,8 +34,8 @@ export function checkIdEmail(data) {
 }
 export function searchUser(memberId) {
   const member_id = Number(memberId);
-  //console.log(memberId);
-  //console.log(member_id);
+  // console.log(memberId);
+  // console.log(member_id);
   return axios({
     url: `http://3.39.32.185:8080/api/member?memberId=${member_id}`,
     method: "get",

@@ -48,18 +48,6 @@ const MyPostList = () => {
           console.log(res.data.data);
           setPostList(res.data.data);
         }
-
-        // function isMemberId(el) {
-        //   if (el.posterId === "member_id") {
-        //     return;
-        //   }
-        // }
-        // const myList = postListShow.filter(isMemberId);
-        // console.log(myList);
-        // dispatch(loadPostListAsync(posterId)).then(res => {
-        //   console.log(postListShow);
-        //   console.log(res.data);
-        // });
       });
     }
   }, [memberId, navigate, selectMemberId]);

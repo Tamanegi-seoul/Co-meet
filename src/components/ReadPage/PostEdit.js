@@ -27,11 +27,7 @@ const PostEdit = ({ postContents }) => {
       designatedStacks: postContents.designatedStacks,
     };
 
-    // Axios.patch("http://3.39.32.185:8080/api/post", AxiosData)
-    //   .then(res => {
     navigate(`/write`, { state: { AxiosData } });
-    // })
-    // .catch(err => console.log("edit patch 실패", err));
   };
 
   return (
