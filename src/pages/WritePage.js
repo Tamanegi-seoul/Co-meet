@@ -112,7 +112,6 @@ const WritePage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-
   const stackHandler = event => {
     const {
       target: { value },

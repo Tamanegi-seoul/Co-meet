@@ -8,6 +8,7 @@ import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import styled from "styled-components";
+import { BsFillPencilFill } from "react-icons/bs";
 
 const style = {
   position: "absolute",
@@ -29,14 +30,16 @@ const AnswerButton = styled.button`
   border-radius: 20px;
 `;
 
-export default function ModalRevise() {
+export default function ModalRevise({ Edit }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
     <div>
-      <Button onClick={handleOpen}>수정 모달창</Button>
+      <Button onClick={handleOpen}>
+        <BsFillPencilFill size={18} color={"#444"} />
+      </Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -72,10 +75,11 @@ export default function ModalRevise() {
               </AnswerButton>
               <AnswerButton
                 style={{
-                  backgroundColor: "#00B0FF",
+                  backgroundColor: "#444",
                   color: "white",
                   cursor: "pointer",
                 }}
+                onClick={Edit}
               >
                 네, 수정할래요
               </AnswerButton>

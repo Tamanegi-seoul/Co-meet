@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 // import Axios from "axios";
 // import styled from "styled-components";
 // import { useParams } from "react-router-dom";
 // import { useDispatch } from "react-redux";
-import { BsFillPencilFill } from "react-icons/bs";
-import { AiFillDelete } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import ModalDelete from "../Modal/ModalDelete";
+import ModalRevise from "../Modal/ModalRevise";
 
 const PostEdit = ({ postContents }) => {
   const navigate = useNavigate();
@@ -47,12 +47,8 @@ const PostEdit = ({ postContents }) => {
 
   return (
     <>
-      <BsFillPencilFill
-        size={18}
-        style={{ paddingRight: "15px", cursor: "pointer" }}
-        onClick={Edit}
-      />
-      <AiFillDelete size={20} style={{ cursor: "pointer" }} onClick={Delete} />
+      <ModalRevise Edit={Edit} />
+      <ModalDelete Delete={Delete} />
     </>
   );
 };
