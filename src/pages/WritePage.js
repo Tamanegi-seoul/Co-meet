@@ -111,7 +111,6 @@ const WritePage = () => {
   const [designatedStacks, setStack] = React.useState([]);
   const navigate = useNavigate();
   const location = useLocation();
-  const [contentData, setContentData] = useState(setContent);
 
   const stackHandler = event => {
     const {
@@ -170,9 +169,10 @@ const WritePage = () => {
   const group_type_Handler = e => {
     if (AxiosData.AxiosData.groupType) {
       AxiosData.AxiosData.groupType = e.target.value;
+    } else if (!AxiosData.AxiosData.groupType) {
+      setGroupType(e.target.value);
+      console.log(e.target.value);
     }
-    setGroupType(e.target.value);
-    console.log(e.target.value);
   };
 
   const date_Hanler = newValue => {
@@ -205,6 +205,7 @@ const WritePage = () => {
   //Data 받아오기
   const AxiosData = location.state;
 
+  // axios patch
   const EditPost = e => {
     const EditData = {
       postId: AxiosData.AxiosData.postId,

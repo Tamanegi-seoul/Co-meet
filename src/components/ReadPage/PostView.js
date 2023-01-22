@@ -46,13 +46,6 @@ const PostView = () => {
       });
   }, [dispatch, postId]);
 
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: "",
-    });
-  }, []);
-
   const stacks = postContents.designatedStacks;
 
   return (
@@ -77,6 +70,7 @@ const PostView = () => {
             {postContents.posterId == MemberId && (
               <PostEdit postContents={postContents} />
             )}
+            {/* <PostEdit postContents={postContents} /> */}
           </EditTool>
         </PostHeaderContainer>
         <div>
