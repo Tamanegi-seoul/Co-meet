@@ -116,7 +116,7 @@ const WritePage = () => {
     const {
       target: { value },
     } = event;
-    if (AxiosData.AxiosData.designatedStacks) {
+    if (AxiosData) {
       AxiosData.AxiosData.designatedStacks = event.target.value;
     }
     setStack(
@@ -127,7 +127,7 @@ const WritePage = () => {
 
   // 모집 인원
   const capacityHandler = e => {
-    if (AxiosData.AxiosData.recruitCapacity) {
+    if (AxiosData) {
       AxiosData.AxiosData.recruitCapacity = e.target.value;
     }
     setRecruitCapacity(e.target.value);
@@ -135,7 +135,7 @@ const WritePage = () => {
   };
 
   const remoteHandler = e => {
-    if (AxiosData.AxiosData.remote || e.target.value == true) {
+    if (AxiosData) {
       AxiosData.AxiosData.remote = e.target.value;
     }
     setRemote(e.target.value);
@@ -143,7 +143,7 @@ const WritePage = () => {
   };
 
   const termHandler = e => {
-    if (AxiosData.AxiosData.expectedTerm) {
+    if (AxiosData) {
       AxiosData.AxiosData.expectedTerm = e.target.value;
     }
     setTerm(e.target.value);
@@ -151,7 +151,7 @@ const WritePage = () => {
   };
 
   const contact_typeHandler = e => {
-    if (AxiosData.AxiosData.contactType) {
+    if (AxiosData) {
       AxiosData.AxiosData.contactType = e.target.value;
     }
     setContactType(e.target.value);
@@ -159,7 +159,7 @@ const WritePage = () => {
   };
 
   const contact_Handler = e => {
-    if (AxiosData.AxiosData.contact) {
+    if (AxiosData) {
       AxiosData.AxiosData.contact = e.target.value;
     }
     setContact(e.target.value);
@@ -167,16 +167,15 @@ const WritePage = () => {
   };
 
   const group_type_Handler = e => {
-    if (AxiosData.AxiosData.groupType) {
+    if (AxiosData) {
       AxiosData.AxiosData.groupType = e.target.value;
-    } else if (!AxiosData.AxiosData.groupType) {
-      setGroupType(e.target.value);
-      console.log(e.target.value);
     }
+    setGroupType(e.target.value);
+    console.log(e.target.value);
   };
 
-  const date_Hanler = newValue => {
-    if (AxiosData.AxiosData.startDate) {
+  const date_Handler = newValue => {
+    if (AxiosData) {
       AxiosData.AxiosData.startDate = newValue;
     }
     setStartDate(newValue);
@@ -184,7 +183,7 @@ const WritePage = () => {
   };
 
   const title_Handler = e => {
-    if (AxiosData.AxiosData.title) {
+    if (AxiosData) {
       AxiosData.AxiosData.title = e.target.value;
     }
     setTitle(e.target.value);
@@ -192,7 +191,7 @@ const WritePage = () => {
   };
 
   const content_Handler = (e, editor) => {
-    if (AxiosData.AxiosData.content) {
+    if (AxiosData) {
       AxiosData.AxiosData.content = editor.getData();
     }
     setContent(editor.getData());
@@ -430,7 +429,7 @@ const WritePage = () => {
                 <DatePicker
                   label="시작예정일"
                   value={AxiosData ? AxiosData.AxiosData.startDate : startDate}
-                  onChange={date_Hanler}
+                  onChange={date_Handler}
                   renderInput={params => <TextField {...params} />}
                 />
               </LocalizationProvider>
