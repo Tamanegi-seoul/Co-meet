@@ -111,24 +111,25 @@ const WritePage = () => {
   const [designatedStacks, setStack] = React.useState([]);
   const navigate = useNavigate();
   const location = useLocation();
-  // const [contentData, setContentData] = useState(setContent);
 
   const stackHandler = event => {
     const {
       target: { value },
     } = event;
-    if (AxiosData.AxiosData.designatedStacks) {
+    if (AxiosData) {
       AxiosData.AxiosData.designatedStacks = event.target.value;
     }
     setStack(
       // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
+      typeof value === "string"
+        ? [...new Set(value)].split(",")
+        : [...new Set(value)]
     );
   };
 
   // 모집 인원
   const capacityHandler = e => {
-    if (AxiosData.AxiosData.recruitCapacity) {
+    if (AxiosData) {
       AxiosData.AxiosData.recruitCapacity = e.target.value;
     }
     setRecruitCapacity(e.target.value);
@@ -136,7 +137,7 @@ const WritePage = () => {
   };
 
   const remoteHandler = e => {
-    if (AxiosData.AxiosData.remote || e.target.value === true) {
+    if (AxiosData) {
       AxiosData.AxiosData.remote = e.target.value;
     }
     setRemote(e.target.value);
@@ -144,7 +145,7 @@ const WritePage = () => {
   };
 
   const termHandler = e => {
-    if (AxiosData.AxiosData.expectedTerm) {
+    if (AxiosData) {
       AxiosData.AxiosData.expectedTerm = e.target.value;
     }
     setTerm(e.target.value);
@@ -152,7 +153,7 @@ const WritePage = () => {
   };
 
   const contact_typeHandler = e => {
-    if (AxiosData.AxiosData.contactType) {
+    if (AxiosData) {
       AxiosData.AxiosData.contactType = e.target.value;
     }
     setContactType(e.target.value);
@@ -160,7 +161,7 @@ const WritePage = () => {
   };
 
   const contact_Handler = e => {
-    if (AxiosData.AxiosData.contact) {
+    if (AxiosData) {
       AxiosData.AxiosData.contact = e.target.value;
     }
     setContact(e.target.value);
@@ -168,15 +169,15 @@ const WritePage = () => {
   };
 
   const group_type_Handler = e => {
-    if (AxiosData.AxiosData.groupType) {
+    if (AxiosData) {
       AxiosData.AxiosData.groupType = e.target.value;
     }
     setGroupType(e.target.value);
     console.log(e.target.value);
   };
 
-  const date_Hanler = newValue => {
-    if (AxiosData.AxiosData.startDate) {
+  const date_Handler = newValue => {
+    if (AxiosData) {
       AxiosData.AxiosData.startDate = newValue;
     }
     setStartDate(newValue);
@@ -184,7 +185,7 @@ const WritePage = () => {
   };
 
   const title_Handler = e => {
-    if (AxiosData.AxiosData.title) {
+    if (AxiosData) {
       AxiosData.AxiosData.title = e.target.value;
     }
     setTitle(e.target.value);
@@ -192,7 +193,7 @@ const WritePage = () => {
   };
 
   const content_Handler = (e, editor) => {
-    if (AxiosData.AxiosData.content) {
+    if (AxiosData) {
       AxiosData.AxiosData.content = editor.getData();
     }
     setContent(editor.getData());
@@ -205,6 +206,9 @@ const WritePage = () => {
   //Data 받아오기
   const AxiosData = location.state;
 
+  console.log(AxiosData.AxiosData.designatedStacks);
+
+  // axios patch
   const EditPost = e => {
     const EditData = {
       postId: AxiosData.AxiosData.postId,
@@ -218,7 +222,7 @@ const WritePage = () => {
       contact: AxiosData.AxiosData.contact,
       startDate: AxiosData.AxiosData.startDate,
       expectedTerm: AxiosData.AxiosData.expectedTerm,
-      designatedStacks: AxiosData.AxiosData.designatedStacks,
+      designatedStacks: [...new Set(AxiosData.AxiosData.designatedStacks)],
     };
     e.preventDefault();
 
@@ -384,7 +388,7 @@ const WritePage = () => {
                 multiple
                 value={
                   AxiosData
-                    ? AxiosData.AxiosData.designatedStacks
+                    ? [...new Set(AxiosData.AxiosData.designatedStacks)]
                     : designatedStacks
                 }
                 onChange={stackHandler}
@@ -429,7 +433,7 @@ const WritePage = () => {
                 <DatePicker
                   label="시작예정일"
                   value={AxiosData ? AxiosData.AxiosData.startDate : startDate}
-                  onChange={date_Hanler}
+                  onChange={date_Handler}
                   renderInput={params => <TextField {...params} />}
                 />
               </LocalizationProvider>

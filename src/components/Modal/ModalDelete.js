@@ -8,6 +8,8 @@ import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import styled from "styled-components";
+import { AiFillDelete } from "react-icons/ai";
+import { red } from "@mui/material/colors";
 
 const style = {
   position: "absolute",
@@ -29,14 +31,16 @@ const AnswerButton = styled.button`
   border-radius: 20px;
 `;
 
-export default function ModalDelete() {
+export default function ModalDelete({ Delete }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
     <div>
-      <Button onClick={handleOpen}>삭제 모달창</Button>
+      <Button onClick={handleOpen}>
+        <AiFillDelete size={21} color={"#444"} />
+      </Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -72,10 +76,11 @@ export default function ModalDelete() {
               </AnswerButton>
               <AnswerButton
                 style={{
-                  backgroundColor: "#00B0FF",
+                  backgroundColor: "#444",
                   color: "white",
                   cursor: "pointer",
                 }}
+                onClick={Delete}
               >
                 네, 삭제할래요
               </AnswerButton>
