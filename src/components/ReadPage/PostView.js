@@ -46,7 +46,7 @@ const PostView = () => {
       });
   }, [dispatch, postId]);
 
-  const stacks = postContents.designatedStacks;
+  const stacks = [...new Set(postContents.designatedStacks)];
 
   return (
     <>

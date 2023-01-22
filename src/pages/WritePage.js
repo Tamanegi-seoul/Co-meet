@@ -121,7 +121,9 @@ const WritePage = () => {
     }
     setStack(
       // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
+      typeof value === "string"
+        ? [...new Set(value)].split(",")
+        : [...new Set(value)]
     );
   };
 
@@ -204,6 +206,8 @@ const WritePage = () => {
   //Data 받아오기
   const AxiosData = location.state;
 
+  console.log(AxiosData.AxiosData.designatedStacks);
+
   // axios patch
   const EditPost = e => {
     const EditData = {
@@ -218,7 +222,7 @@ const WritePage = () => {
       contact: AxiosData.AxiosData.contact,
       startDate: AxiosData.AxiosData.startDate,
       expectedTerm: AxiosData.AxiosData.expectedTerm,
-      designatedStacks: AxiosData.AxiosData.designatedStacks,
+      designatedStacks: [...new Set(AxiosData.AxiosData.designatedStacks)],
     };
     e.preventDefault();
 
@@ -384,7 +388,7 @@ const WritePage = () => {
                 multiple
                 value={
                   AxiosData
-                    ? AxiosData.AxiosData.designatedStacks
+                    ? [...new Set(AxiosData.AxiosData.designatedStacks)]
                     : designatedStacks
                 }
                 onChange={stackHandler}
