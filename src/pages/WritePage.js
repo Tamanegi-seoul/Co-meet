@@ -1,5 +1,5 @@
-import { Grid, inputAdornmentClasses, MenuList } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Grid } from "@mui/material";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -111,7 +111,7 @@ const WritePage = () => {
   const [designatedStacks, setStack] = React.useState([]);
   const navigate = useNavigate();
   const location = useLocation();
-  const [contentData, setContentData] = useState(setContent);
+  // const [contentData, setContentData] = useState(setContent);
 
   const stackHandler = event => {
     const {
@@ -136,7 +136,7 @@ const WritePage = () => {
   };
 
   const remoteHandler = e => {
-    if (AxiosData.AxiosData.remote || e.target.value == true) {
+    if (AxiosData.AxiosData.remote || e.target.value === true) {
       AxiosData.AxiosData.remote = e.target.value;
     }
     setRemote(e.target.value);

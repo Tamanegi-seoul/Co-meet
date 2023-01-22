@@ -74,7 +74,7 @@ const PostView = () => {
             </div>
           </div>
           <EditTool>
-            {postContents.posterId == MemberId && (
+            {postContents.posterId === MemberId && (
               <PostEdit postContents={postContents} />
             )}
           </EditTool>
