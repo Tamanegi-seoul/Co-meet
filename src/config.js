@@ -6,6 +6,10 @@ CKEDITOR.editorConfig = function (config) {
 
   //config.htmlEncodeOutput = false; // html 태그 그대로 보여질 경우
 
+  //자동공백 추가 제거
+  config.basicEntities = false;
+
+  config.fillEmptyBlocks = false;
   config.enterMode = CKEDITOR.ENDTER_BR; // <P>태그 제거
 
   config.allowedContent = true; // html 태그 자동삭제 방지 설정
