@@ -8,7 +8,7 @@ import Axios from "axios";
 
 //게시물 작성 완료 페이지의 댓글창
 // const PostComent = ({ content, setContent, onRegisterClick, count }) => {
-const PostComent = ({ commentData }) => {
+const PostComment = ({ commentData }) => {
   // const navigate = useNavigate();
   const memberId = useSelector(state => state.user.memberId);
   const { postId } = useParams();
@@ -16,6 +16,15 @@ const PostComent = ({ commentData }) => {
   // const postListShow = useSelector(state => state.post.postListShow);
   // const [postList, setPostList] = useState([]);
   const [message, setMessage] = useState("");
+  const [editOpen, setEditOpen] = useState(false);
+
+  const contentInputHandle = () => {
+    setEditOpen(true);
+  };
+
+  const contentInputCancel = () => {
+    setEditOpen(false);
+  };
 
   const handleMessage = event => {
     setMessage(event.target.value);
@@ -123,8 +132,29 @@ const PostComent = ({ commentData }) => {
                         </div>
                       </div>
                     </div>
+                    <section>
+                      <button onClick={contentInputHandle}>수정</button>
+                      <button>삭제</button>
+                    </section>
                   </Section>
-                  <p>{comment.content}</p>
+                  <section>
+                    <p>{comment.content}</p>
+                    {/* {수정 버튼 누르고 난 뒤} */}
+                    {editOpen && (
+                      <div>
+                        <input
+                          type="text"
+                          placeholder=""
+                          value=""
+                          name="contentInput"
+                        />
+                        <div>
+                          <button onClick={contentInputCancel}>취소</button>
+                          <button>완료</button>
+                        </div>
+                      </div>
+                    )}
+                  </section>
                 </>
               );
             })
@@ -161,4 +191,4 @@ const Section = styled.div`
   }
 `;
 
-export default PostComent;
+export default PostComment;
