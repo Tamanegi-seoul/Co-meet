@@ -206,8 +206,6 @@ const WritePage = () => {
   //Data 받아오기
   const AxiosData = location.state;
 
-  // console.log(AxiosData.AxiosData.designatedStacks);
-
   // axios patch
   const EditPost = e => {
     const EditData = {
@@ -483,6 +481,7 @@ const WritePage = () => {
                 onChange={contact_Handler}
                 label="연락 주소"
                 variant="outlined"
+                style={{ marginTop: "10px" }}
               />
 
               {/* <MenuItem value={"KAKAO_OPEN_CHAT"}>온라인</MenuItem>

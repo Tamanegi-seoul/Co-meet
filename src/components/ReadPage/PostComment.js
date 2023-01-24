@@ -5,10 +5,12 @@ import "./Post.css";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Axios from "axios";
+import CommentEdit from "./CommentEdit";
+import { style } from "@mui/system";
 
 //게시물 작성 완료 페이지의 댓글창
 // const PostComent = ({ content, setContent, onRegisterClick, count }) => {
-const PostComent = ({ commentData }) => {
+const PostComment = ({ commentData }) => {
   // const navigate = useNavigate();
   const memberId = useSelector(state => state.user.memberId);
   const { postId } = useParams();
@@ -16,6 +18,15 @@ const PostComent = ({ commentData }) => {
   // const postListShow = useSelector(state => state.post.postListShow);
   // const [postList, setPostList] = useState([]);
   const [message, setMessage] = useState("");
+  const [editOpen, setEditOpen] = useState(false);
+
+  const contentInputHandle = () => {
+    setEditOpen(true);
+  };
+
+  const contentInputCancel = () => {
+    setEditOpen(false);
+  };
 
   const handleMessage = event => {
     setMessage(event.target.value);
@@ -53,10 +64,6 @@ const PostComent = ({ commentData }) => {
     }
   };
 
-  // console.log(comment.comments[0].commenter_profile.image_data);
-
-  // const CommentImg = `data:image/jpeg;base64,${comment.commenter_profile.image_data}`;
-
   return (
     <div className="commentInput">
       <div style={{ fontSize: "22px", fontWeight: "bold", padding: "10px" }}>
@@ -86,7 +93,7 @@ const PostComent = ({ commentData }) => {
           ? commentData.map((comment, index) => {
               return (
                 <>
-                  <Section>
+                  <Section style={{ paddingTop: "15px" }}>
                     <div
                       style={{
                         display: "flex",
@@ -123,8 +130,29 @@ const PostComent = ({ commentData }) => {
                         </div>
                       </div>
                     </div>
+                    <CommentEdit
+                      contentInputHandle={contentInputHandle}
+                      comment={comment}
+                    />
                   </Section>
-                  <p>{comment.content}</p>
+                  <Comment>
+                    <p>{comment.content}</p>
+                    {/* {수정 버튼 누르고 난 뒤} */}
+                    {editOpen && (
+                      <div>
+                        <input
+                          className="input"
+                          type="text"
+                          value={comment.content}
+                          name="contentInput"
+                        />
+                        <div className="editButtonHandle">
+                          <button onClick={contentInputCancel}>취소</button>
+                          <button className="complete">완료</button>
+                        </div>
+                      </div>
+                    )}
+                  </Comment>
                 </>
               );
             })
@@ -161,4 +189,42 @@ const Section = styled.div`
   }
 `;
 
-export default PostComent;
+const Comment = styled.div`
+  input {
+    width: 100%;
+    border-radius: 8px;
+    padding: 8px 12px;
+    border: 1px solid #e1e1e1;
+    outline: none;
+  }
+
+  .editButtonHandle {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #e9ecef;
+      padding: 13px;
+      cursor: pointer;
+      border-radius: 4px;
+      width: 60px;
+      height: 1.5rem;
+      margin-bottom: 10px;
+      margin-top: 10px;
+      margin-right: 10px;
+      outline: none;
+      border: 0px solid #ccc;
+      font-weight: bold;
+    }
+    .complete {
+      background-color: black;
+      color: white;
+    }
+  }
+`;
+
+export default PostComment;
