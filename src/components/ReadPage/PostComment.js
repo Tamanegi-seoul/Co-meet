@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Axios from "axios";
 import CommentEdit from "./CommentEdit";
+import { style } from "@mui/system";
 
 //게시물 작성 완료 페이지의 댓글창
 // const PostComent = ({ content, setContent, onRegisterClick, count }) => {
@@ -62,10 +63,6 @@ const PostComment = ({ commentData }) => {
       addComment();
     }
   };
-
-  // console.log(comment.comments[0].commenter_profile.image_data);
-
-  // const CommentImg = `data:image/jpeg;base64,${comment.commenter_profile.image_data}`;
 
   return (
     <div className="commentInput">
@@ -133,11 +130,10 @@ const PostComment = ({ commentData }) => {
                         </div>
                       </div>
                     </div>
-                    <CommentEdit />
-                    <section className="editButton">
-                      <button onClick={contentInputHandle}>수정</button>
-                      <button>삭제</button>
-                    </section>
+                    <CommentEdit
+                      contentInputHandle={contentInputHandle}
+                      comment={comment}
+                    />
                   </Section>
                   <Comment>
                     <p>{comment.content}</p>
@@ -171,21 +167,6 @@ const Section = styled.div`
   justify-content: space-between;
   margin-bottom: 18px;
 
-  .editButton {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    button {
-      background: inherit;
-      border: none;
-      box-shadow: none;
-      overflow: visible;
-      padding: 7px;
-      cursor: pointer;
-    }
-  }
-
   img {
     display: block;
     width: 52px;
@@ -209,7 +190,7 @@ const Section = styled.div`
 `;
 
 const Comment = styled.div`
-  .input {
+  input {
     width: 100%;
     border-radius: 8px;
     padding: 8px 12px;
