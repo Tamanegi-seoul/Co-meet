@@ -5,6 +5,7 @@ import "./Post.css";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Axios from "axios";
+import CommentEdit from "./CommentEdit";
 
 //게시물 작성 완료 페이지의 댓글창
 // const PostComent = ({ content, setContent, onRegisterClick, count }) => {
@@ -95,7 +96,7 @@ const PostComment = ({ commentData }) => {
           ? commentData.map((comment, index) => {
               return (
                 <>
-                  <Section>
+                  <Section style={{ paddingTop: "15px" }}>
                     <div
                       style={{
                         display: "flex",
@@ -132,29 +133,30 @@ const PostComment = ({ commentData }) => {
                         </div>
                       </div>
                     </div>
-                    <section>
+                    <CommentEdit />
+                    <section className="editButton">
                       <button onClick={contentInputHandle}>수정</button>
                       <button>삭제</button>
                     </section>
                   </Section>
-                  <section>
+                  <Comment>
                     <p>{comment.content}</p>
                     {/* {수정 버튼 누르고 난 뒤} */}
                     {editOpen && (
                       <div>
                         <input
+                          className="input"
                           type="text"
-                          placeholder=""
-                          value=""
+                          value={comment.content}
                           name="contentInput"
                         />
-                        <div>
+                        <div className="editButtonHandle">
                           <button onClick={contentInputCancel}>취소</button>
-                          <button>완료</button>
+                          <button className="complete">완료</button>
                         </div>
                       </div>
                     )}
-                  </section>
+                  </Comment>
                 </>
               );
             })
@@ -168,6 +170,21 @@ const Section = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 18px;
+
+  .editButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      background: inherit;
+      border: none;
+      box-shadow: none;
+      overflow: visible;
+      padding: 7px;
+      cursor: pointer;
+    }
+  }
 
   img {
     display: block;
@@ -188,6 +205,44 @@ const Section = styled.div`
     line-height: 126.5%;
     letter-spacing: -0.005em;
     color: #9f9f9f;
+  }
+`;
+
+const Comment = styled.div`
+  .input {
+    width: 100%;
+    border-radius: 8px;
+    padding: 8px 12px;
+    border: 1px solid #e1e1e1;
+    outline: none;
+  }
+
+  .editButtonHandle {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #e9ecef;
+      padding: 13px;
+      cursor: pointer;
+      border-radius: 4px;
+      width: 60px;
+      height: 1.5rem;
+      margin-bottom: 10px;
+      margin-top: 10px;
+      margin-right: 10px;
+      outline: none;
+      border: 0px solid #ccc;
+      font-weight: bold;
+    }
+    .complete {
+      background-color: black;
+      color: white;
+    }
   }
 `;
 

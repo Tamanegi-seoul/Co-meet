@@ -3,7 +3,7 @@ import axios from "axios";
 export function fetchPost(postOffset) {
   console.log(postOffset);
   return axios({
-    url: "http://3.39.32.185:8080/api/post/all",
+    url: "http://3.39.32.185:8080/api/post/all?offset=0&limit=6",
     method: "get",
     params: { offset: postOffset, limit: 6 },
   });
