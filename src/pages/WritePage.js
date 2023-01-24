@@ -206,7 +206,7 @@ const WritePage = () => {
   //Data 받아오기
   const AxiosData = location.state;
 
-  console.log(AxiosData.AxiosData.designatedStacks);
+  // console.log(AxiosData.AxiosData.designatedStacks);
 
   // axios patch
   const EditPost = e => {
