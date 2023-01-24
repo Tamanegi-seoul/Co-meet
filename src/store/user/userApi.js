@@ -39,7 +39,6 @@ export function searchUser(memberId) {
   return axios({
     url: `http://3.39.32.185:8080/api/member?memberId=${member_id}`,
     method: "get",
-    params: { member_id },
   });
 }
 export function updateUser(formData) {
@@ -52,9 +51,9 @@ export function updateUser(formData) {
 export function deleteUser(memberId) {
   const member_id = Number(memberId);
   return axios({
-    url: "http://3.39.32.185:8080/api/member/remove",
+    url: `http://3.39.32.185:8080/api/member?memberId=${member_id}`,
     method: "delete",
-    params: { member_id },
+    // params: { member_id },
   });
 }
 export function logoutUser() {

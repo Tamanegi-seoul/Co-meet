@@ -19,6 +19,7 @@ import { deleteAsync, searchAsync, updateAsync } from "../../store/user/user";
 import { useEffect } from "react";
 import { onErrorAlert, onSuccessAlert } from "../Alert/Alert";
 import { dataURLtoFile } from "../../utils/base64ImageToFile";
+import UserDelete from "../Modal/UserDelete";
 //-------------------------------------------------------------스택관련 함수
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -149,156 +150,172 @@ const UserImg = () => {
     // }
     setNewNickname(event.target.value);
   };
+
+  const userDelete = () => {
+    dispatch(deleteAsync(memberId)).then(res => {
+      console.log(res);
+      onSuccessAlert("탈퇴완료");
+      navigate("/");
+    });
+  };
+
   return (
-    <div>
-      <ImgBox>
-        <Avatar
-          src={Image}
-          style={{ margin: "20px", cursor: "pointer" }}
-          // size={200}
-          sx={{ width: 160, height: 160 }}
-          onClick={() => {
-            fileInput.current.click();
+    <>
+      <div>
+        <ImgBox>
+          <Avatar
+            src={Image}
+            style={{ margin: "20px", cursor: "pointer" }}
+            // size={200}
+            sx={{ width: 160, height: 160 }}
+            onClick={() => {
+              fileInput.current.click();
+            }}
+          />
+          <div className="btns">
+            <ImageInput>
+              <label htmlFor="ex_file">
+                <div className="btn_select">이미지 선택</div>
+              </label>
+              <input
+                type="file"
+                id="ex_file"
+                accept="image/jpg,image/png,image/jpeg"
+                name="profile_img"
+                onChange={onChange}
+                ref={fileInput}
+              />
+            </ImageInput>
+            <ImageDelete onClick={deleteImage}>이미지 삭제</ImageDelete>
+          </div>
+        </ImgBox>
+        <UserNameWrapper>
+          <h3 style={{ margin: "30px" }}>닉네임</h3>
+          <TextField
+            margin="normal"
+            required
+            id="nickName"
+            label="닉네임"
+            placeholder={prevNickname}
+            value={newNickname}
+            onChange={onChangeNickname}
+            autoFocus
+          />
+        </UserNameWrapper>
+        <p
+          style={{
+            color: "#868e96",
+            fontSize: ".875rem",
+            paddingTop: "15px",
+            paddingLeft: "30px",
+            paddingBottom: "15px",
+            borderBottom: "1px solid grey",
           }}
-        />
-        <div className="btns">
-          <ImageInput>
-            <label htmlFor="ex_file">
-              <div className="btn_select">이미지 선택</div>
-            </label>
-            <input
-              type="file"
-              id="ex_file"
-              accept="image/jpg,image/png,image/jpeg"
-              name="profile_img"
-              onChange={onChange}
-              ref={fileInput}
-            />
-          </ImageInput>
-          <ImageDelete onClick={deleteImage}>이미지 삭제</ImageDelete>
+        >
+          Co-meet에서 사용되는 이름입니다.
+        </p>
+        <TechWrapper>
+          <h3>관심 기술 태그</h3>
+          <FormControl sx={{ m: 1, width: 300 }}>
+            <InputLabel id="demo-multiple-chip-label">TechStack</InputLabel>
+            <Select
+              labelId="demo-multiple-chip-label"
+              id="demo-multiple-chip"
+              multiple
+              value={personName}
+              onChange={handleChange}
+              input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+              renderValue={selected => (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  {selected.map(value => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
+              )}
+              MenuProps={MenuProps}
+            >
+              {names.map(name => (
+                <MenuItem
+                  key={name}
+                  value={name}
+                  style={getStyles(name, personName, theme)}
+                >
+                  {name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </TechWrapper>
+        <p
+          style={{
+            color: "#868e96",
+            fontSize: ".875rem",
+            paddingTop: "15px",
+            paddingLeft: "30px",
+            paddingBottom: "15px",
+            borderBottom: "1px solid grey",
+          }}
+        >
+          관심 있는 기술 태그를 입력해주세요.
+        </p>
+
+        <div style={{ display: "flex", justifyContent: "start" }}>
+          <EditButtons>
+            <button
+              className="save"
+              name="save"
+              onClick={() => {
+                const data = {
+                  memberId: memberId,
+                  prevNickname: prevNickname,
+                  newNickname: newNickname ? newNickname : prevNickname,
+                  updatedStacks: personName,
+                };
+                const formData = new FormData();
+                formData.append(
+                  "request",
+                  new Blob([JSON.stringify(data)], {
+                    type: "application/json",
+                  })
+                );
+
+                formData.append("image", sendImage);
+                dispatch(updateAsync(formData))
+                  .then(res => {
+                    console.log(res.payload);
+                    onSuccessAlert("수정완료되었습니다");
+                    navigate("/");
+                  })
+                  .catch(error => {
+                    console.log("에러났어요");
+                    onErrorAlert("닉네임이 중복됩니다");
+                    console.log(error);
+                  });
+              }}
+            >
+              완료
+            </button>
+            {/* <button
+              className="user_out"
+              name="userOut"
+              userDelete={userDelete}
+              onClick={() => {
+                // dispatch(deleteAsync(memberId)).then(res => {
+                //   console.log(res);
+                //   onSuccessAlert("탈퇴완료");
+                //   navigate("/");
+                // });
+                setDeleteAct(true);
+              }}
+            >
+              회원탈퇴
+            </button> */}
+            <UserDelete userDelete={userDelete} />
+          </EditButtons>
         </div>
-      </ImgBox>
-      <UserNameWrapper>
-        <h3 style={{ margin: "30px" }}>닉네임</h3>
-        <TextField
-          margin="normal"
-          required
-          id="nickName"
-          label="닉네임"
-          placeholder={prevNickname}
-          value={newNickname}
-          onChange={onChangeNickname}
-          autoFocus
-        />
-      </UserNameWrapper>
-      <p
-        style={{
-          color: "#868e96",
-          fontSize: ".875rem",
-          paddingTop: "15px",
-          paddingLeft: "30px",
-          paddingBottom: "15px",
-          borderBottom: "1px solid grey",
-        }}
-      >
-        Co-meet에서 사용되는 이름입니다.
-      </p>
-      <TechWrapper>
-        <h3>관심 기술 태그</h3>
-        <FormControl sx={{ m: 1, width: 300 }}>
-          <InputLabel id="demo-multiple-chip-label">TechStack</InputLabel>
-          <Select
-            labelId="demo-multiple-chip-label"
-            id="demo-multiple-chip"
-            multiple
-            value={personName}
-            onChange={handleChange}
-            input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-            renderValue={selected => (
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                {selected.map(value => (
-                  <Chip key={value} label={value} />
-                ))}
-              </Box>
-            )}
-            MenuProps={MenuProps}
-          >
-            {names.map(name => (
-              <MenuItem
-                key={name}
-                value={name}
-                style={getStyles(name, personName, theme)}
-              >
-                {name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </TechWrapper>
-      <p
-        style={{
-          color: "#868e96",
-          fontSize: ".875rem",
-          paddingTop: "15px",
-          paddingLeft: "30px",
-          paddingBottom: "15px",
-          borderBottom: "1px solid grey",
-        }}
-      >
-        관심 있는 기술 태그를 입력해주세요.
-      </p>
-
-      <div style={{ display: "flex", justifyContent: "start" }}>
-        <EditButtons>
-          <button
-            className="save"
-            name="save"
-            onClick={() => {
-              const data = {
-                memberId: memberId,
-                prevNickname: prevNickname,
-                newNickname: newNickname ? newNickname : prevNickname,
-                updatedStacks: personName,
-              };
-              const formData = new FormData();
-              formData.append(
-                "request",
-                new Blob([JSON.stringify(data)], {
-                  type: "application/json",
-                })
-              );
-
-              formData.append("image", sendImage);
-              dispatch(updateAsync(formData))
-                .then(res => {
-                  console.log(res.payload);
-                  onSuccessAlert("수정완료되었습니다");
-                  navigate("/");
-                })
-                .catch(error => {
-                  console.log("에러났어요");
-                  onErrorAlert("닉네임이 중복됩니다");
-                  console.log(error);
-                });
-            }}
-          >
-            완료
-          </button>
-          <button
-            className="user_out"
-            name="userOut"
-            onClick={() => {
-              dispatch(deleteAsync(memberId)).then(() => {
-                onSuccessAlert("탈퇴완료");
-                navigate("/");
-              });
-            }}
-          >
-            회원탈퇴
-          </button>
-        </EditButtons>
       </div>
-    </div>
+      {/* {deleteAct && <UserDelete />} */}
+    </>
   );
 };
 
