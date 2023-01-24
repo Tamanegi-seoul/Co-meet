@@ -19,6 +19,11 @@ const PostComment = ({ commentData }) => {
   // const [postList, setPostList] = useState([]);
   const [message, setMessage] = useState("");
   const [editOpen, setEditOpen] = useState(false);
+  const [inputEditHandle, setInputEditHandle] = useState("");
+
+  const inputHandle = e => {
+    setInputEditHandle(e.target.value);
+  };
 
   const contentInputHandle = () => {
     setEditOpen(true);
@@ -130,10 +135,12 @@ const PostComment = ({ commentData }) => {
                         </div>
                       </div>
                     </div>
-                    <CommentEdit
-                      contentInputHandle={contentInputHandle}
-                      comment={comment}
-                    />
+                    {memberId == comment.commenterId && (
+                      <CommentEdit
+                        contentInputHandle={contentInputHandle}
+                        comment={comment}
+                      />
+                    )}
                   </Section>
                   <Comment>
                     <p>{comment.content}</p>
@@ -143,8 +150,10 @@ const PostComment = ({ commentData }) => {
                         <input
                           className="input"
                           type="text"
-                          value={comment.content}
+                          placeholder={comment.content}
+                          value={inputEditHandle}
                           name="contentInput"
+                          onChange={inputHandle}
                         />
                         <div className="editButtonHandle">
                           <button onClick={contentInputCancel}>취소</button>

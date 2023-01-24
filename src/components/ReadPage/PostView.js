@@ -15,7 +15,6 @@ const PostView = () => {
   const { postId } = useParams();
   const dispatch = useDispatch();
   const MemberId = useSelector(state => state.user.memberId);
-  console.log(MemberId);
   const [postContents, setPostContents] = useState([]);
   const [postIntroduce, setPostIntroduce] = useState();
   const [userImg, setUserImg] = useState(
@@ -115,7 +114,7 @@ const PostView = () => {
             {postIntroduce?.replace(/(<([^>]+)>)/gi, "")}
           </div>
         </div>
-        <PostComment commentData={responseCommentData} />
+        <PostComment memberId={MemberId} commentData={responseCommentData} />
       </PostContent>
       <Footer />
     </>
