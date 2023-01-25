@@ -108,7 +108,7 @@ const WritePage = () => {
   const [content, setContent] = useState(""); //내용
   const posterId = useSelector(state => state.user.memberId);
   const theme = useTheme();
-  const [designatedStacks, setStack] = React.useState([]);
+  const [designatedStacks, setStack] = React.useState(...new Set([]));
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -121,9 +121,7 @@ const WritePage = () => {
     }
     setStack(
       // On autofill we get a stringified value.
-      typeof value === "string"
-        ? [...new Set(value)].split(",")
-        : [...new Set(value)]
+      typeof value === "string" ? value.split(",") : value
     );
   };
 

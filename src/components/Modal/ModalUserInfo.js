@@ -1,6 +1,6 @@
 // Main Header => 사용자 정보 이미지를 클릭했을때 나오는 모달창
 
-import * as React from "react";
+import React, { useState } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -11,6 +11,8 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import { useDispatch, useSelector } from "react-redux";
 import { logOutAsync2 } from "../../store/user/user";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import styled from "styled-components";
 
 const style = {
   position: "absolute",
@@ -25,7 +27,18 @@ const style = {
   p: 4,
 };
 
-export default function ModalUserInfo() {
+const Img = styled.div`
+  img {
+    display: block;
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: all 0.125s ease-in 0s;
+  }
+`;
+
+export default function ModalUserInfo({ userData }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
@@ -33,6 +46,19 @@ export default function ModalUserInfo() {
   const handleClose = () => setOpen(false);
   const userInfo = useSelector(state => state.user.nickName);
   const memberId = useSelector(state => state.user.memberId);
+  const [userImg, setUserImg] = useState();
+
+  axios({
+    method: "get",
+    url: `http://3.39.32.185:8080/api/member?memberId=${memberId}`,
+  })
+    .then(res => {
+      console.log("get 성공", res.data.data);
+      setUserImg(res.data.data.profileImage.imageData);
+    })
+    .catch(err => {
+      console.log("get err", err);
+    });
 
   const buttons = [
     <Button key="one" onClick={() => navigate("/my_post_list/" + memberId)}>
@@ -61,7 +87,9 @@ export default function ModalUserInfo() {
         }}
         onClick={handleOpen}
       >
-        {userInfo}
+        <Img>
+          <img src={"data:image/jpeg;base64," + userImg} alt="사용자 이미지" />
+        </Img>
       </Button>
       <Modal
         aria-labelledby="transition-modal-title"

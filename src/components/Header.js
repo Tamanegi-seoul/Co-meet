@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
 import Toolbar from "@mui/material/Toolbar";
@@ -84,7 +84,7 @@ const Header = () => {
               Login
             </Button>
           ) : (
-            <ModalUserInfo></ModalUserInfo>
+            <ModalUserInfo />
           )}
         </nav>
       </Toolbar>

@@ -68,6 +68,7 @@ export const checkIdEmailAsync = createAsyncThunk(
     return;
   }
 );
+
 export const searchAsync = createAsyncThunk("search", async data => {
   return await searchUser(data)
     .then(res => {
