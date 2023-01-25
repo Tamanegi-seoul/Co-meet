@@ -57,7 +57,7 @@ export default function ModalUserInfo({ userData }) {
     url: `http://3.39.32.185:8080/api/member?memberId=${memberId}`,
   })
     .then(res => {
-      console.log("get 성공", res.data.data);
+      // console.log("get 성공", res.data.data);
       setUserImg(res.data.data.profileImage.imageData);
     })
     .catch(err => {
@@ -92,7 +92,19 @@ export default function ModalUserInfo({ userData }) {
         onClick={handleOpen}
       >
         <Img>
-          <img src={"data:image/jpeg;base64," + userImg} alt="사용자 이미지" />
+          {!userImg ? (
+            <img
+              src={
+                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+              }
+              alt="사용자 이미지"
+            />
+          ) : (
+            <img
+              src={"data:image/jpeg;base64," + userImg}
+              alt="사용자 이미지"
+            />
+          )}
           <BsFillCaretDownFill
             size="10"
             style={{ marginLeft: "5px", color: "#868e96" }}
