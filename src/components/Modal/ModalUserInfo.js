@@ -13,6 +13,7 @@ import { logOutAsync2 } from "../../store/user/user";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
+import { BsFillCaretDownFill } from "react-icons/bs";
 
 const style = {
   position: "absolute",
@@ -28,6 +29,9 @@ const style = {
 };
 
 const Img = styled.div`
+  display: flex;
+  align-items: center;
+
   img {
     display: block;
     height: 2.5rem;
@@ -89,6 +93,10 @@ export default function ModalUserInfo({ userData }) {
       >
         <Img>
           <img src={"data:image/jpeg;base64," + userImg} alt="사용자 이미지" />
+          <BsFillCaretDownFill
+            size="10"
+            style={{ marginLeft: "5px", color: "#868e96" }}
+          />
         </Img>
       </Button>
       <Modal

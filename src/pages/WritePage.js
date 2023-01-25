@@ -108,7 +108,7 @@ const WritePage = () => {
   const [content, setContent] = useState(""); //내용
   const posterId = useSelector(state => state.user.memberId);
   const theme = useTheme();
-  const [designatedStacks, setStack] = React.useState(...new Set([]));
+  const [designatedStacks, setStack] = React.useState([]);
   const navigate = useNavigate();
   const location = useLocation();
 
