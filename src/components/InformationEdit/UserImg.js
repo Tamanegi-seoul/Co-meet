@@ -278,13 +278,12 @@ const UserImg = () => {
                     type: "application/json",
                   })
                 );
-
                 formData.append("image", sendImage);
                 dispatch(updateAsync(formData))
                   .then(res => {
                     console.log(res.payload);
                     onSuccessAlert("수정완료되었습니다");
-                    navigate("/");
+                    navigate("/", { state: res.payload });
                   })
                   .catch(error => {
                     console.log("에러났어요");
