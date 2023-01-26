@@ -21,9 +21,15 @@ const Header = () => {
       component="main"
     >
       <Toolbar
-        sx={{ flexWrap: "wrap" }}
+        sx={
+          {
+            // flexWrap: "wrap",
+            // alignItems: "center",
+          }
+        }
         style={{
           backgroundColor: "white",
+          padding: "0 10%",
         }}
       >
         <Typography
@@ -35,7 +41,7 @@ const Header = () => {
         >
           <Link
             style={{
-              paddingLeft: "100px",
+              // paddingLeft: "100px",
               fontSize: "25px",
               fontWeight: "900",
               fontFamily: "Nunito-Black",
@@ -48,7 +54,13 @@ const Header = () => {
             Co Meet
           </Link>
         </Typography>
-        <nav style={{ display: "flex", alignItems: "center" }}>
+        <nav
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            // backgroundColor: "red",
+          }}
+        >
           {userInfo == null ? (
             ""
           ) : (

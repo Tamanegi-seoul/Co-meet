@@ -82,7 +82,7 @@ export default function ModalUserInfo({ userData }) {
     </Button>,
   ];
   return (
-    <div>
+    <div style={{ width: "50px" }}>
       <Button
         style={{
           fontSize: "16px",
