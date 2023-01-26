@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { useMediaQuery } from "react-responsive";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import GlobalStyles from "@mui/material/GlobalStyles";
@@ -9,6 +10,7 @@ import Footer from "../components/Footer";
 import MainCarousel from "../components/MainCarousel";
 
 const MainPage = () => {
+  const isDesktopOrMobile = useMediaQuery({ query: "(max-width:768px)" });
   return (
     <React.Fragment>
       <GlobalStyles

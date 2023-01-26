@@ -283,7 +283,7 @@ const UserImg = () => {
                   .then(res => {
                     console.log(res.payload);
                     onSuccessAlert("수정완료되었습니다");
-                    navigate("/", { state: res.payload });
+                    navigate("/");
                   })
                   .catch(error => {
                     console.log("에러났어요");
