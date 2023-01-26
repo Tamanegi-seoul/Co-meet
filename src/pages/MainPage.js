@@ -10,7 +10,7 @@ import Footer from "../components/Footer";
 import MainCarousel from "../components/MainCarousel";
 
 const MainPage = () => {
-  const isDesktopOrMobile = useMediaQuery({ query: "(max-width:768px)" });
+  const isDesktopOrMobile = useMediaQuery({ query: "(max-width:480px)" });
   return (
     <React.Fragment>
       <GlobalStyles
@@ -20,7 +20,7 @@ const MainPage = () => {
       <Header />
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <MainCarousel />
+          {isDesktopOrMobile ? "" : <MainCarousel />}
         </Grid>
         <Grid item xs={1}></Grid>
         <Grid item xs={10}>

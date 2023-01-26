@@ -57,7 +57,11 @@ const MyPostList = () => {
       <Header />
       <TableWrapper>
         <div
-          style={{ display: "flex", justifyItems: "center", padding: "30px 0" }}
+          style={{
+            display: "flex",
+            justifyItems: "center",
+            padding: "30px 10%",
+          }}
         >
           <span>
             <HiClipboardList style={{ width: "35px" }} size="30px" />
@@ -72,14 +76,13 @@ const MyPostList = () => {
             내 작성글
           </span>
         </div>
-
-        <CommonTable headersName={["글번호", "제목", "등록일"]}>
+        <CommonTable headersName={["제목", "등록일"]}>
           {postList ? (
             postList.map((item, index) => {
               return (
                 <CommonTableRow key={index} props={item.postId}>
-                  <CommonTableColumn>{item.postId}</CommonTableColumn>
                   <CommonTableColumn>{item.title}</CommonTableColumn>
+                  {/* <CommonTableColumn>{item.postId}</CommonTableColumn> */}
                   <CommonTableColumn>
                     {item.createdTime.slice(0, 10)}
                   </CommonTableColumn>
@@ -99,7 +102,7 @@ const MyPostList = () => {
 };
 
 const TableWrapper = styled.div`
-  width: 800px;
+  width: 100%;
   margin: 0 auto;
 `;
 export default MyPostList;
