@@ -1,5 +1,5 @@
 .common-table {
-  width: 100%;
+  width: 80%;
   margin: 0 auto;
   text-align: center;
   border-spacing: 0;
@@ -12,7 +12,9 @@
   padding: 10px 5px;
   font-weight: bold;
 }
-
+.common-table-header-column:nth-child(1) {
+  /* width: 300px; */
+}
 .common-table-row:hover {
   background-color: #eceaea;
   cursor: pointer;

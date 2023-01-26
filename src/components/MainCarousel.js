@@ -9,7 +9,7 @@ import styled from "styled-components";
 export default function MainCarousel(props) {
   const settings = {
     autoplay: true,
-    autoplaySpeed: 4000,
+    autoplaySpeed: 3000,
     dots: false,
     infinite: true,
     speed: 1500,
@@ -40,8 +40,8 @@ export default function MainCarousel(props) {
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToShow: 1,
+          slidesToScroll: 1,
         },
       },
       {
@@ -129,13 +129,13 @@ export default function MainCarousel(props) {
 
 const SlideList = styled.div`
   width: 100%;
-  height: 300px;
+  height: 18.75rem;
   cursor: pointer;
 `;
 
 const FirstMainPage = styled.div`
   /* width: 60%; */
-  padding: 50px 0;
+  padding: 50px 10%;
   background-color: #f8f8f8;
   button {
     border-radius: 50px;
@@ -161,7 +161,7 @@ const FirstMainPage = styled.div`
 
 const SecondMainPage = styled.div`
   /* width: 60%; */
-  padding: 70px 0;
+  padding: 50px 10%;
 
   h2 {
     font-size: 26px;
