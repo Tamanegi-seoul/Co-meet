@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import CommentEdit from "./CommentEdit";
 import { useState } from "react";
@@ -7,8 +7,12 @@ import Axios from "axios";
 const CommentList = ({ comment, index, memberId }) => {
   const [editOpen, setEditOpen] = useState(false);
   const [inputEditHandle, setInputEditHandle] = useState("");
+  const commentInput = useRef();
 
   const inputHandle = e => {
+    if (comment.content) {
+      comment.content = setInputEditHandle(e.target.value);
+    }
     setInputEditHandle(e.target.value);
   };
 
@@ -18,6 +22,7 @@ const CommentList = ({ comment, index, memberId }) => {
 
   const contentInputHandle = () => {
     setEditOpen(true);
+    editOpen == true && commentInput.current.focus();
   };
 
   //axios comment update - API PATCH
@@ -91,11 +96,11 @@ const CommentList = ({ comment, index, memberId }) => {
             <input
               className="input"
               type="text"
-              placeholder={comment.content}
-              value={inputEditHandle}
+              value={comment.content}
               name="contentInput"
               onChange={inputHandle}
               onKeyDown={commentKeyDown}
+              ref={commentInput}
             />
             <div className="editButtonHandle">
               <button onClick={contentInputCancel}>취소</button>

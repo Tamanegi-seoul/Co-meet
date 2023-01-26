@@ -4,6 +4,7 @@ import Footer from "../Footer";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { viewPostDetailAsync } from "../../store/post/post";
+import { useLocation } from "react-router";
 import axios from "axios";
 import PostComment from "./PostComment";
 import ScrollTop from "../../scrollTop";
