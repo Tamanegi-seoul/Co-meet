@@ -1,5 +1,5 @@
 import axios, { Axios } from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const CommentEdit = ({ contentInputHandle, comment }) => {

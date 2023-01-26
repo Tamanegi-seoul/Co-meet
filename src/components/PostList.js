@@ -30,6 +30,7 @@ const Blank = styled.div`
   width: 100%;
   background-color: white;
 `;
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -79,7 +80,7 @@ export default function BasicTabs() {
 
   const isStudy = postListShow.filter(data => data.groupType === "STUDY");
   const isProject = postListShow.filter(data => data.groupType === "PROJECT");
-  // console.log(postListShow);
+  // console.log("postListShow", postListShow);
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
