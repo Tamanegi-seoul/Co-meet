@@ -28,10 +28,7 @@ const CommentList = ({ comment, index, memberId }) => {
     };
 
     Axios.patch("http://3.39.32.185:8080/api/comment", UpdateData)
-      .then(res => {
-        window.location.reload();
-        // console.log("comment update 성공", res);
-      })
+      .then(res => {})
       .catch(err => {
         console.log("comment update 실패", err);
       });

@@ -34,7 +34,9 @@ const PostComment = ({ commentData }) => {
           memberId: memberId,
           content: message,
         })
-        .then(res => {})
+        .then(res => {
+          window.location.reload();
+        })
         .catch(err => console.log(err));
     }
   };
