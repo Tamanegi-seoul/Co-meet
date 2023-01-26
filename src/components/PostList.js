@@ -68,6 +68,7 @@ export default function BasicTabs() {
   const [value, setValue] = useState(0);
   const isLoading = useSelector(state => state.post.MorePostListLoading);
   const postListShow = useSelector(state => state.post.postListShow);
+  const postListBreak = useSelector(state => state.post.postListBreak);
   const setInfiniteScroll = useIntersectionObserver();
 
   const handleChange = (event, newValue) => {
@@ -110,7 +111,9 @@ export default function BasicTabs() {
                   );
                 })}
                 {isLoading && <Loading />}
-                {!isLoading && <Blank ref={setInfiniteScroll}></Blank>}
+                {postListBreak && !isLoading && (
+                  <Blank ref={setInfiniteScroll}></Blank>
+                )}
               </>
             ) : (
               <NoSearch />

@@ -8,7 +8,7 @@ const initialState = {
   postListShow: [],
   stackList: [],
   postOffset: 0,
-
+  postListBreak: true, //모든 게시글을 불러왔으면 멈춤
   MorePostListLoading: false,
 };
 
@@ -76,6 +76,7 @@ export const postSlice = createSlice({
         state.MorePostListLoading = true;
       })
       .addCase(loadMorePostListAsync.fulfilled, (state, action) => {
+        console.log(action.payload);
         if (action.payload.length) {
           state.postOffset += 6;
           state.postListData = state.postListData.concat(action.payload);
@@ -85,6 +86,7 @@ export const postSlice = createSlice({
             state.stackList
           );
         } else {
+          state.postListBreak = false;
           state.postOffset = 0;
         }
         state.MorePostListLoading = false;
