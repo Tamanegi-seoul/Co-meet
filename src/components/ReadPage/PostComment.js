@@ -4,7 +4,7 @@ import { onErrorAlert } from "../Alert/Alert";
 import "./Post.css";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Axios from "axios";
+import axios from "axios";
 import CommentEdit from "./CommentEdit";
 import CommentList from "./CommentList";
 import { style } from "@mui/system";
@@ -28,19 +28,12 @@ const PostComment = ({ commentData }) => {
     if (!memberId) {
       onErrorAlert("로그인을 먼저 해주세요!");
     } else {
-      Axios.post(
-        "http://3.39.32.185:8080/api/comment",
-        {
+      axios
+        .post("http://3.39.32.185:8080/api/comment", {
           postId: postId,
           memberId: memberId,
           content: message,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+        })
         .then(res => {
           window.location.reload();
         })

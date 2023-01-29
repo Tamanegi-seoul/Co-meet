@@ -12,6 +12,14 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import postReducer from "../store/post/post";
+import axios from "axios";
+import { getCookie } from "../utils/setCookie";
+
+if (getCookie("accessToken")) {
+  axios.defaults.headers.common["Authorization"] = `Bearer ${getCookie(
+    "accessToken"
+  )}`;
+}
 
 const reducers = combineReducers({
   user: userReducer,

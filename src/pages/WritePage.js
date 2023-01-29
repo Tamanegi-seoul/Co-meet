@@ -232,34 +232,25 @@ const WritePage = () => {
 
   const addPost = e => {
     e.preventDefault();
-    Axios.post(
-      "http://3.39.32.185:8080/api/post",
-      {
-        title,
-        content,
-        groupType,
-        contactType,
-        contact,
-        posterId, //user id
-        startDate,
-        expectedTerm,
-        recruitCapacity,
-        designatedStacks,
-        remote,
-        // recruit_status,
-        // recruit_capacity,
-        // type,
-        // expected_term,
-        // stack,
-        // startDate,
-      },
-      {
-        headers: {
-          //"Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    Axios.post("http://3.39.32.185:8080/api/post", {
+      title,
+      content,
+      groupType,
+      contactType,
+      contact,
+      posterId, //user id
+      startDate,
+      expectedTerm,
+      recruitCapacity,
+      designatedStacks,
+      remote,
+      // recruit_status,
+      // recruit_capacity,
+      // type,
+      // expected_term,
+      // stack,
+      // startDate,
+    })
       .then(res => {
         console.log("게시글 등록됨", res);
         navigate("/post/" + res.data.data.postId);
